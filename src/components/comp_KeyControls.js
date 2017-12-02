@@ -30,7 +30,7 @@ Crafty.c('KeyControls', {
 				this.goingRight = true;
 			} else if (k === this.action) {
 					console.log(this.selected + " is maybe " + Crafty.keys['1'])
-				if (this.selected === Crafty.keys['1'] && this.money > 30) { // spawn
+				if (this.selected === 1 && this.money > 30) { // spawn
 					this.money -= 30;
 					this.updateMoneyText();
 					Crafty.e('2D, WebGL, Sprite, chicken_down, Moving, Collision, Chicken, SpriteAnimation, ReelFromVelocity')
