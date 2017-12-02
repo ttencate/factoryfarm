@@ -13,18 +13,18 @@ Crafty.paths({
 
 Game = {
 	width: function() {
-		return 800;
+		return window.innerWidth;
 	},
 
 	height: function() {
-		return 600;
+		return window.innerHeight;
 	},
-
-    
     
 	start: function() {
 		// Start crafty and set a background color so that we can see it's working
-		Crafty.init(Game.width(),Game.height(), 'cr-stage');
+		Crafty.init();
+		Crafty.timer.FPS(60);
+		Crafty.timer.steptype('semifixed', 50)
     //Crafty.viewport.zoom(20,0,0,100);
     //Crafty.pixelart(true);
 		Crafty.scene('Loading');

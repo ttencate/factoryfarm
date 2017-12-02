@@ -3,7 +3,6 @@ var bgMusic = null;
 
 // MAIN SCENE
 Crafty.scene('Main', function() {
-	Crafty.timer.FPS(60);
 	
 	if (!bgMusic) {
 		bgMusic = Crafty.audio.play('bgMusic',-1,0.3);
@@ -14,7 +13,10 @@ Crafty.scene('Main', function() {
 	}
 	
 	buildLevel = function(){
-		Crafty.e('2D, Canvas, Color').color('red').attr({x: 50, y: 50, w: 50, h: 50});
+		Crafty.e('2D, WebGL, Color, KeyControls, Moving, Collision')
+			.color('red').attr({x: 50, y: 50, w: 50, h: 50})
+			._Moving()
+			._KeyControls(Crafty.keys.LEFT_ARROW, Crafty.keys.RIGHT_ARROW, Crafty.keys.UP_ARROW, Crafty.keys.DOWN_ARROW);
 	}
 
 	buildLevel();
