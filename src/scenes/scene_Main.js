@@ -3,9 +3,6 @@ var bgMusic = null;
 
 // MAIN SCENE
 Crafty.scene('Main', function() {
-	
-	infoDiv = document.getElementById('info');
-	infoDiv.innerHTML = "This is your money";
 
 	if (!bgMusic) {
 		bgMusic = Crafty.audio.play('bgMusic',-1,0.3);

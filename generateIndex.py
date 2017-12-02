@@ -29,7 +29,15 @@ footer = """    <script>
   <body>
         <!--Add your own HTML!-->   
     <div id="cr-stage">
-      <div id="info"></div>
+      <div id="info">
+        <div id="moneyText"></div>
+        <div id="hotbar">
+          <div class="hotbar-item" id="hotbar-item-1">1</div>
+          <div class="hotbar-item" id="hotbar-item-2">2</div>
+          <div class="hotbar-item" id="hotbar-item-3">3</div>
+        </div>
+        <div id="dayText">Day 1</div>
+      </div>
     </div>
   </body>
 </html>"""

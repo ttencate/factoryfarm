@@ -29,7 +29,6 @@ Crafty.c('Chicken', {
 
 			var polCoords = utility.car2pol(dx, dy);
 			var angle = polCoords.phi;
-			console.log(angle);
 			this.vx += Math.cos(angle) * this.acc * prox * dt;
 			this.vy += Math.sin(angle) * this.acc * prox * dt;
 

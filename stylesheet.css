@@ -31,13 +31,65 @@ a {
 }
 
 #info {
-	position: relative;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
 	z-index: 40;
-	text-align: left;
 	background-color: rgba(0, 0, 0, 0.5);
 	padding: 10px;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: row;
+	flex-direction: row;
 }
 
+#info > * {
+	-webkit-flex-grow: 1;
+	flex-grow: 1;
+}
+
+#moneyText {
+	font-size: 150%;
+	text-align: left;
+	line-height: 68px;
+}
+
+#hotbar {
+	text-align: center;
+}
+
+#dayText {
+	font-size: 150%;
+	text-align: right;
+	line-height: 68px;
+}
+
+.hotbar-item {
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	border: 4px solid #222;
+	background-color: rgba(0, 0, 0, 0.5);
+	line-height: 112px;
+	text-align: left;
+}
+
+.hotbar-item.active {
+	border-color: white;
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+#hotbar-item-1 {
+	background-image: url(assets/images/chicken.png);
+	background-size: 400%;
+	background-position: 0px -128px;
+}
+
+#hotbar-item-2 {
+	background-image: url(assets/images/tileset.png);
+	background-position: -256px -128px;
+}
 
 @-ms-viewport{
     zoom: 1.0;
