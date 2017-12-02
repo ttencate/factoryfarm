@@ -17,7 +17,7 @@ header = """<!DOCTYPE html>
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favoicon.png"> 
     <!-- <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'> -->
     <!--   <meta name="viewport"   content="user-scalable=yes, initial-scale=1.0" /> -->
-    <script src="node_modules/craftyjs/dist/crafty.js"></script>
+    <script src="lib/crafty.js"></script>
 """
 footer = """    <script>
       window.addEventListener('load', Game.start);
