@@ -33,11 +33,11 @@ a {
 #info {
 	position: absolute;
 	left: 0;
-	top: 0;
 	right: 0;
+	bottom: 0;
 	z-index: 40;
 	background-color: rgba(0, 0, 0, 0.5);
-	padding: 10px;
+	padding: 4px 12px;
 	display: -webkit-flex;
 	display: flex;
 	-webkit-flex-direction: row;
@@ -52,7 +52,7 @@ a {
 #moneyText {
 	font-size: 150%;
 	text-align: left;
-	line-height: 68px;
+	line-height: 72px;
 }
 
 #hotbar {
@@ -62,7 +62,7 @@ a {
 #dayText {
 	font-size: 150%;
 	text-align: right;
-	line-height: 68px;
+	line-height: 72px;
 }
 
 .hotbar-item {
