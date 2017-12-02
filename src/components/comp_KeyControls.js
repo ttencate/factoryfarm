@@ -5,11 +5,13 @@ Crafty.c('KeyControls', {
 	goingRight: false,
 	goingUp: false,
 	goingDown: false,
+	money: 100,
 
 	init: function() {
 		// acceleration
 		this.acc = 0.003;
 		this.drag = 0.005;
+		this.selected = Crafty.keys['1'];
 
 		this.bind('KeyDown', function(keyEvent) {
 			var k = keyEvent.key;
@@ -21,6 +23,16 @@ Crafty.c('KeyControls', {
 				this.goingLeft = true;
 			} else if (k === this.right) {
 				this.goingRight = true;
+			} else if (k === this.action) {
+					console.log(this.selected + " is maybe " + Crafty.keys['1'])
+				if (this.selected === Crafty.keys['1'] && this.money > 30) { // spawn
+					this.money -= 30;
+					Crafty.e('2D, WebGL, Color, Moving, Collision, Chicken')
+						.attr({x: this._x, y: this._y, w: 30, h: 30, z: zLevels['chicken']})
+						.color('blue')
+						._Chicken()
+						._Moving();
+				}
 			}
 		});
 		this.bind('KeyUp', function(keyEvent) {
@@ -35,17 +47,20 @@ Crafty.c('KeyControls', {
 				this.goingRight = false;
 			}
 		});
+
 		this.bind('EnterFrame', function(timestep){
 			this.updateVelocity(timestep.dt);
 		});
 	},
 
-	_KeyControls: function(left, right, up, down, action) {
+	_KeyControls: function(left, right, up, down, action, select1, select2) {
 		this.left = left;
 		this.right = right;
 		this.up = up;
 		this.down = down;
-		this.action = action
+		this.action = action;
+		this.select1 = select1;
+		this.select2 = select2;
 		return this;
 	},
 

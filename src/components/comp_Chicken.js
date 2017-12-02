@@ -53,13 +53,13 @@ Crafty.c('Chicken', {
 				var need = Math.min(Math.max(10, this.happy), this.fed);
 				if (need < 80) {
 					if (need === this.fed) { // go eat
-						console.log("need is feed");
+						// console.log("need is feed");
 						this.dest = {x: 400, y: 600};
 					} else if (need === this.happy) { // have fun
-						console.log("fun4win");
+						// console.log("fun4win");
 						this.dest = {x: 200, y: 600};
 					} else {
-						console.log("why did the chicken cross the street?");
+						// console.log("why did the chicken cross the street?");
 					}
 				}
 				// move in the direction of your destination
