@@ -68,6 +68,12 @@ Crafty.scene('Main', function() {
 		Crafty.viewport.clampToEntities = false;
 		Crafty.viewport.follow(player);
 
+		chick = Crafty.e('2D, WebGL, Color, Moving, Collision, Chicken')
+				.attr({x: 800, y: 600, w: 30, h: 30, z: zLevels['chicken']})
+				.color('blue')
+				._Chicken()
+				._Moving();
+
 	}
 
 	buildLevel();
