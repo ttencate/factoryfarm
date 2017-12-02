@@ -32,6 +32,9 @@ Crafty.scene('Loading', function() {
 	Crafty.load(assetsObject,
 		function() {
 			//when loaded
+			Crafty.sprite(64, 64, "assets/images/tileset.png", {
+				tileset: [0,0],	
+			});	
 			levelIdx = 0;
 			Crafty.scene('Main');
 		},
