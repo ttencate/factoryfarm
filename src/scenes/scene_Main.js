@@ -33,7 +33,7 @@ Crafty.scene('Main', function() {
 
 		for (var i = level.layers.length - 1; i >= 0; i--) {
 			var layer = level.layers[i];
-			if (layer.name === "Tile Layer 1") {
+			if (layer.name === "walls") {
 				solidLayer = layer;
 			} else if (layer.name === "background") {
 				bgLayer = layer;

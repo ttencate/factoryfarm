@@ -4,7 +4,9 @@ var assetsObject = {
 },
 "images": [
 	"music.png",
+	"farmer.kra",
 	"favoicon.png",
+	"farmer.png",
 	"nomusic.png",
 	"sound.png",
 	"backgroundGrass.png",
