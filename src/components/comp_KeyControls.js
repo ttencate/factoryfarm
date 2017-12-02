@@ -15,9 +15,8 @@ Crafty.c('KeyControls', {
 		// acceleration
 		this.acc = 0.005;
 		this.drag = 0.02;
-		this.selected = Crafty.keys['1'];
 		this.numSelections = 3;
-		this.updateSelection();
+		this.select(1);
 
 		this.bind('KeyDown', function(keyEvent) {
 			var k = keyEvent.key;
@@ -45,8 +44,7 @@ Crafty.c('KeyControls', {
 						._Moving();
 				}
 			} else if (k >= Crafty.keys['1'] && k < Crafty.keys['1'] + this.numSelections) {
-				this.selected = k;
-				this.updateSelection();
+				this.select(k - Crafty.keys['1'] + 1);
 			}
 		});
 		this.bind('KeyUp', function(keyEvent) {
@@ -100,9 +98,10 @@ Crafty.c('KeyControls', {
 		this.moneyText.innerText = '$' + this.money;
 	},
 
-	updateSelection: function() {
+	select: function(selected) {
+		this.selected = selected;
 		var items = document.getElementsByClassName('hotbar-item');
-		var activeItemId = 'hotbar-item-' + (this.selected - Crafty.keys['1'] + 1);
+		var activeItemId = 'hotbar-item-' + selected;
 		for (var i = 0; i < items.length; i++) {
 			var item = items[i];
 			if (item.id === activeItemId) {

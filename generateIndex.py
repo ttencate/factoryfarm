@@ -29,15 +29,15 @@ footer = """    <script>
   <body>
         <!--Add your own HTML!-->   
     <div id="cr-stage">
-      <div id="info">
-        <div id="moneyText"></div>
-        <div id="hotbar">
-          <div class="hotbar-item" id="hotbar-item-1">1</div>
-          <div class="hotbar-item" id="hotbar-item-2">2</div>
-          <div class="hotbar-item" id="hotbar-item-3">3</div>
-        </div>
-        <div id="dayText">Day 1</div>
+    </div>
+    <div id="info">
+      <div id="moneyText"></div>
+      <div id="hotbar" onclick="Crafty('KeyControls').select(parseInt(event.target.id.substr(12, 1)))">
+        <div class="hotbar-item" id="hotbar-item-1" title="Chicken">1</div>
+        <div class="hotbar-item" id="hotbar-item-2" title="Fence">2</div>
+        <div class="hotbar-item" id="hotbar-item-3" title="Feeder">3</div>
       </div>
+      <div id="dayText">Day 1</div>
     </div>
   </body>
 </html>"""
