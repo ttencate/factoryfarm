@@ -37,7 +37,6 @@ Crafty.c('KeyControls', {
 						.reel('walking_left', 500, [[0, 3], [1, 3], [2, 3], [3, 3]])
 						.animate('walking_down', 0)
 						.attr({x: this._x, y: this._y, w: 32, h: 32, z: zLevels['chicken']})
-						.color('blue')
 						._Chicken()
 						._Moving();
 				}
