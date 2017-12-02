@@ -78,9 +78,13 @@ Crafty.scene('Main', function() {
 		Crafty.viewport.clampToEntities = false;
 		Crafty.viewport.follow(player);
 
-		chick = Crafty.e('2D, WebGL, Color, Moving, Collision, Chicken')
-				.attr({x: 800, y: 600, w: 30, h: 30, z: zLevels['chicken']})
-				.color('blue')
+		chick = Crafty.e('2D, WebGL, Sprite, chicken_down, Moving, Collision, Chicken, SpriteAnimation, ReelFromVelocity')
+				.attr({x: 800, y: 600, w: 32, h: 32, z: zLevels['chicken']})
+				.reel('walking_down', 500, [[0, 0], [1, 0], [2, 0], [3, 0]])
+				.reel('walking_up', 500, [[0, 1], [1, 1], [2, 1], [3, 1]])
+				.reel('walking_right', 500, [[0, 2], [1, 2], [2, 2], [3, 2]])
+				.reel('walking_left', 500, [[0, 3], [1, 3], [2, 3], [3, 3]])
+				.animate('walking_down', 0)
 				._Chicken()
 				._Moving();
 
