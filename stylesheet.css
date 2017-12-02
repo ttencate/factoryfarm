@@ -1,0 +1,40 @@
+
+/* Add your CSS below! */
+
+
+body {
+	color: #ffffff;
+    text-align: center;
+    background-color:  #ffdd66;
+	font-size:18px
+}
+
+h1 {
+	font-family:  Helvetica, sans-serif;
+	font-size:45px;
+	color: #9E3B33;
+}
+ 
+ 
+a {
+   color:  #9E3B33;
+ }
+
+#canvascontainer{	
+	
+	margin: 0 auto;	
+	border-radius: 5px;
+	width: 800px;
+	height:600px;
+	cursor: crosshair;
+}
+#cr-stage { 
+	background-color:  #360404;
+	color: white;
+	
+}
+
+@-ms-viewport{
+    width: extend-to-zoom;
+    zoom: 1.0;
+}
