@@ -1,6 +1,7 @@
 
 params = {
     debug: false,
+    proxLimit: 20000
 };
 
 zLevels = {

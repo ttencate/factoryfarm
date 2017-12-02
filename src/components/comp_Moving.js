@@ -5,7 +5,6 @@ Crafty.c("Moving", {
 		this.requires("2D");
 		this.vx = 0.0;
 		this.vy = 0.0;
-		this.drag = 0.005;
 		this.bounce = 0;
 	},
 
