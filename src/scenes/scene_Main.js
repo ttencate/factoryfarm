@@ -68,6 +68,7 @@ Crafty.scene('Main', function() {
 
 		player = Crafty.e('2D, WebGL, Sprite, farmer_down, KeyControls, Moving, Collision, SpriteAnimation, ReelFromVelocity')
 				.attr({x: 800, y: 500, w: 64, h: 64, z: zLevels['player']})
+				.collision([[19, 47], [47, 47], [47, 59], [19, 59]]) // Has no effect?
 				.reel('walking_down', 500, [[0, 0], [1, 0], [2, 0], [3, 0]])
 				.reel('walking_up', 500, [[0, 1], [1, 1], [2, 1], [3, 1]])
 				.reel('walking_right', 500, [[0, 2], [1, 2], [2, 2], [3, 2]])
