@@ -9,8 +9,8 @@ Crafty.c('KeyControls', {
 
 	init: function() {
 		// acceleration
-		this.acc = 0.003;
-		this.drag = 0.005;
+		this.acc = 0.005;
+		this.drag = 0.02;
 		this.selected = Crafty.keys['1'];
 
 		this.bind('KeyDown', function(keyEvent) {
