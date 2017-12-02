@@ -4,7 +4,6 @@ var assetsObject = {
 	},
 	"images": [
 		"nosound.png",
-		"chicken.png",
 		"sound.png",
 		"music.png",
 		"tileset.png",
@@ -23,6 +22,16 @@ var assetsObject = {
 				farmer_up: [0, 1],
 				farmer_right: [0, 2],
 				farmer_left: [0, 3],
+			},
+		},
+		"chicken.png": {
+			tile: 32,
+			tileh: 32,
+			map: {
+				chicken_down: [0, 0],
+				chicken_up: [0, 1],
+				chicken_right: [0, 2],
+				chicken_left: [0, 3],
 			},
 		}
 	},
