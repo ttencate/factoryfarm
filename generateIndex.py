@@ -28,7 +28,9 @@ footer = """    <script>
   </head>
   <body>
         <!--Add your own HTML!-->   
-    <div id="cr-stage"></div>
+    <div id="cr-stage">
+      <div id="info"></div>
+    </div>
   </body>
 </html>"""
 

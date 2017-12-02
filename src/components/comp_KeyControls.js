@@ -8,6 +8,9 @@ Crafty.c('KeyControls', {
 	money: 100,
 
 	init: function() {
+
+		this.moneyDiv = document.getElementById('moneyText');
+
 		// acceleration
 		this.acc = 0.003;
 		this.drag = 0.005;

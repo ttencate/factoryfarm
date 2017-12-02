@@ -30,6 +30,15 @@ a {
 	cursor: hidden;
 }
 
+#info {
+	position: relative;
+	z-index: 40;
+	text-align: left;
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 10px;
+}
+
+
 @-ms-viewport{
     zoom: 1.0;
 }
