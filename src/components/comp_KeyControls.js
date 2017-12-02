@@ -19,15 +19,18 @@ Crafty.c('KeyControls', {
 		this.bind('KeyDown', function(keyEvent) {
 			var k = keyEvent.key;
 			if (k === this.up ) {
+				console.log('going up now!');
 				this.goingUp = true;
 			} else if (k === this.down) {
+				console.log('going down now!');
 				this.goingDown = true;
 			} else if (k === this.left) {
+				console.log('going left');
 				this.goingLeft = true;
 			} else if (k === this.right) {
+				console.log('going right');
 				this.goingRight = true;
 			} else if (k === this.action) {
-					console.log(this.selected + " is maybe " + Crafty.keys['1'])
 				if (this.selected === Crafty.keys['1'] && this.money > 30) { // spawn
 					this.money -= 30;
 					Crafty.e('2D, WebGL, Sprite, chicken_down, Moving, Collision, Chicken, SpriteAnimation, ReelFromVelocity')
@@ -37,7 +40,6 @@ Crafty.c('KeyControls', {
 						.reel('walking_left', 500, [[0, 3], [1, 3], [2, 3], [3, 3]])
 						.animate('walking_down', 0)
 						.attr({x: this._x, y: this._y, w: 32, h: 32, z: zLevels['chicken']})
-						.color('blue')
 						._Chicken()
 						._Moving();
 				}

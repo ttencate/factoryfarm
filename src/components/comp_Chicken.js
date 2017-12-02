@@ -22,14 +22,22 @@ Crafty.c('Chicken', {
 			var dx = this.dest.x - this.x;
 			var dy = this.dest.y - this.y;
 			
-			// use proximity to slow down in time
+			// use proximity to slow down in time and determine if the chicken is close enough to satisfy needs
 			var dSquared = dx * dx + dy * dy;
-			var prox = Math.min(dSquared, params.proxLimit) / params.proxLimit;
+			if (dSquared < params.needD2) {
+				// chicken is really close to destination that was
+				if (this.currentNeed === "fed") {
+					this.fed += 0.5;
+				} else if (this.currentNeed === "happy") {
+					this.happy += 0.5;
+				}
+			}
 
+
+			var prox = Math.min(dSquared, params.proxLimit) / params.proxLimit;
 
 			var polCoords = utility.car2pol(dx, dy);
 			var angle = polCoords.phi;
-			console.log(angle);
 			this.vx += Math.cos(angle) * this.acc * prox * dt;
 			this.vy += Math.sin(angle) * this.acc * prox * dt;
 
@@ -49,17 +57,31 @@ Crafty.c('Chicken', {
 			var dt = timestep.dt;
 			if (this.needCounter === 0) {
 				this.needCounter = 100;
-				// pick most urgent need
-				var need = Math.min(Math.max(10, this.happy), this.fed);
-				if (need < 80) {
-					if (need === this.fed) { // go eat
-						// console.log("need is feed");
-						this.dest = {x: 400, y: 600};
-					} else if (need === this.happy) { // have fun
-						// console.log("fun4win");
-						this.dest = {x: 200, y: 600};
-					} else {
-						// console.log("why did the chicken cross the street?");
+				// update needs and check most pressing one
+				this.fed -= 10 + 2 * Math.random();
+				this.happy -= 5 + 2 * Math.random();
+				// pick need, following rules in order:
+				// 1. satisfy really urgent needs
+				// 2. satisfy current need up to a threshold
+				if (this.fed < 10) {
+					this.currentNeed = "fed";
+					this.dest = {x: 400, y: 600};
+				} else if (this.currentNeed = "none" || this[this.currentNeed] > 70) {
+					var need = Math.min(Math.min(60, Math.max(10, this.happy)), this.fed);
+					if (need < 80) {
+						if (need === this.fed) { // go eat
+							// console.log("need is feed");
+							this.currentNeed = "fed";
+							this.dest = {x: 400, y: 600};
+						} else if (need === this.happy) { // have fun
+							// console.log("fun4win");
+							this.currentNeed = "happy";
+							this.dest = {x: 200, y: 600};
+						} else {
+							this.currentNeed = "none";
+							this.dest = {x: 300, y: 900};
+							// console.log("why did the chicken cross the street?");
+						}
 					}
 				}
 				// move in the direction of your destination
