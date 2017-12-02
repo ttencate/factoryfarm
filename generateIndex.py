@@ -30,7 +30,7 @@ footer = """    <script>
         <!--Add your own HTML!-->   
     <div id="cr-stage">
     </div>
-    <div id="info">
+    <div id="info" style="visibility: hidden;">
       <div id="moneyText"></div>
       <div id="hotbar" onclick="Crafty('KeyControls').select(parseInt(event.target.id.substr(12, 1)))">
         <div class="hotbar-item" id="hotbar-item-1" title="Chicken">1</div>
