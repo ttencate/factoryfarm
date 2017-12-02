@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 
 import os
 import re
@@ -36,11 +36,13 @@ try:
   jsRegex = re.compile('.*\.js');
   indexFile.write(header)
   for root, dirs, files in os.walk('./src/'):
+    dirs.sort()
     for name in files:
       indexFile.write('    <script src="');
       indexFile.write(os.path.join(root, name));
       indexFile.write('"></script>\n');
   for root, dirs, files in os.walk('./assets/'):
+    dirs.sort()
     for name in files:
       if jsRegex.match(name):
         indexFile.write('    <script src="');
