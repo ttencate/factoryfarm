@@ -1,3 +1,5 @@
+#!/usr/bin/python2
+
 import os
 import re
 from sets import Set
@@ -9,7 +11,7 @@ try:
 
 	soundNames = Set()
 	files = [f for f in os.listdir('.') if os.path.isfile(f)]
-	for f in files:
+	for f in sorted(files):
 		if f != "createSoundMap.py" and f != "soundMap.js" and f != "audacity":
 			match = re.search(r'(.*)\.([^\.]*)', f)
 			fileName = match.group(1)

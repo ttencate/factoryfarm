@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 
 import os
 
@@ -18,7 +18,7 @@ try:
 	assetsObjectFile.write('},\n')
 	#write image files
 	assetsObjectFile.write('\"images\": [\n')
-	imagefiles = filter(lambda x: x != "imageMap.js" and x != "createImageMap.py" and x != "Inkscape", os.listdir('./images/'))
+	imagefiles = filter(lambda x: x != "imageMap.js" and x != "createImageMap.py" and x != "Inkscape" and not x.endswith('~'), os.listdir('./images/'))
 #	for f in imagefiles:
 #		assetsObjectFile.write('\"' + f + '\"')
 	assetsObjectFile.write('\t\"' + '\",\n\t\"'.join(imagefiles))
