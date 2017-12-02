@@ -32,6 +32,12 @@ Crafty.c("Moving", {
 				this.ry = this.prevY;
 				this.y = Math.round(this.ry);
 			}
+			if (this.grabbed) {
+				this.z = zLevels['player'] + this._y + 20;
+			} else {
+				this.z = this.baseZ + this._y;
+			}
+
 		});
 		return this;
 	},

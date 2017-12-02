@@ -26,5 +26,13 @@ utility = {
 		}
 		return phi % (2 * Math.PI);
 	},
-	
+
+};
+
+Math.deg2rad = function(degrees) {
+  return degrees * Math.PI / 180;
+};
+
+Math.rad2deg = function(radians) {
+  return radians * 180 / Math.PI;
 };
