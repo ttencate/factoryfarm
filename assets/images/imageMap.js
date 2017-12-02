@@ -6,4 +6,5 @@ var imageMap = {
 	backgroundGrass: 'assets/images/backgroundGrass.png',
 	coins: 'assets/images/coins.png',
 	nosound: 'assets/images/nosound.png',
+	tileset: 'assets/images/tileset.png',
 };

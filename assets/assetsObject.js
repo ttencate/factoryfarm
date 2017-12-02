@@ -9,5 +9,6 @@ var assetsObject = {
 	"sound.png",
 	"backgroundGrass.png",
 	"coins.png",
-	"nosound.png"],
+	"nosound.png",
+	"tileset.png"],
 };
