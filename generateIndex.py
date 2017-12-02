@@ -9,7 +9,7 @@ indexFile = open('index.html', 'w')
 header = """<!DOCTYPE html>
 <html>
     <head>
-        <title>Title of our game</title>
+        <title>Factory Farm</title>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
         <link rel="stylesheet" type="text/css" href="stylesheet.css" />
@@ -17,7 +17,8 @@ header = """<!DOCTYPE html>
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favoicon.png"> 
     <!-- <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'> -->
     <!--   <meta name="viewport"   content="width=device-width, user-scalable=no, initial-scale=1.0" /> -->
-    <script src="node_modules/craftyjs/dist/crafty.js"></script>"""
+    <script src="node_modules/craftyjs/dist/crafty.js"></script>
+"""
 footer = """    <script>
       window.addEventListener('load', Game.start);
     </script>
@@ -33,9 +34,9 @@ footer = """    <script>
     </div>
     <!--<div><p><h1>Game Title</h1></p></div>-->
     <div>
-      <p>Made by Jelle & Anneroos with the <a href="http://craftyjs.com">Crafty library</a> 
-            <!-- for <a href="http://www.ludumdare.com/compo/ludum-dare-38/?action=preview&uid=18490">Ludum Dare 38</a> with the theme ''.</p> -->
-      <p> <a href="http://jellenauta.com/games/">Return to our game page</a></p> 
+      <p>Made by Thomas & Jelle with the <a href="http://craftyjs.com">Crafty library</a> 
+            <!-- for <a href="http://www.ludumdare.com/compo/ludum-dare-40/?action=preview&uid=18490">Ludum Dare 40</a> with the theme 'The more you have, the worse it is'.</p> -->
+      <p> <a href="http://jellenauta.com/games/">Return to the game page</a></p> 
     </div>
     
   </body>
