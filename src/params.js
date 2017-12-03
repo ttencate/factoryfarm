@@ -8,6 +8,7 @@ params = {
     grassSearchRadius: 15,
     // fed factors
     hunger: 0.1,
+    pShit: 1,
     // happy factors
     pavedImpact: 70,
     filthImpact: 0.4,

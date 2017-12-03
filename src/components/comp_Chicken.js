@@ -96,7 +96,8 @@ Crafty.c('Chicken', {
 
 				// maybe make a doo-doo
 				if (Math.random() < params.pShit) {
-					tileMatrix[col][row].dirty += 15;
+					var tile = getTile(col, row)
+					if (tile) tile.setFilth(tile.filth + 15);
 				}
 
 				// pick need, following rules in order:

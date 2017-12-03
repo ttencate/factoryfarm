@@ -43,6 +43,7 @@ var assetsObject = {
 			map: {
 				highlightYes: [0,2],
 				highlightNo: [0,3],
+				filth: [6, 3],
 			},
 		},
 		"marker.png": {
