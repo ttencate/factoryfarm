@@ -3,10 +3,12 @@ params = {
     debug: false,
     proxLimit: 20000,
     needD2: 10000,
+    needCheckTime: 2000,
     chickWalkRange: 400,
     grabReach: 20,
     grabAreaSize: 35,
-    interactDist: 80
+    interactDist: 80,
+    grassSearchRadius: 15
 };
 
 zLevels = {

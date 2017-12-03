@@ -44,19 +44,16 @@ Crafty.c('Wall',{
 		var rightIdx = xIdx + 1;
 		var topIdx = yIdx - 1;
 		var bottomIdx = yIdx + 1;
-		var lCol = wallTiles[leftIdx];
-		var col = wallTiles[xIdx];
-		var rCol = wallTiles[rightIdx];
+		var lCol = tileMatrix[leftIdx];
+		var col = tileMatrix[xIdx];
+		var rCol = tileMatrix[rightIdx];
 		var leftNeighbor, topNeighbor, rightNeighbor, bottomNeighbor;
 		leftNeighbor = topNeighbor = rightNeighbor = bottomNeighbor = 1; // 1 = second element, means absent
 
-		if (lCol)
-			leftNeighbor = lCol[yIdx] && lCol[yIdx].has("Wall") ? 0 : 1;
-		if (col) {
-			topNeighbor = col[topIdx] && col[topIdx].has("Wall") ? 0 : 1;
-			bottomNeighbor = col[bottomIdx] && col[bottomIdx].has("Wall") ? 0 : 1;
-		}
-		if (rCol) rightNeighbor = rCol[yIdx] && rCol[yIdx].has("Wall") ? 0 : 1;
+		leftNeighbor = lCol && lCol[yIdx] && lCol[yIdx].block && lCol[yIdx].block.has("Wall") ? 0 : 1;
+		topNeighbor = col && col[topIdx] && col[topIdx].block && col[topIdx].block.has("Wall") ? 0 : 1;
+		bottomNeighbor = col && col[bottomIdx] && col[bottomIdx].block && col[bottomIdx].block.has("Wall") ? 0 : 1;
+		rightNeighbor = rCol && rCol[yIdx] && rCol[yIdx].block && rCol[yIdx].block.has("Wall") ? 0 : 1;
 		var spriteCoords = this.spriteMatrix[leftNeighbor][topNeighbor][rightNeighbor][bottomNeighbor];
 		// set sprites to match neighbors
 		this.sprite(spriteCoords.c, spriteCoords.r);
@@ -112,13 +109,13 @@ Crafty.c('Wall',{
 
 	matchAndFixNeighbors: function(c, r){
 		this.matchNeighbors();
-		var left = wallTiles[c-1] ? wallTiles[c-1][r] : null;
+		var left = tileMatrix[c-1] && tileMatrix[c-1][r] ? tileMatrix[c-1][r].block : null;
 		if (left && left.matchNeighbors) left.matchNeighbors();
-		var right = wallTiles[c+1] ? wallTiles[c+1][r] : null;
+		var right = tileMatrix[c+1] && tileMatrix[c+1][r] ? tileMatrix[c+1][r].block : null;
 		if (right && right.matchNeighbors) right.matchNeighbors();
-		var top = wallTiles[c][r-1] ? wallTiles[c][r-1] : null;
+		var top = tileMatrix[c] && tileMatrix[c][r-1] ? tileMatrix[c][r-1].block : null;
 		if (top && top.matchNeighbors) top.matchNeighbors();
-		var bottom = wallTiles[c][r+1] ? wallTiles[c][r+1] : null;
+		var bottom = tileMatrix[c] && tileMatrix[c][r+1] ? tileMatrix[c][r+1].block : null;
 		if (bottom && bottom.matchNeighbors) bottom.matchNeighbors();
 	}
 }); 

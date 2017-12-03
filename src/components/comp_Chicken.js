@@ -12,7 +12,7 @@ Crafty.c('Chicken', {
 		this.acc = 0.001;
 		this.drag = 0.007;
 		this.isGrabbed = false;
-		this.needCounter = 0;
+		this.needWatch = Math.random() * params.needCheckTime;
 		this.requires('OriginCoordinates');
 		this.origin("center");
 	},
@@ -57,9 +57,13 @@ Crafty.c('Chicken', {
 
 		this.bind("EnterFrame", function(timestep){
 			var dt = timestep.dt;
-			if (this.needCounter === 0) {
+			this.needWatch -= dt;
+			if (this.needWatch < 0) {
+				console.log(dt);
+				this.needWatch += params.needCheckTime;
 				console.log('fed: ' + this.fed + ', happy: ' + this.happy);
-				this.needCounter = 100;
+				var col = Math.floor(this.originX() / tileSize);
+				var row = Math.floor(this.originY() / tileSize);
 				// update needs and check most pressing one
 				this.fed -= 3 + 2 * Math.random();
 				this.happy -= 4 + 1 * Math.random();
@@ -95,7 +99,6 @@ Crafty.c('Chicken', {
 					var feeder = null;
 					var dx, dy, d2;
 					var d2min = Infinity;
-					console.log(feeders);
 					for (var i = 0; i < feeders.length; i++) {
 						feeder = Crafty(feeders[i]);
 						dx = feeder.originX() - this.originX();
@@ -105,15 +108,27 @@ Crafty.c('Chicken', {
 							this.dest = feeder;
 						}
 					}
-					console.log('feeder: ' + this.dest);
 				} else if (this.currentNeed === "happy") {
-					this.dest = {x: 200, y: 600};
+					// find patch of grass for happiness
+					var newCol, newRow;
+					var startPhi = Math.random() * 2 * Math.PI;
+					var phiStep = 2 * Math.PI / 20;
+					var foundGrass = false;
+					// sample tiles along lines of sight until grass is found
+					for (var phi = startPhi; phi < startPhi + 2 * Math.PI; phi += phiStep) {
+						for (var r = 1; r < params.grassSearchRadius; r++) { // radius in tiles
+							newCol = Math.round(col + r * Math.cos(phi));
+							newRow = Math.round(row + r * Math.sin(phi));
+							if (tileMatrix[newCol] && tileMatrix[newCol][newRow] && !tileMatrix[newCol][newRow].paved) {
+								this.dest = {x: newCol * tileSize, y: newRow * tileSize};
+								foundGrass = true;
+								break;
+							}
+						}
+						if (foundGrass) break;
+					}
 				}
-
-
-				// move in the direction of your destination
 			}
-			--this.needCounter;
 			this.updateVelocity(dt);
 		});
 		return this;

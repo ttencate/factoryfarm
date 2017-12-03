@@ -31,16 +31,12 @@ Crafty.c('KeyControls', {
 			if (k === Crafty.keys.F7) { // cheat for debugging
 				this.setMoney(this.money + 1000);
 			} else if (k === this.up ) {
-				console.log('going up now!');
 				this.goingUp = true;
 			} else if (k === this.down) {
-				console.log('going down now!');
 				this.goingDown = true;
 			} else if (k === this.left) {
-				console.log('going left');
 				this.goingLeft = true;
 			} else if (k === this.right) {
-				console.log('going right');
 				this.goingRight = true;
 			} else if (k === this.action) {
 				if (this.selected === 1 && this.money > 30) { // spawn
@@ -58,17 +54,16 @@ Crafty.c('KeyControls', {
 					// determine nearest tile
 					var col = Math.floor(this.interactPoint.x / tileSize);
 					var row = Math.floor(this.interactPoint.y / tileSize);
-					if (wallTiles[col] && wallTiles[col][row] && wallTiles[col][row]) {
-						// tile is blocked
-					} else {
-						if (this.selected === 2 && this.money > 4) { // build fence
-							this.setMoney(this.money - 4);
-							if (!wallTiles[col]) wallTiles[col] = [];
-							wallTiles[col][row] = Crafty.e('2D, Wall')._Wall(col, row);
-							wallTiles[col][row].matchAndFixNeighbors(col, row);
-						} else if (this.selected === 3 && this.money > 55) { // place feeder
-							this.setMoney(this.money - 55);
-							wallTiles[col][row] = Crafty.e('2D, Feeder')._Feeder(col, row);
+					if (tileMatrix[col] && tileMatrix[col][row]) { // consider only tiles in bounds of tileMatrix
+						if (!tileMatrix[col][row].block) { // tile is not already blocked
+							if (this.selected === 2 && this.money > 4) { // build fence
+								this.setMoney(this.money - 4);
+								tileMatrix[col][row].block = Crafty.e('2D, Wall')._Wall(col, row);
+								tileMatrix[col][row].block.matchAndFixNeighbors(col, row);
+							} else if (this.selected === 3 && this.money > 55) { // place feeder
+								this.setMoney(this.money - 55);
+								tileMatrix[col][row].block = Crafty.e('2D, Feeder')._Feeder(col, row);
+							}
 						}
 					}
 				}

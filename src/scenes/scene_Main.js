@@ -1,6 +1,5 @@
 var overlay;
 var bgMusic = null;
-var wallTiles;
 
 // MAIN SCENE
 Crafty.scene('Main', function() {
@@ -52,21 +51,20 @@ Crafty.scene('Main', function() {
 			Crafty.e('2D, WebGL, Image').image("assets/images/grass.png").attr({x: grass.x, y: grass.y - grass.height, w: grass.width, h: grass.height});
 		}
 
-		wallTiles = [];
+		tileMatrix = [];
 		// draw all the tiles
-		for (var row = 0; row < level.height; ++row) {
-			for (var col = 0; col < level.width; ++col) {
-				if (!wallTiles[col]) {
-					wallTiles[col] = [];
-				}
-				// create tile for platform layer
+		for (var col = 0; col < level.width; ++col) {
+			tileMatrix[col] = [];
+			for (var row = 0; row < level.height; ++row) {
+				tileMatrix[col][row] = {block: null};
 				tileIdx = solidLayer.data[level.width * row + col];
+				// add impassable items
 				if (tileIdx === 6) {
-					wallTiles[col][row] = Crafty.e('2D, Feeder')._Feeder(col, row);
+					tileMatrix[col][row].block = Crafty.e('2D, Feeder')._Feeder(col, row);
 				} else if (tileIdx > 0) {
-					wallTiles[col][row] = Crafty.e('2D, Wall')._Wall(col, row).attr({
+					tileMatrix[col][row].block = Crafty.e('2D, Wall')._Wall(col, row);//.attr({
 						// tileIdx: tileIdx
-					});//.sprite((tileIdx - 1) % xTiles, Math.floor((tileIdx - 1) / xTiles));
+					//});
 				}
 			};
 		};
