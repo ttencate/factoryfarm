@@ -24,7 +24,6 @@ Crafty.c('Wall',{
 													 [{c:3,r:1},{c:3,r:2}]], 		//  T (B?)
 													[[{c:0,r:0},{c:0,r:3}],			//   R(B?)
 													 [{c:3,r:0},{c:1,r:0}]]]];//(B?) // TODO: add lonely fence
-    globalSafe = 0;
 	},
 	
 	_Wall: function(x,y){
@@ -59,10 +58,6 @@ Crafty.c('Wall',{
 		}
 		if (rCol) rightNeighbor = rCol[yIdx] && rCol[yIdx].has("Wall") ? 0 : 1;
 		var spriteCoords = this.spriteMatrix[leftNeighbor][topNeighbor][rightNeighbor][bottomNeighbor];
-		while (globalSafe < 300) {
-			globalSafe++;
-			console.log(leftNeighbor + ", " + topNeighbor + ", " + rightNeighbor + ", " + bottomNeighbor);
-		}
 		// set sprites to match neighbors
 		this.sprite(spriteCoords.c + 1, spriteCoords.r);
 
