@@ -36,6 +36,13 @@ var assetsObject = {
 			map: {
 				seller: [6, 1],
 			}
-		}
+		},
+		"marker.png": {
+			tile: 32,
+			tileh: 32,
+			map: {
+				marker: [0, 0],
+			},
+		},
 	},
 };

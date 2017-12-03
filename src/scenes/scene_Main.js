@@ -1,6 +1,18 @@
 var overlay;
 var bgMusic = null;
 var globalGrimness = 0;
+var tileMatrix;
+
+function getTile(col, row) {
+	if (col < 0 || col >= tileMatrix.length) {
+		return {};
+	}
+	var arr = tileMatrix[col];
+	if (row < 0 || row >= arr.length) {
+		return {};
+	}
+	return arr[row];
+}
 
 // MAIN SCENE
 Crafty.scene('Main', function() {
@@ -59,6 +71,7 @@ Crafty.scene('Main', function() {
 		solidLayer = null;
 		grassLayer = null;
 		spawnLayer = null;
+		ownedLayer = null;
 
 		for (var i = level.layers.length - 1; i >= 0; i--) {
 			var layer = level.layers[i];
@@ -68,6 +81,8 @@ Crafty.scene('Main', function() {
 				grassLayer = layer;
 			} else if (layer.name === "spawn") {
 				spawnLayer = layer;
+			} else if (layer.name === "owned") {
+				ownedLayer = layer;
 			}
 		}
 		
@@ -83,8 +98,9 @@ Crafty.scene('Main', function() {
 		for (var col = 0; col < level.width; ++col) {
 			tileMatrix[col] = [];
 			for (var row = 0; row < level.height; ++row) {
-				tileMatrix[col][row] = {block: null};
-				tileIdx = solidLayer.data[level.width * row + col];
+				var linearIndex = level.width * row + col;
+				tileMatrix[col][row] = {block: null, owned: false};
+				tileIdx = solidLayer.data[linearIndex];
 				// add impassable items
 				if (tileIdx === 6) {
 					tileMatrix[col][row].block = Crafty.e('2D, Feeder')._Feeder(col, row);
@@ -92,6 +108,9 @@ Crafty.scene('Main', function() {
 					tileMatrix[col][row].block = Crafty.e('2D, Wall')._Wall(col, row);//.attr({
 						// tileIdx: tileIdx
 					//});
+				}
+				if (ownedLayer.data[linearIndex]) {
+					tileMatrix[col][row].owned = true;
 				}
 			};
 		};
@@ -142,8 +161,34 @@ Crafty.scene('Main', function() {
 		}
 
 		Crafty.viewport.clampToEntities = false;
+
+		updateLandMarkers();
 	}
 
 	buildLevel();
 });
 
+function updateLandMarkers() {
+	for (var col = 0; col < tileMatrix.length; ++col) {
+		for (var row = 0; row < tileMatrix[col].length; ++row) {
+			var tile = getTile(col, row);
+			var owned = !!tile.owned;
+			var needMarker =
+					owned !== !!getTile(col-1, row).owned ||
+					owned !== !!getTile(col, row-1).owned ||
+					owned !== !!getTile(col-1, row).owned ||
+					owned !== !!getTile(col-1, row-1).owned;
+			if (tile.landMarker && !needMarker) {
+				tile.landMarker.destroy();
+				tile.landMarker = null;
+			} else if (!tile.landMarker && needMarker) {
+				console.log(col, row);
+				var x = 64 * col - 11;
+				var y = 64 * row - 24;
+				var z = zLevels['markers'] + y;
+				tile.landMarker = Crafty.e('2D, WebGL, Sprite, marker')
+						.attr({x: x, y: y, z: z, w: 32, h: 32});
+			}
+		}
+	}
+}
