@@ -42,7 +42,7 @@ footer = """    <script>
         <div class="hotbar-item" id="hotbar-item-2" title="Fence"><span class="key">2</span><span class="cost">fence</span></div>
         <div class="hotbar-item" id="hotbar-item-3" title="Feeder"><span class="key">3</span><span class="cost">feeder</span></div>
       </div>
-      <div id="dayText">Day 1</div>
+      <div id="dayText"><span id="monthText"></span>, year <span id="yearText"></span></div>
       <div id="timeText">06:00</div>
     </div>
     <script type="text/x-vertex-shader" id="vertex-shader">

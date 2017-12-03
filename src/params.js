@@ -8,7 +8,8 @@ params = {
     grabReach: 20,
     grabAreaSize: 35,
     interactDist: 80,
-    grassSearchRadius: 15
+    grassSearchRadius: 15,
+    monthDurationMilliseconds: 60000 / 12,
 };
 
 zLevels = {
