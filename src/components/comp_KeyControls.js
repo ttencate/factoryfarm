@@ -203,7 +203,7 @@ Crafty.c('KeyControls', {
 
 	setMoney: function(money) {
 		this.money = money;
-		this.moneyText.innerText = '$' + this.money;
+		this.moneyText.innerText = '$' + Math.round(this.money * 100) / 100;
 	},
 
 	updateChickensText: function() {
