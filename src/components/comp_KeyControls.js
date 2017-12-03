@@ -83,7 +83,7 @@ Crafty.c('KeyControls', {
 					// this.grabArea.rotation = Math.rad2deg(polar.phi);
 					var grabbed = this.grabArea.hit("Chicken");
 					if (grabbed) {
-						grabbed[0].obj.grabbed = true;
+						grabbed[0].obj.isGrabbed = true;
 						this.grabbed = grabbed[0].obj;
 					}
 				}
@@ -103,7 +103,7 @@ Crafty.c('KeyControls', {
 				this.goingRight = false;
 			} else if (k === this.grab) {
 				if (this.grabbed) {
-					this.grabbed.grabbed = false;
+					this.grabbed.isGrabbed = false;
 					this.grabbed = null;
 				}
 			}

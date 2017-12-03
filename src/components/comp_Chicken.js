@@ -8,10 +8,10 @@ Crafty.c('Chicken', {
 		this.fed = 50;
 		this.age = 0;
 		this.sick = 0;
-		this.dest = {x: 500, y: 400};
+		this.dest = {x: 500, y: 400}; // must be an object with originX/originY functions OR x and y properties.
 		this.acc = 0.001;
 		this.drag = 0.007;
-		this.grabbed = false;
+		this.isGrabbed = false;
 		this.needCounter = 0;
 		this.requires('OriginCoordinates');
 		this.origin("center");
@@ -22,8 +22,8 @@ Crafty.c('Chicken', {
 		}
 
 		this.updateVelocity = function(dt) {
-			var dx = this.dest.x - this.x;
-			var dy = this.dest.y - this.y;
+			var dx = (this.dest.originX ? this.dest.originX() : this.dest.x) - this.originX();
+			var dy = (this.dest.originY ? this.dest.originY() : this.dest.y) - this.originY();
 			
 			// use proximity to slow down in time and determine if the chicken is close enough to satisfy needs
 			var dSquared = dx * dx + dy * dy;
@@ -36,7 +36,7 @@ Crafty.c('Chicken', {
 				}
 			}
 			var prox = Math.min(dSquared, params.proxLimit) / params.proxLimit;
-			if (!this.grabbed) { // do not actively move if grabbed
+			if (!this.isGrabbed) { // do not actively move if grabbed
 				var polCoords = utility.car2pol(dx, dy);
 				var angle = polCoords.phi;
 				this.vx += Math.cos(angle) * this.acc * prox * dt;
@@ -58,7 +58,7 @@ Crafty.c('Chicken', {
 		this.bind("EnterFrame", function(timestep){
 			var dt = timestep.dt;
 			if (this.needCounter === 0) {
-				// console.log('fed: ' + this.fed + ', happy: ' + this.happy);
+				console.log('fed: ' + this.fed + ', happy: ' + this.happy);
 				this.needCounter = 100;
 				// update needs and check most pressing one
 				this.fed -= 3 + 2 * Math.random();
@@ -68,32 +68,49 @@ Crafty.c('Chicken', {
 				// 2. satisfy current need up to a threshold
 				if (this.fed < 10) {
 					this.currentNeed = "fed";
-					this.dest = {x: 400, y: 600};
-				} else if (this.currentNeed = "none" || this[this.currentNeed] > 80) { // reselect need if this one is satisfied
-					// if both needs above 60, don't take action
+				} else if (this.currentNeed === "none" || this[this.currentNeed] > 80) { // reselect need if this one is satisfied
+					// if all needs above 60, don't take action
 					var need = Math.min(Math.min(60, this.happy), this.fed);
 					if (need === this.fed) { // go eat
-						// console.log("need is feed");
 						this.currentNeed = "fed";
-						this.dest = {x: 400, y: 600};
 					} else if (need === this.happy) { // have fun
-						// console.log("fun4win");
 						this.currentNeed = "happy";
 						this.dest = {x: 200, y: 600};
 					} else {
 						if (this.currentNeed === "none") { // chicken was already loitering
-							if (Math.random() > 0.4) { // sometimes rest
+							if (Math.random() > 0.6) { // sometimes rest
 								this.dest = {x: this.originX() + (0.5 - Math.random()) * params.chickWalkRange,
 														 y: this.originY() + (0.5 - Math.random()) * params.chickWalkRange}
-														 							// this.dest = {x: 300, y: 900};
-
 							}
-						} else {
-							this.dest = {x: 300, y: 900};
+						} else { // just finished satisfying need, move away
+							this.dest = {x: this.originX() + (0.5 - Math.random()) * params.chickWalkRange,
+													 y: this.originY() + (0.5 - Math.random()) * params.chickWalkRange};
 							this.currentNeed = "none";
 						}
 					}
 				}
+				if (this.currentNeed === "fed") {
+					// find nearest feeder
+					var feeders = Crafty("Feeder");
+					var feeder = null;
+					var dx, dy, d2;
+					var d2min = Infinity;
+					console.log(feeders);
+					for (var i = 0; i < feeders.length; i++) {
+						feeder = Crafty(feeders[i]);
+						dx = feeder.originX() - this.originX();
+						dy = feeder.originY() - this.originY();
+						d2 = dx * dx + dy * dy;
+						if (d2 < d2min) {
+							this.dest = feeder;
+						}
+					}
+					console.log('feeder: ' + this.dest);
+				} else if (this.currentNeed === "happy") {
+					this.dest = {x: 200, y: 600};
+				}
+
+
 				// move in the direction of your destination
 			}
 			--this.needCounter;
