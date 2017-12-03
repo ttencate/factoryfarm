@@ -80,11 +80,12 @@ Crafty.scene('Main', function() {
 		var spawns = spawnLayer.objects;
 		for (var i = spawns.length - 1; i >= 0; i--) {
 			var spawn = spawns[i];
+			var properties = spawn.properties || {};
 			var x = spawn.x + spawn.width / 2;
 			var y = spawn.y + spawn.height / 2;
 			switch (spawn.type) {
 				case 'Chicken':
-					Crafty.e('2D, WebGL, Sprite, chicken_down, Moving, Collision, Chicken, SpriteAnimation, ReelFromVelocity')
+					var chicken = Crafty.e('2D, WebGL, Sprite, chicken_down, Moving, Collision, Chicken, SpriteAnimation, ReelFromVelocity')
 							.attr({x: x - 16, y: y - 16, w: 32, h: 32, z: zLevels['chicken']})
 							.reel('walking_down', 500, [[0, 0], [1, 0], [2, 0], [3, 0]])
 							.reel('walking_up', 500, [[0, 1], [1, 1], [2, 1], [3, 1]])
@@ -93,6 +94,7 @@ Crafty.scene('Main', function() {
 							.animate('walking_down', 0)
 							._Chicken()
 							._Moving();
+					chicken.age = properties.age || 0;
 					break;
 				case 'Farmer':
 					player = Crafty.e('2D, WebGL, Sprite, farmer_down, KeyControls, Moving, Collision, SpriteAnimation, ReelFromVelocity, OriginCoordinates')
