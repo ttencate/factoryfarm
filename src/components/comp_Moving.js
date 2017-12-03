@@ -16,7 +16,17 @@ Crafty.c("Moving", {
 		this.ry = this._y;
 		this.bind("EnterFrame", function(timestep) {
 			var dt = timestep.dt;
-			if (this.moveCollisionTest()) { // if we're stuck, first get free
+			var collisions
+			if (collisions = this.moveCollisionTest()) { // if we're stuck, first get free
+				// Unless we are a chicken and have an appointment with the Seller!
+				for (var i = 0; i < collisions.length; i++) {
+					if (collisions[i].obj.has("Seller")) {
+						console.log("Chicken sold!");
+						this.destroy();
+						player.setMoney(player.money + 35 + Math.random() * 10);
+					}
+				}
+
 				this.rx += this.vx * dt;
 				this.x = Math.round(this.rx);
 				this.ry += this.vy * dt;
@@ -50,8 +60,9 @@ Crafty.c("Moving", {
 	},
 
 	moveCollisionTest: function() {
-		if (this.hit("Impassable")) {
-			return true;
+		var collisions = null;
+		if (collisions = this.hit("Impassable")) {
+			return collisions;
 		}
 		return false;
 	}

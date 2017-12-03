@@ -3,7 +3,7 @@ params = {
     debug: false,
     proxLimit: 20000,
     needD2: 10000,
-    needCheckTime: 2000,
+    needCheckTime: 4000,
     chickWalkRange: 400,
     grabReach: 20,
     grabAreaSize: 35,

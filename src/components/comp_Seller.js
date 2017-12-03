@@ -8,8 +8,8 @@ Crafty.c('Seller',{
 		this.collision([10,30, 54,30, 54,60, 10,60]);
 	},
 	
-	_Feeder: function(x,y){
-		this.requires('tileset').sprite(5,0);
+	_Seller: function(x,y){
+		this.requires('tileset').sprite(5,0, 2,2);
 		this.x = 64*x;
 		this.y = 64*y;
 		this.baseZ = zLevels['walls'];

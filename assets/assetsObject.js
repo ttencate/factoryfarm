@@ -3,14 +3,7 @@ var assetsObject = {
 		"bgmusic": ["bgmusic.mp3", "bgmusic.ogg"],
 	},
 	"images": [
-		"nosound.png",
-		"sound.png",
-		"music.png",
 		"tileset.png",
-		"coins.png",
-		"backgroundGrass.png",
-		"nomusic.png",
-		"favoicon.png",
 	],
 	"sprites": {
 		"farmer.png": {
