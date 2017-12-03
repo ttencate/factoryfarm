@@ -219,7 +219,9 @@ Crafty.c('KeyControls', {
 			return;
 		}
 		this.chickenPopup.style.visibility = 'visible';
-		var html = '<dl>';
+		var html = '';
+		html += '<b>' + chicken.name + '</b>';
+		html += '<dl>';
 		html += '<dt>Happiness</dt><dd>' + heartString(chicken.happy) + '</dd>';
 		html += '<dt>Fed</dt><dd>' + Math.round(chicken.fed) + '%</dd>';
 		html += '<dt>Age</dt><dd>' + Math.floor(chicken.age) + ' years</dd>';
