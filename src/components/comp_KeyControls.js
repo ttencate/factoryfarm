@@ -161,12 +161,17 @@ Crafty.c('KeyControls', {
 			if (this.selected === 2 || this.selected === 3) {
 				var tileX = Math.floor(this.interactPoint.x / tileSize);
 				var tileY = Math.floor(this.interactPoint.y / tileSize);
-				var tile = tileMatrix[tileX][tileY];
+				var tile = getTile(tileX, tileY);
 				this.highlightTile.x = tileX * tileSize;
 				this.highlightTile.y = tileY * tileSize;
 				this.highlightTile.z = zLevels['background' + this.highlightTile.y];
 				this.highlightTile.visible = true;
 				this.interactIndicator.visible = false;
+				if (tile && tile.owned) {
+					this.highlightTile.sprite("highlightYes");
+				} else {
+					this.highlightTile.sprite("highlightNo");
+				}
 				//Crafty.e("2D, WebGL, Color").attr({x: tileX * tileSize, y: tileY * tileSize, w: tileSize, h: tileSize, z: 10000}).color('purple');
 			} else {
 				this.interactIndicator.visible = true;
