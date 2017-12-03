@@ -40,5 +40,12 @@ var assetsObject = {
 				grass: [0, 0],
 			},
 		},
+		"marker.png": {
+			tile: 32,
+			tileh: 32,
+			map: {
+				marker: [0, 0],
+			},
+		},
 	},
 };

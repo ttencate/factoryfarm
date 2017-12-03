@@ -16,5 +16,6 @@ zLevels = {
     player: 1700,
     chicken: 1670,
     walls: 1680,
+    markers: 1670,
     roof: 1900,
 };
