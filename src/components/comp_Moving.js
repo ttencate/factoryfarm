@@ -20,10 +20,10 @@ Crafty.c("Moving", {
 			if (collisions = this.moveCollisionTest()) { // if we're stuck, first get free
 				// Unless we are a chicken and have an appointment with the Seller!
 				for (var i = 0; i < collisions.length; i++) {
-					if (collisions[i].obj.has("Seller")) {
+					if (this.has("Chicken") && collisions[i].obj.has("Seller") && !this.isGrabbed) {
 						console.log("Chicken sold!");
 						this.destroy();
-						player.setMoney(player.money + 35 + Math.random() * 10);
+						player.setMoney(player.money + 0.01 * Math.round(3500 + Math.random() * 10));
 					}
 				}
 

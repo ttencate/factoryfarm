@@ -2,9 +2,6 @@ var assetsObject = {
 	"audio": {
 		"bgmusic": ["bgmusic.mp3", "bgmusic.ogg"],
 	},
-	"images": [
-		"tileset.png",
-	],
 	"sprites": {
 		"farmer.png": {
 			tile: 64,
@@ -33,5 +30,12 @@ var assetsObject = {
 				grass: [0, 0],
 			},
 		},
+		"tileset.png": {
+			tile: 128,
+			tileh: 128,
+			map: {
+				seller: [6, 1],
+			}
+		}
 	},
 };
