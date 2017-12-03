@@ -8,7 +8,6 @@ var assetsObject = {
 		"music.png",
 		"tileset.png",
 		"coins.png",
-		"grass.png",
 		"backgroundGrass.png",
 		"nomusic.png",
 		"favoicon.png",
@@ -33,6 +32,13 @@ var assetsObject = {
 				chicken_right: [0, 2],
 				chicken_left: [0, 3],
 			},
-		}
+		},
+		"grass.png": {
+			tile: 1024,
+			tileh: 1024,
+			map: {
+				grass: [0, 0],
+			},
+		},
 	},
 };

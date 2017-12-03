@@ -210,6 +210,9 @@ Crafty.c('KeyControls', {
 	updateChickensText: function() {
 		var numChickens = Crafty('Chicken').length;
 		this.chickensText.innerText = numChickens + ' chicken' + (numChickens == 1 ? '' : 's');
+		var minGrimnessAt = 4;
+		var maxGrimnessAt = 14;
+		globalGrimness = Math.max(0.0, Math.min(1.0, (numChickens - minGrimnessAt) / (maxGrimnessAt - minGrimnessAt)));
 	},
 
 	select: function(selected) {

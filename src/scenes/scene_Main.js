@@ -1,10 +1,37 @@
 var overlay;
 var bgMusic = null;
 var wallTiles;
+var globalGrimness = 0;
 
 // MAIN SCENE
 Crafty.scene('Main', function() {
   document.getElementById('info').style.visibility = 'visible';
+
+	var colorGradingShader = new Crafty.WebGLShader(
+		document.getElementById('vertex-shader').innerText,
+		document.getElementById('fragment-shader').innerText,
+		[
+			{ name: "aPosition",     width: 2 },
+			{ name: "aOrientation",  width: 3 },
+			{ name: "aLayer",        width: 2 },
+			{ name: "aTextureCoord", width: 2 },
+			{ name: "aGrimness",     width: 2 }
+		],
+		function(e, entity) {
+			var co = e.co;
+			// Write texture coordinates
+			e.program.writeVector("aTextureCoord",
+				co.x, co.y,
+				co.x, co.y + co.h,
+				co.x + co.w, co.y,
+				co.x + co.w, co.y + co.h
+			);
+			// Write our grayscale attribute
+			var grimness = (globalGrimness + (entity.grimness || 0)) * (1.0 - (entity.ignoreGrimness || 0));
+			e.program.writeVector("aGrimness", grimness, 0.0);
+		}
+	);
+	Crafty.defaultShader('Sprite', colorGradingShader);
 
 	if (!bgMusic) {
 		bgMusic = Crafty.audio.play('bgMusic',-1,0.3);
@@ -49,7 +76,7 @@ Crafty.scene('Main', function() {
 		var grasses = grassLayer.objects;
 		for (var i = grasses.length - 1; i >= 0; i--) {
 			var grass = grasses[i];
-			Crafty.e('2D, WebGL, Image').image("assets/images/grass.png").attr({x: grass.x, y: grass.y - grass.height, w: grass.width, h: grass.height});
+			Crafty.e('2D, WebGL, Sprite, grass').attr({x: grass.x, y: grass.y - grass.height, w: grass.width, h: grass.height});
 		}
 
 		wallTiles = [];
@@ -108,6 +135,7 @@ Crafty.scene('Main', function() {
 							.origin(32,50)
 							._Moving()
 							._KeyControls(Crafty.keys.LEFT_ARROW, Crafty.keys.RIGHT_ARROW, Crafty.keys.UP_ARROW, Crafty.keys.DOWN_ARROW, Crafty.keys.SPACE, Crafty.keys.SHIFT);
+					// player.ignoreGrimness = 1.0;
 					Crafty.viewport.follow(player);
 					break;
 			}
