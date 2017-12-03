@@ -9,8 +9,9 @@ Crafty.c('KeyControls', {
 
 	init: function() {
 		this.baseZ = zLevels['player'];
+
 		this.moneyText = document.getElementById('moneyText');
-		this.updateMoneyText();
+		this.setMoney(100);
 
 		// acceleration
 		this.acc = 0.005;
@@ -24,7 +25,9 @@ Crafty.c('KeyControls', {
 
 		this.bind('KeyDown', function(keyEvent) {
 			var k = keyEvent.key;
-			if (k === this.up ) {
+			if (k === Crafty.keys.F7) { // cheat for debugging
+				this.setMoney(this.money + 1000);
+			} else if (k === this.up ) {
 				console.log('going up now!');
 				this.goingUp = true;
 			} else if (k === this.down) {
@@ -38,8 +41,7 @@ Crafty.c('KeyControls', {
 				this.goingRight = true;
 			} else if (k === this.action) {
 				if (this.selected === 1 && this.money > 30) { // spawn
-					this.money -= 30;
-					this.updateMoneyText();
+					this.setMoney(this.money - 30);
 					Crafty.e('2D, WebGL, Sprite, chicken_down, Moving, Collision, Chicken, SpriteAnimation, ReelFromVelocity')
 						.reel('walking_down', 500, [[0, 0], [1, 0], [2, 0], [3, 0]])
 						.reel('walking_up', 500, [[0, 1], [1, 1], [2, 1], [3, 1]])
@@ -57,14 +59,12 @@ Crafty.c('KeyControls', {
 						// tile is blocked
 					} else {
 						if (this.selected === 2 && this.money > 4) { // build fence
-							this.money -= 4;
-							this.updateMoneyText();
+							this.setMoney(this.money - 4);
 							if (!wallTiles[col]) wallTiles[col] = [];
 							wallTiles[col][row] = Crafty.e('2D, Wall')._Wall(col, row);
 							wallTiles[col][row].matchAndFixNeighbors(col, row);
 						} else if (this.selected === 3 && this.money > 55) { // place feeder
-							this.money -= 55;
-							this.updateMoneyText();
+							this.setMoney(this.money - 55);
 							wallTiles[col][row] = Crafty.e('2D, Feeder')._Feeder(col, row);
 						}
 					}
@@ -194,7 +194,8 @@ Crafty.c('KeyControls', {
 		}	
 	},
 
-	updateMoneyText: function() {
+	setMoney: function(money) {
+		this.money = money;
 		this.moneyText.innerText = '$' + this.money;
 	},
 
