@@ -12,6 +12,7 @@ Crafty.c('KeyControls', {
 
 		this.moneyText = document.getElementById('moneyText');
 		this.chickensText = document.getElementById('chickensText');
+		this.chickenPopup = document.getElementById('chickenPopup');
 		this.setMoney(100);
 
 		// acceleration
@@ -85,6 +86,7 @@ Crafty.c('KeyControls', {
 					if (grabbed) {
 						grabbed[0].obj.isGrabbed = true;
 						this.grabbed = grabbed[0].obj;
+						this.updateChickenPopup(this.grabbed);
 					}
 				}
 			} else if (k >= Crafty.keys['1'] && k < Crafty.keys['1'] + this.numSelections) {
@@ -113,6 +115,7 @@ Crafty.c('KeyControls', {
 					}
 					this.grabbed.isGrabbed = false;
 					this.grabbed = null;
+					this.updateChickenPopup(null);
 				}
 			}
 		});
@@ -230,6 +233,20 @@ Crafty.c('KeyControls', {
 		globalGrimness = Math.max(0.0, Math.min(1.0, (numChickens - minGrimnessAt) / (maxGrimnessAt - minGrimnessAt)));
 	},
 
+	updateChickenPopup: function(chicken) {
+		if (!chicken) {
+			this.chickenPopup.style.visibility = 'hidden';
+			return;
+		}
+		this.chickenPopup.style.visibility = 'visible';
+		var html = '<dl>';
+		html += '<dt>Happiness</dt><dd>' + heartString(chicken.happy) + '</dd>';
+		html += '<dt>Fed</dt><dd>' + Math.round(chicken.fed) + '%</dd>';
+		html += '<dt>Age</dt><dd>' + Math.floor(chicken.age) + ' years</dd>';
+		html += '</dl>';
+		this.chickenPopup.innerHTML = html;
+	},
+
 	select: function(selected) {
 		this.selected = selected;
 		var items = document.getElementsByClassName('hotbar-item');
@@ -244,3 +261,15 @@ Crafty.c('KeyControls', {
 		}
 	},
 });
+
+function heartString(percentage) {
+	var html = '';
+	for (var h = 20; h <= 100; h += 20) {
+		if (percentage >= h) {
+			html += '<i class="icon heart-full"></i>';
+		} else {
+			html += '<i class="icon heart-empty"></i>';
+		}
+	}
+	return html;
+}

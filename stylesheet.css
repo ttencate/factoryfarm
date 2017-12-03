@@ -113,6 +113,58 @@ a {
 	background-position: -320px -128px;
 }
 
+#chickenPopupContainer {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	top: 50vh;
+	text-align: center;
+	z-index: 50;
+}
+
+#chickenPopup {
+	display: inline-block;
+	position: relative;
+	top: -200px;
+	padding: 8px;
+	border-radius: 4px;
+	font-size: 24px;
+	background-color: rgba(0, 0, 0, 0.3);
+	text-shadow: 1px 1px 2px black;
+}
+
+dl, dt, dd {
+	margin: 0;
+	padding: 0;
+}
+
+dt {
+	float: left;
+	width: 100px;
+	text-align: left !important;
+}
+
+dd {
+	margin-left: 120px;
+	text-align: right !important;
+}
+
+i.icon {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	vertical-align: middle;
+}
+
+.heart-full {
+	background-image: url(assets/images/heart.png);
+	background-position: -24px;
+}
+
+.heart-empty {
+	background-image: url(assets/images/heart.png);
+}
+
 @-ms-viewport{
-    zoom: 1.0;
+	zoom: 1.0;
 }
