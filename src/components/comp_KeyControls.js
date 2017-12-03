@@ -11,11 +11,14 @@ Crafty.c('KeyControls', {
 		this.baseZ = zLevels['player'];
 
 		this.moneyText = document.getElementById('moneyText');
+		this.chickensText = document.getElementById('chickensText');
 		this.setMoney(100);
 
 		// acceleration
 		this.acc = 0.005;
-		this.drag = 0.02;
+		this.drag = 0.01;
+		this.minSpeed = 8 / 1000; // px per ms
+		this.maxSpeed = 256 / 1000; // px per ms
  
  		this.interactPoint = {x: 0, y: 0}
 		this.grabArea = Crafty.e("2D, WebGL, Collision").attr({x: 0, y: 0, w: params.grabAreaSize, h: params.grabAreaSize, z: zLevels["player"]});
@@ -161,6 +164,7 @@ Crafty.c('KeyControls', {
 				this.grabbed.rx = grabX;
 				this.grabbed.ry = grabY;
 			}
+			this.updateChickensText();
 		});
 	},
 
@@ -184,19 +188,28 @@ Crafty.c('KeyControls', {
 		if (this.goingRight)
 			this.vx += this.acc * dt;
 		// console.log('vx: ' + this.vx)
-		this.vx -= this.drag * this.vx * dt;
-		this.vy -= this.drag * this.vy * dt;
-		if (utility.sign(this.vx) * this.vx < 0.1 && !this.goingLeft && !this.goingRight) {
-			this.vx = 0;
+		this.vx *= Math.pow(1 - this.drag, dt);
+		this.vy *= Math.pow(1 - this.drag, dt);
+		var speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+		if (speed > this.maxSpeed) {
+			var speedFactor = this.maxSpeed / speed;
+			this.vx *= speedFactor;
+			this.vy *= speedFactor;
 		}
-		if (utility.sign(this.vy) * this.vy < 0.1 && !this.goingUp && !this.goingDown) {
+		if (speed < this.minSpeed && !this.goingLeft && !this.goingRight && !this.goingUp && !this.goingDown) {
+			this.vx = 0;
 			this.vy = 0;
-		}	
+		}
 	},
 
 	setMoney: function(money) {
 		this.money = money;
 		this.moneyText.innerText = '$' + this.money;
+	},
+
+	updateChickensText: function() {
+		var numChickens = Crafty('Chicken').length;
+		this.chickensText.innerText = numChickens + ' chicken' + (numChickens == 1 ? '' : 's');
 	},
 
 	select: function(selected) {
