@@ -62,7 +62,7 @@ Crafty.c("Moving", {
 					return collisions;
 				}
 				var gateObj = obj._parent;
-				if (gateObj && gateObj.matchNeighbors) {
+				if (gateObj && gateObj.matchNeighbors && !gateObj.gateOpen) {
 					gateObj.gateOpen = true;
 					gateObj.matchNeighbors();
 					gateObj.delay(function() {
