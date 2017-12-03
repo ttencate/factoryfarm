@@ -20,3 +20,9 @@ zLevels = {
     walls: 1680,
     roof: 1900,
 };
+
+costs = {
+  chicken: 30,
+  fence: 4,
+  feeder: 55,
+};
