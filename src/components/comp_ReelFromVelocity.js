@@ -8,32 +8,35 @@ Crafty.c('ReelFromVelocity', {
 	},
 
 	updateReel: function() {
-		if (typeof this.vx !== 'number' && typeof this.vy !== 'number') {
-			return;
+		var directionFromVelocity = this.directionFromVelocity();
+		var direction = this.direction || directionFromVelocity;
+		if (direction && this.reelDirection !== direction) {
+			this.animate('walking_' + direction, -1);
+			this.reelDirection = direction;
+		} else if (!directionFromVelocity) {
+			this.pauseAnimation();
+			this.reelPosition(0);
+			this.reelDirection = null;
 		}
-		var direction = null;
+	},
+
+	directionFromVelocity: function() {
 		if (this.vx || this.vy) {
 			if (Math.abs(this.vx) > Math.abs(this.vy)) {
 				if (this.vx > 0) {
-					direction = 'right';
+					return 'right';
 				} else {
-					direction = 'left';
+					return 'left';
 				}
 			} else {
 				if (this.vy > 0) {
-					direction = 'down';
+					return 'down';
 				} else {
-					direction = 'up';
+					return 'up';
 				}
 			}
-			if (this.direction != direction) {
-				this.animate('walking_' + direction, -1);
-				this.direction = direction;
-			}
 		} else {
-			this.pauseAnimation();
-			this.reelPosition(0);
+			return null;
 		}
-		this.direction = direction;
 	},
 });
