@@ -59,9 +59,8 @@ Crafty.c('Chicken', {
 			var dt = timestep.dt;
 			this.needWatch -= dt;
 			if (this.needWatch < 0) {
-				console.log(dt);
 				this.needWatch += params.needCheckTime;
-				console.log('fed: ' + this.fed + ', happy: ' + this.happy);
+				// console.log('fed: ' + this.fed + ', happy: ' + this.happy);
 				var col = Math.floor(this.originX() / tileSize);
 				var row = Math.floor(this.originY() / tileSize);
 				// update needs and check most pressing one

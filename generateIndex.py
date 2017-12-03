@@ -41,27 +41,42 @@ footer = """    <script>
       <div id="dayText">Day 1</div>
       <div id="timeText">06:00</div>
     </div>
+    <script type="text/x-vertex-shader" id="vertex-shader">
+      %(vertexShader)s
+    </script>
+    <script type="text/x-fragment-shader" id="fragment-shader">
+      %(fragmentShader)s
+    </script>
   </body>
 </html>"""
+
+def readFile(filename):
+    with open(filename, 'rt') as f:
+        return f.read()
 
 try:
   jsRegex = re.compile('.*\.js');
   indexFile.write(header)
   for root, dirs, files in os.walk('./src/'):
     dirs.sort()
+    files.sort()
     for name in files:
       indexFile.write('    <script src="');
       indexFile.write(os.path.join(root, name));
       indexFile.write('"></script>\n');
   for root, dirs, files in os.walk('./assets/'):
     dirs.sort()
+    files.sort()
     for name in files:
       if jsRegex.match(name):
         indexFile.write('    <script src="');
         indexFile.write(os.path.join(root, name));
         indexFile.write('"></script>\n');
 
-  indexFile.write(footer)
+  indexFile.write(footer % {
+    'vertexShader': readFile('assets/shaders/vertex.glsl'),
+    'fragmentShader': readFile('assets/shaders/fragment.glsl'),
+  })
 
 finally:
   indexFile.close()
