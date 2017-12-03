@@ -8,10 +8,10 @@ Crafty.c('Chicken', {
 		this.fed = 50;
 		this.age = 0;
 		this.sick = 0;
-		this.dest = {x: 500, y: 400}; // must be an object with originX/originY functions OR x and y properties.
 		this.acc = 0.001;
 		this.drag = 0.007;
 		this.isGrabbed = false;
+		this.currentNeed = "none";
 		this.needWatch = Math.random() * params.needCheckTime;
 		this.requires('OriginCoordinates');
 		this.origin("center");
@@ -20,6 +20,8 @@ Crafty.c('Chicken', {
 		if (this.updateVelocity) {
 			console.log("Warning: _Chicken should be called after the Moving component has been added!");
 		}
+
+		this.dest = {x: this.originX(), y: this.originY()}; // must be an object with originX/originY functions OR x and y properties.
 
 		this.updateVelocity = function(dt) {
 			var dx = (this.dest.originX ? this.dest.originX() : this.dest.x) - this.originX();
@@ -69,8 +71,13 @@ Crafty.c('Chicken', {
 				// pick need, following rules in order:
 				// 1. satisfy really urgent needs
 				// 2. satisfy current need up to a threshold
-				if (this.fed < 10) {
-					this.currentNeed = "fed";
+				var minNeed = Math.min(this.fed, this.happy);
+				if (this.minNeed < 30) {
+					if (this.minNeed === this.fed) {
+						this.currentNeed = "fed";
+					} else if (this.minNeed === this.happy) {
+						this.currentNeed = "happy";
+					}
 				} else if (this.currentNeed === "none" || this[this.currentNeed] > 80) { // reselect need if this one is satisfied
 					// if all needs above 60, don't take action
 					var need = Math.min(Math.min(60, this.happy), this.fed);
@@ -78,7 +85,6 @@ Crafty.c('Chicken', {
 						this.currentNeed = "fed";
 					} else if (need === this.happy) { // have fun
 						this.currentNeed = "happy";
-						this.dest = {x: 200, y: 600};
 					} else {
 						if (this.currentNeed === "none") { // chicken was already loitering
 							if (Math.random() > 0.6) { // sometimes rest
@@ -118,9 +124,15 @@ Crafty.c('Chicken', {
 						for (var r = 1; r < params.grassSearchRadius; r++) { // radius in tiles
 							newCol = Math.round(col + r * Math.cos(phi));
 							newRow = Math.round(row + r * Math.sin(phi));
-							if (tileMatrix[newCol] && tileMatrix[newCol][newRow] && !tileMatrix[newCol][newRow].paved) {
-								this.dest = {x: newCol * tileSize, y: newRow * tileSize};
-								foundGrass = true;
+							if (tileMatrix[newCol] && tileMatrix[newCol][newRow]) {
+								if (tileMatrix[newCol][newRow].block) {
+									break; // can't see through walls.
+								} else if (!tileMatrix[newCol][newRow].paved) {
+									this.dest = {x: newCol * tileSize, y: newRow * tileSize};
+									foundGrass = true;
+									break;
+								}
+							} else { // out of bounds
 								break;
 							}
 						}

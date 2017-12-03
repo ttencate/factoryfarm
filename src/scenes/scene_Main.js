@@ -101,6 +101,8 @@ Crafty.scene('Main', function() {
 			}
 		})
 
+		var seller = Crafty.e('2D, WebGL, Sprite, Impassable, Seller').attr({x: 600, y: 600});
+
 		// spawn living entities
 		var spawns = spawnLayer.objects;
 		for (var i = spawns.length - 1; i >= 0; i--) {
