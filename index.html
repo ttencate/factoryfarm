@@ -15,6 +15,7 @@
     <script src="./src/map.js"></script>
     <script src="./src/params.js"></script>
     <script src="./src/utility.js"></script>
+    <script src="./src/components/comp_Calendar.js"></script>
     <script src="./src/components/comp_Chicken.js"></script>
     <script src="./src/components/comp_Feeder.js"></script>
     <script src="./src/components/comp_KeyControls.js"></script>
@@ -29,6 +30,7 @@
     <script src="./src/scenes/scene_Main.js"></script>
     <script src="./src/scenes/scene_StartScreen.js"></script>
     <script src="./assets/assetsObject.js"></script>
+    <script src="./assets/names.js"></script>
     <script src="./assets/images/imageMap.js"></script>
     <script src="./assets/sound/soundMap.js"></script>
     <script>
@@ -50,11 +52,11 @@
       <div id="moneyText"></div>
       <div id="chickensText"></div>
       <div id="hotbar" onclick="Crafty('KeyControls').select(parseInt(event.target.id.substr(12, 1)))">
-        <div class="hotbar-item" id="hotbar-item-1" title="Chicken">1</div>
-        <div class="hotbar-item" id="hotbar-item-2" title="Fence">2</div>
-        <div class="hotbar-item" id="hotbar-item-3" title="Feeder">3</div>
+        <div class="hotbar-item" id="hotbar-item-1" title="Chicken"><span class="key">1</span><span class="cost">chicken</span></div>
+        <div class="hotbar-item" id="hotbar-item-2" title="Fence"><span class="key">2</span><span class="cost">fence</span></div>
+        <div class="hotbar-item" id="hotbar-item-3" title="Feeder"><span class="key">3</span><span class="cost">feeder</span></div>
       </div>
-      <div id="dayText">Day 1</div>
+      <div id="dayText"><span id="monthText"></span>, year <span id="yearText"></span></div>
       <div id="timeText">06:00</div>
     </div>
     <script type="text/x-vertex-shader" id="vertex-shader">
@@ -77,10 +79,10 @@ const mat4 happyColorMatrix = mat4(
 	0.0, 0.0, 0.0, 0.0
 );
 const mat4 grimColorMatrix = mat4(
-	0.7, 0.6, 0.4, 0.0,
-	0.6, 0.5, 0.4, 0.0,
+	0.7, 0.5, 0.4, 0.0,
+	0.5, 0.7, 0.4, 0.0,
 	0.5, 0.5, 0.9, 0.0,
-	-0.3, -0.2, -0.2, 0.0
+	-0.2, -0.2, -0.2, 0.0
 );
 
 void main() {

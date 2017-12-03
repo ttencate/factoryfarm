@@ -4,6 +4,7 @@ Crafty.c('Chicken', {
 
 	init: function() {
 		this.baseZ = zLevels['chicken'];
+		this.name = femaleNames[Math.floor(Math.random() * femaleNames.length)];
 		this.happy = 50;
 		this.fed = 50;
 		this.age = 0;

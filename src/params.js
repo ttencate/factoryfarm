@@ -12,12 +12,12 @@ params = {
     pavedImpact: 70,
     filthImpact: 0.4,
     crowdImpact: 10,
-
-
-    
+    // farmer parameters
     grabReach: 20,
     grabAreaSize: 35,
     interactDist: 80,
+
+    monthDurationMilliseconds: 60000 / 12,
 };
 
 zLevels = {
@@ -28,4 +28,10 @@ zLevels = {
     markers: 1670,
     walls: 1680,
     roof: 1900,
+};
+
+costs = {
+  chicken: 30,
+  fence: 4,
+  feeder: 55,
 };

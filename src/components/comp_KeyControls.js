@@ -10,6 +10,7 @@ Crafty.c('KeyControls', {
 	init: function() {
 		this.baseZ = zLevels['player'];
 
+		this.initHotbar();
 		this.moneyText = document.getElementById('moneyText');
 		this.chickensText = document.getElementById('chickensText');
 		this.chickenPopup = document.getElementById('chickenPopup');
@@ -45,8 +46,8 @@ Crafty.c('KeyControls', {
 			} else if (k === this.right) {
 				this.goingRight = true;
 			} else if (k === this.action) {
-				if (this.selected === 1 && this.money > 30) { // spawn
-					this.setMoney(this.money - 30);
+				if (this.selected === 1 && this.money >= costs.chicken) { // spawn
+					this.setMoney(this.money - costs.chicken);
 					Crafty.e('2D, WebGL, Sprite, chicken_down, Moving, Collision, Chicken, SpriteAnimation, ReelFromVelocity')
 						.reel('walking_down', 500, [[0, 0], [1, 0], [2, 0], [3, 0]])
 						.reel('walking_up', 500, [[0, 1], [1, 1], [2, 1], [3, 1]])
@@ -62,11 +63,11 @@ Crafty.c('KeyControls', {
 					var row = Math.floor(this.interactPoint.y / tileSize);
 					if (tileMatrix[col] && tileMatrix[col][row]) { // consider only tiles in bounds of tileMatrix
 						if (!tileMatrix[col][row].block) { // tile is not already blocked
-							if (this.selected === 2 && this.money > 4) { // build fence
+							if (this.selected === 2 && this.money >= costs.fence) { // build fence
 								this.setMoney(this.money - 4);
 								tileMatrix[col][row].block = Crafty.e('2D, Wall')._Wall(col, row);
 								tileMatrix[col][row].block.matchAndFixNeighbors(col, row);
-							} else if (this.selected === 3 && this.money > 55) { // place feeder
+							} else if (this.selected === 3 && this.money >= costs.feeder) { // place feeder
 								this.setMoney(this.money - 55);
 								tileMatrix[col][row].block = Crafty.e('2D, Feeder')._Feeder(col, row);
 							}
@@ -225,7 +226,7 @@ Crafty.c('KeyControls', {
 
 	setMoney: function(money) {
 		this.money = money;
-		this.moneyText.innerText = '$' + this.money;
+		this.moneyText.innerText = '$' + Math.round(this.money * 100) / 100;
 	},
 
 	updateChickensText: function() {
@@ -242,12 +243,21 @@ Crafty.c('KeyControls', {
 			return;
 		}
 		this.chickenPopup.style.visibility = 'visible';
-		var html = '<dl>';
+		var html = '';
+		html += '<b>' + chicken.name + '</b>';
+		html += '<dl>';
 		html += '<dt>Happiness</dt><dd>' + heartString(chicken.happy) + '</dd>';
 		html += '<dt>Fed</dt><dd>' + Math.round(chicken.fed) + '%</dd>';
 		html += '<dt>Age</dt><dd>' + Math.floor(chicken.age) + ' years</dd>';
 		html += '</dl>';
 		this.chickenPopup.innerHTML = html;
+	},
+
+	initHotbar: function() {
+		var items = document.querySelectorAll('.hotbar-item .cost');
+		for (var i = 0; i < items.length; i++) {
+			items[i].innerText = '$' + costs[items[i].innerText];
+		}
 	},
 
 	select: function(selected) {

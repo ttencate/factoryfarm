@@ -38,11 +38,11 @@ footer = """    <script>
       <div id="moneyText"></div>
       <div id="chickensText"></div>
       <div id="hotbar" onclick="Crafty('KeyControls').select(parseInt(event.target.id.substr(12, 1)))">
-        <div class="hotbar-item" id="hotbar-item-1" title="Chicken">1</div>
-        <div class="hotbar-item" id="hotbar-item-2" title="Fence">2</div>
-        <div class="hotbar-item" id="hotbar-item-3" title="Feeder">3</div>
+        <div class="hotbar-item" id="hotbar-item-1" title="Chicken"><span class="key">1</span><span class="cost">chicken</span></div>
+        <div class="hotbar-item" id="hotbar-item-2" title="Fence"><span class="key">2</span><span class="cost">fence</span></div>
+        <div class="hotbar-item" id="hotbar-item-3" title="Feeder"><span class="key">3</span><span class="cost">feeder</span></div>
       </div>
-      <div id="dayText">Day 1</div>
+      <div id="dayText"><span id="monthText"></span>, year <span id="yearText"></span></div>
       <div id="timeText">06:00</div>
     </div>
     <script type="text/x-vertex-shader" id="vertex-shader">

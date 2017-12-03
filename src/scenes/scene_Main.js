@@ -188,6 +188,8 @@ Crafty.scene('Main', function() {
 
 		Crafty.viewport.clampToEntities = false;
 
+		Crafty.e('Calendar');
+
 		updateLandMarkers();
 	}
 
