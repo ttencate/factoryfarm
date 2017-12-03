@@ -51,10 +51,28 @@ Crafty.c("Moving", {
 	},
 
 	moveCollisionTest: function() {
-		var collisions = null;
-		if (collisions = this.hit("Impassable")) {
-			return collisions;
+		var collisions = this.hit('Impassable');
+		if (!collisions) {
+			return false;
 		}
-		return false;
+		if (this.has('CanMoveThroughGates')) {
+			for (var i = 0; i < collisions.length; i++) {
+				var obj = collisions[i].obj;
+				if (!obj.has('Gate')) {
+					return collisions;
+				}
+				var gateObj = obj._parent;
+				if (gateObj && gateObj.matchNeighbors) {
+					gateObj.gateOpen = true;
+					gateObj.matchNeighbors();
+					gateObj.delay(function() {
+						this.gateOpen = false;
+						this.matchNeighbors();
+					}.bind(gateObj), 500);
+				}
+			}
+			return false;
+		}
+		return collisions;
 	}
 });
