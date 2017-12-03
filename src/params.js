@@ -19,6 +19,7 @@ params = {
     indicatorSize: 32,
 
     monthDurationMilliseconds: 60000 / 12,
+    rentPerTile: 1,
 };
 
 zLevels = {

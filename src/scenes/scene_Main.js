@@ -2,6 +2,7 @@ var overlay;
 var bgMusic = null;
 var globalGrimness = 0;
 var tileMatrix;
+var ownedTiles = 0;
 
 function getTile(col, row) {
 	if (col < 0 || col >= tileMatrix.length) {
@@ -136,6 +137,8 @@ Crafty.scene('Main', function() {
 					tileMatrix[col][row].block = Crafty.e('2D, Wall')._Wall(col, row);//.attr({
 						// tileIdx: tileIdx
 					//});
+				} else if (tileType === 'Gate') {
+					tileMatrix[col][row].block = Crafty.e('2D, Wall, Gate')._Wall(col, row);//.attr({
 				}
 				if (ownedLayer.data[linearIndex]) {
 					tileMatrix[col][row].owned = true;
@@ -190,17 +193,21 @@ Crafty.scene('Main', function() {
 
 		Crafty.e('Calendar');
 
-		updateLandMarkers();
+		updateLand();
 	}
 
 	buildLevel();
 });
 
-function updateLandMarkers() {
+function updateLand() {
+	ownedTiles = 0;
 	for (var col = 0; col < tileMatrix.length; ++col) {
 		for (var row = 0; row < tileMatrix[col].length; ++row) {
 			var tile = getTile(col, row);
 			var owned = !!tile.owned;
+			if (owned) {
+				++ownedTiles;
+			}
 			var needMarker =
 					owned !== !!getTile(col-1, row).owned ||
 					owned !== !!getTile(col, row-1).owned ||
@@ -218,4 +225,6 @@ function updateLandMarkers() {
 			}
 		}
 	}
+
+	document.getElementById('rentText').innerText = utility.formatMoney(ownedTiles * params.rentPerTile);
 }
