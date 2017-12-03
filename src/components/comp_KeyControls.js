@@ -32,6 +32,9 @@ Crafty.c('KeyControls', {
 		this.highlightTile = Crafty.e("2D, WebGL, highlightYes")
 				.attr({x: this.interactPoint.x, y: this.interactPoint.y, w: tileSize, h: tileSize})
 				.sprite("highlightYes");
+		this.interactIndicator = Crafty.e("2D, WebGL, highlightYes")
+				.attr({x: this.interactPoint.x, y: this.interactPoint.y, w: params.indicatorSize, h: params.indicatorSize})
+				.sprite("highlightYes");
 
 		this.bind('KeyDown', function(keyEvent) {
 			var k = keyEvent.key;
@@ -47,6 +50,9 @@ Crafty.c('KeyControls', {
 				this.goingRight = true;
 			} else if (k === this.action) {
 				if (this.selected === 1 && this.money >= costs.chicken) { // spawn
+					var chickSize = 32;
+					// var dir = this.reel();
+					// xMod = dir === "walking_down" || dir === "walking_up" ? chickSize / 2 : 0;
 					this.setMoney(this.money - costs.chicken);
 					Crafty.e('2D, WebGL, Sprite, chicken_down, Moving, Collision, Chicken, SpriteAnimation, ReelFromVelocity')
 						.reel('walking_down', 500, [[0, 0], [1, 0], [2, 0], [3, 0]])
@@ -54,7 +60,7 @@ Crafty.c('KeyControls', {
 						.reel('walking_right', 500, [[0, 2], [1, 2], [2, 2], [3, 2]])
 						.reel('walking_left', 500, [[0, 3], [1, 3], [2, 3], [3, 3]])
 						.animate('walking_down', 0)
-						.attr({x: this._x, y: this._y, w: 32, h: 32, z: zLevels['chicken']})
+						.attr({x: this.interactPoint.x - chickSize/2, y: this.interactPoint.y - chickSize/2, w: chickSize, h: chickSize, z: zLevels['chicken']})
 						._Chicken()
 						._Moving();
 				} else if (this.selected === 2 || this.selected === 3) {
@@ -127,12 +133,14 @@ Crafty.c('KeyControls', {
 			var dir = this.reel();
 			if (dir == "walking_left") {
 				this.interactPoint.x = this.originX() - params.interactDist;
-				this.interactPoint.y = this.originY()-20;
+				this.interactPoint.y = this.originY()-10;
 				this.grabArea.x = -params.grabReach + this.originX() - 0.5 * params.grabAreaSize;
 				this.grabArea.y = this.originY() - 0.5 * params.grabAreaSize;
 			} else if (dir == "walking_right") {
 				this.interactPoint.x = this.originX() + params.interactDist;
-				this.interactPoint.y = this.originY()-20;
+				this.interactPoint.y = this.originY()-10;
+				this.interactIndicator.x = this.interactPoint.x; 
+				this.interactIndicator.y = this.interactPoint.y;
 				this.grabArea.x = params.grabReach + this.originX() - 0.5 * params.grabAreaSize;
 				this.grabArea.y = this.originY() - 0.5 * params.grabAreaSize;
 			} else if (dir == "walking_up") {
@@ -146,6 +154,9 @@ Crafty.c('KeyControls', {
 				this.grabArea.x = this.originX() - 0.5 * params.grabAreaSize;
 				this.grabArea.y = params.grabReach + this.originY() - 0.5 * params.grabAreaSize;
 			}
+			this.interactIndicator.x = this.interactPoint.x - params.indicatorSize / 2; 
+			this.interactIndicator.y = this.interactPoint.y - params.indicatorSize / 2;
+
 			// outline tile with which the player would now interact if she pressed the action button
 			if (this.selected === 2 || this.selected === 3) {
 				var tileX = Math.floor(this.interactPoint.x / tileSize);
@@ -154,7 +165,12 @@ Crafty.c('KeyControls', {
 				this.highlightTile.x = tileX * tileSize;
 				this.highlightTile.y = tileY * tileSize;
 				this.highlightTile.z = zLevels['background' + this.highlightTile.y];
+				this.highlightTile.visible = true;
+				this.interactIndicator.visible = false;
 				//Crafty.e("2D, WebGL, Color").attr({x: tileX * tileSize, y: tileY * tileSize, w: tileSize, h: tileSize, z: 10000}).color('purple');
+			} else {
+				this.interactIndicator.visible = true;
+				this.highlightTile.visible = false;
 			}
 
 			if (this.grabbed) {

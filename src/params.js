@@ -16,6 +16,7 @@ params = {
     grabReach: 20,
     grabAreaSize: 35,
     interactDist: 80,
+    indicatorSize: 32,
 
     monthDurationMilliseconds: 60000 / 12,
 };
