@@ -52,12 +52,20 @@ a {
 	text-align: center;
 }
 
-#moneyText {
+#moneyDiv {
 	text-align: left;
 }
 
-#chickensText {
+#rentDiv {
 	text-align: left;
+}
+
+#chickensDiv {
+	text-align: right;
+}
+
+#dayDiv {
+	text-align: right;
 }
 
 #hotbar {
@@ -66,14 +74,6 @@ a {
 	text-align: center;
 	line-height: 0;
 	white-space: nowrap;
-}
-
-#dayText {
-	text-align: right;
-}
-
-#timeText {
-	text-align: right;
 }
 
 .hotbar-item {

@@ -1,3 +1,5 @@
+'use strict';
+
 Crafty.c('Wall',{
 	init: function(){
 		this.requires('2D, WebGL, OriginCoordinates, Collision');
@@ -23,7 +25,7 @@ Crafty.c('Wall',{
 												 [[[{c:1,r:1},{c:1,r:2}],			//  TR(B?)
 													 [{c:4,r:1},{c:4,r:2}]], 		//  T (B?)
 													[[{c:1,r:0},{c:1,r:3}],			//   R(B?)
-													 [{c:4,r:0},{c:0,r:1}]]]];  //    (B?)
+													 [{c:4,r:0},{c:4,r:3}]]]];  //    (B?)
 	},
 	
 	_Wall: function(x,y){
@@ -54,9 +56,21 @@ Crafty.c('Wall',{
 		topNeighbor = col && col[topIdx] && col[topIdx].block && col[topIdx].block.has("Wall") ? 0 : 1;
 		bottomNeighbor = col && col[bottomIdx] && col[bottomIdx].block && col[bottomIdx].block.has("Wall") ? 0 : 1;
 		rightNeighbor = rCol && rCol[yIdx] && rCol[yIdx].block && rCol[yIdx].block.has("Wall") ? 0 : 1;
-		var spriteCoords = this.spriteMatrix[leftNeighbor][topNeighbor][rightNeighbor][bottomNeighbor];
-		// set sprites to match neighbors
-		this.sprite(spriteCoords.c, spriteCoords.r);
+
+		var spriteCoords;
+		if (this.has("Gate")) {
+			if ((!topNeighbor || !bottomNeighbor) && leftNeighbor && rightNeighbor) {
+				spriteCoords = {c: 4, r: 1};
+				this.sprite(5, 4);
+			} else {
+				spriteCoords = {c: 2, r: 3};
+				this.sprite(4, 4);
+			}
+		} else {
+			var spriteCoords = this.spriteMatrix[leftNeighbor][topNeighbor][rightNeighbor][bottomNeighbor];
+			// set sprites to match neighbors
+			this.sprite(spriteCoords.c, spriteCoords.r);
+		}
 
 		// set hitboxes to match neighbors
 		this.hitAreaH.destroy();
@@ -80,7 +94,7 @@ Crafty.c('Wall',{
 			horz = false;
 		}
 		if (horz) {
-			this.hitAreaH = Crafty.e("2D, WebGL, Collision, Impassable").attr({x: this._x, y: this._y, w: this._w, h: this._h});
+			this.hitAreaH = Crafty.e("2D, Collision, Impassable").attr({x: this._x, y: this._y, w: this._w, h: this._h});
 			this.hitAreaH.collision([lBound,tBound, rBound,tBound, rBound,bBound, lBound, bBound]);
 			this.attach(this.hitAreaH);
 		}
@@ -97,11 +111,14 @@ Crafty.c('Wall',{
 		} else if (spriteCoords.r == 2) { // top half collides
 			tBound = 0;
 			bBound = 0.5 * tileSize;
+		} else if (!horz) {
+			tBound = 0.5 * tileSize - 5;
+			bBound = 0.5 * tileSize + 5;
 		} else {
 			vert = false;
 		}
 		if (vert) {
-			this.hitAreaV = Crafty.e("2D, WebGL, Collision, Impassable").attr({x: this._x, y: this._y, w: this._w, h: this._h});
+			this.hitAreaV = Crafty.e("2D, Collision, Impassable").attr({x: this._x, y: this._y, w: this._w, h: this._h});
 			this.hitAreaV.collision([lBound,tBound, rBound,tBound, rBound,bBound, lBound, bBound]);
 			this.attach(this.hitAreaV);
 		}

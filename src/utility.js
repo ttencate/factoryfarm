@@ -1,4 +1,4 @@
-utility = {
+var utility = {
 	sign: function(num) {
 		if (num === 0) {
 			return 0;
@@ -27,6 +27,9 @@ utility = {
 		return phi % (2 * Math.PI);
 	},
 
+	formatMoney: function(money) {
+		return '$' + Math.round(money * 100) / 100;
+	},
 };
 
 Math.deg2rad = function(degrees) {

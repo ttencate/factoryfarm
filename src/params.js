@@ -18,6 +18,7 @@ params = {
     interactDist: 80,
 
     monthDurationMilliseconds: 60000 / 12,
+    rentPerTile: 1,
 };
 
 zLevels = {

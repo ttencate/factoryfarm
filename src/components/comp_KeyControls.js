@@ -226,12 +226,12 @@ Crafty.c('KeyControls', {
 
 	setMoney: function(money) {
 		this.money = money;
-		this.moneyText.innerText = '$' + Math.round(this.money * 100) / 100;
+		this.moneyText.innerText = utility.formatMoney(this.money);
 	},
 
 	updateChickensText: function() {
 		var numChickens = Crafty('Chicken').length;
-		this.chickensText.innerText = numChickens + ' chicken' + (numChickens == 1 ? '' : 's');
+		this.chickensText.innerText = numChickens;
 		var minGrimnessAt = 4;
 		var maxGrimnessAt = 14;
 		globalGrimness = Math.max(0.0, Math.min(1.0, (numChickens - minGrimnessAt) / (maxGrimnessAt - minGrimnessAt)));
@@ -256,7 +256,7 @@ Crafty.c('KeyControls', {
 	initHotbar: function() {
 		var items = document.querySelectorAll('.hotbar-item .cost');
 		for (var i = 0; i < items.length; i++) {
-			items[i].innerText = '$' + costs[items[i].innerText];
+			items[i].innerText = utility.formatMoney(costs[items[i].innerText]);
 		}
 	},
 
