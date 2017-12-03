@@ -28,9 +28,9 @@ Crafty.c('KeyControls', {
 		this.numSelections = 3;
 		this.select(1);
 
-		// this.highLightTile = Crafty.e("2D, WebGL, highlight")
-		// 		.attr({x: this.interactPoint.x, y: this.interactPoint.y, w: tileSize, h: tileSize});
-
+		this.highlightTile = Crafty.e("2D, WebGL, highlightYes")
+				.attr({x: this.interactPoint.x, y: this.interactPoint.y, w: tileSize, h: tileSize})
+				.sprite("highlightYes");
 
 		this.bind('KeyDown', function(keyEvent) {
 			var k = keyEvent.key;
@@ -150,7 +150,10 @@ Crafty.c('KeyControls', {
 				var tileX = Math.floor(this.interactPoint.x / tileSize);
 				var tileY = Math.floor(this.interactPoint.y / tileSize);
 				var tile = tileMatrix[tileX][tileY];
-				Crafty.e("2D, WebGL, Color").attr({x: tileX * tileSize, y: tileY * tileSize, w: tileSize, h: tileSize, z: 10000}).color('purple');
+				this.highlightTile.x = tileX * tileSize;
+				this.highlightTile.y = tileY * tileSize;
+				this.highlightTile.z = zLevels['background' + this.highlightTile.y];
+				//Crafty.e("2D, WebGL, Color").attr({x: tileX * tileSize, y: tileY * tileSize, w: tileSize, h: tileSize, z: 10000}).color('purple');
 			}
 
 			if (this.grabbed) {

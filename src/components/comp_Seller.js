@@ -17,7 +17,7 @@ Crafty.c('Seller',{
 		this.baseZ = zLevels['seller'];
 		this.z = this.baseZ + this.y;
 		this.requires('seller, SpriteAnimation')
-			.reel('sell', 500, [[3,0],[3,1],[3,2],[3,3]])
+			.reel('sell', 500, [[0,0],[0,1],[0,2],[0,3],[0,4]])
 			.animate('sell', 0)
 			.pauseAnimation();
 		this.bind("AnimationEnd", function() {

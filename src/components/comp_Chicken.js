@@ -20,7 +20,6 @@ Crafty.c('Chicken', {
 		if (this.updateVelocity) {
 			console.log("Warning: _Chicken should be called after the Moving component has been added!");
 		}
-
 		this.dest = {x: this.originX(), y: this.originY()}; // must be an object with originX/originY functions OR x and y properties.
 
 		this.updateVelocity = function(dt) {
@@ -65,9 +64,40 @@ Crafty.c('Chicken', {
 				// console.log('fed: ' + this.fed + ', happy: ' + this.happy);
 				var col = Math.floor(this.originX() / tileSize);
 				var row = Math.floor(this.originY() / tileSize);
-				// update needs and check most pressing one
-				this.fed -= 3 + 2 * Math.random();
-				this.happy -= 4 + 1 * Math.random();
+				if (this.currentTile !== tileMatrix[col][row]) {
+					if (this.currentTile) {
+						var myIdx = this.currentTile.units.indexOf(this);
+						if (myIdx !== -1) {
+							this.currentTile.units.splice(myIdx, 1);
+						} else {
+							console.log("DEBUG: unit was not in expected units list!");
+						}
+					}
+					this.currentTile = tileMatrix[col][row];
+					this.currentTile.units.push(this);
+				}
+
+				// update needs
+				this.fed -= params.hunger * dt;
+				// calculate steady-state happiness in this location
+				var ssHappy = 100; // base is perfectly happy.
+
+				if (this.currentTile.paved) {
+					ssHappy -= 70; // don't like paved.
+				}
+				ssHappy -= params.filthImpact * this.currentTile.filth; // filth makes chicken unhappy
+				// account for crowdedness, get chicken on same tile
+				var chickenSameTile = this.currentTile.units;
+				ssHappy -= (chickenSameTile.length - 1) * params.crowdImpact;
+
+				var dHappy = ssHappy - this.happy;
+				this.happy += (3 * utility.sign(dHappy) + 0.1 * dHappy) * dt;
+
+				// maybe make a doo-doo
+				if (Math.random() < params.pShit) {
+					tileMatrix[col][row].dirty += 15;
+				}
+
 				// pick need, following rules in order:
 				// 1. satisfy really urgent needs
 				// 2. satisfy current need up to a threshold

@@ -5,10 +5,19 @@ params = {
     needD2: 10000,
     needCheckTime: 4000,
     chickWalkRange: 400,
+    grassSearchRadius: 15,
+    // fed factors
+    hunger: 0.1,
+    // happy factors
+    pavedImpact: 70,
+    filthImpact: 0.4,
+    crowdImpact: 10,
+
+
+    
     grabReach: 20,
     grabAreaSize: 35,
     interactDist: 80,
-    grassSearchRadius: 15
 };
 
 zLevels = {

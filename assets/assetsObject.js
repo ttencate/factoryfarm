@@ -30,20 +30,21 @@ var assetsObject = {
 				grass: [0, 0],
 			},
 		},
-		"tileset.png": {
+		"seller.png": {
 			tile: 128,
 			tileh: 128,
 			map: {
-				seller: [6, 1],
+				seller: [0, 0],
 			},
 		},
-		// "tileset.png": {
-		// 	tile: 64,
-		// 	tileh: 64,
-		// 	map: {
-		// 		highlight: [2,2],
-		// 	}
-		// },
+		"tileset.png": {
+			tile: 64,
+			tileh: 64,
+			map: {
+				highlightYes: [0,2],
+				highlightNo: [0,3],
+			},
+		},
 		"marker.png": {
 			tile: 32,
 			tileh: 32,

@@ -101,7 +101,30 @@ Crafty.scene('Main', function() {
 			tileMatrix[col] = [];
 			for (var row = 0; row < level.height; ++row) {
 				var linearIndex = level.width * row + col;
-				tileMatrix[col][row] = {block: null, owned: false};
+				tileMatrix[col][row] = {
+						block: null,
+						owned: false,
+						filth: 0,
+						filthSprite: null,
+						units: [],
+						setFilth: function(filth){
+							if (!this.filthSprite) this.filthSprite = Crafty.e('2D, WebGL, filth')
+									.attr({x: col * tileSize, y: row * tileSize, w: tileSize, h: tileSize, z: zLevels['background'] + this.y});
+							this.filth = filth;
+							if (this.filth < 0) {
+								this.filth = 0;
+								//this.filthSprite.sprite();
+							} else if (this.filth < 20) {
+								//this.filthSprite.sprite();
+							} else if (this.filth < 50) {
+								//this.filthSprite.sprite();
+							} else if (this.filth < 100) {
+								//this.filthSprite.sprite();
+							} else { // disgusting!
+
+							}
+						}
+					};
 				tileIdx = solidLayer.data[linearIndex];
 				tileType = tileSet.tiles[tileIdx - tileSet.firstgid] && tileSet.tiles[tileIdx - tileSet.firstgid].type;
 				// add impassable items
