@@ -21,10 +21,15 @@ Crafty.c('KeyControls', {
 		this.maxSpeed = 256 / 1000; // px per ms
  
  		this.interactPoint = {x: 0, y: 0}
-		this.grabArea = Crafty.e("2D, WebGL, Collision").attr({x: 0, y: 0, w: params.grabAreaSize, h: params.grabAreaSize, z: zLevels["player"]});
+		this.grabArea = Crafty.e("2D, WebGL, Collision")
+				.attr({x: 0, y: 0, w: params.grabAreaSize, h: params.grabAreaSize, z: zLevels["player"]});
 		this.attach(this.grabArea);
 		this.numSelections = 3;
 		this.select(1);
+
+		// this.highLightTile = Crafty.e("2D, WebGL, highlight")
+		// 		.attr({x: this.interactPoint.x, y: this.interactPoint.y, w: tileSize, h: tileSize});
+
 
 		this.bind('KeyDown', function(keyEvent) {
 			var k = keyEvent.key;
@@ -98,6 +103,14 @@ Crafty.c('KeyControls', {
 				this.goingRight = false;
 			} else if (k === this.grab) {
 				if (this.grabbed) {
+					var chopCollisions;
+					if (chopCollisions = this.grabbed.hit("ChopArea")) {
+						if (this.grabbed.has("Chicken")) {
+							chopCollisions[0].obj._parent.animate();
+							player.setMoney(player.money + 0.01 * Math.round(3500 + Math.random() * 10));
+							this.grabbed.destroy();
+						}
+					}
 					this.grabbed.isGrabbed = false;
 					this.grabbed = null;
 				}
@@ -110,12 +123,12 @@ Crafty.c('KeyControls', {
 			var dir = this.reel();
 			if (dir == "walking_left") {
 				this.interactPoint.x = this.originX() - params.interactDist;
-				this.interactPoint.y = this.originY();
+				this.interactPoint.y = this.originY()-20;
 				this.grabArea.x = -params.grabReach + this.originX() - 0.5 * params.grabAreaSize;
 				this.grabArea.y = this.originY() - 0.5 * params.grabAreaSize;
 			} else if (dir == "walking_right") {
 				this.interactPoint.x = this.originX() + params.interactDist;
-				this.interactPoint.y = this.originY();
+				this.interactPoint.y = this.originY()-20;
 				this.grabArea.x = params.grabReach + this.originX() - 0.5 * params.grabAreaSize;
 				this.grabArea.y = this.originY() - 0.5 * params.grabAreaSize;
 			} else if (dir == "walking_up") {
@@ -128,6 +141,13 @@ Crafty.c('KeyControls', {
 				this.interactPoint.y = this.originY() + params.interactDist;
 				this.grabArea.x = this.originX() - 0.5 * params.grabAreaSize;
 				this.grabArea.y = params.grabReach + this.originY() - 0.5 * params.grabAreaSize;
+			}
+			// outline tile with which the player would now interact if she pressed the action button
+			if (this.selected === 2 || this.selected === 3) {
+				var tileX = Math.floor(this.interactPoint.x / tileSize);
+				var tileY = Math.floor(this.interactPoint.y / tileSize);
+				var tile = tileMatrix[tileX][tileY];
+				Crafty.e("2D, WebGL, Color").attr({x: tileX * tileSize, y: tileY * tileSize, w: tileSize, h: tileSize, z: 10000}).color('purple');
 			}
 
 			if (this.grabbed) {

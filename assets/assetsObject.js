@@ -35,8 +35,15 @@ var assetsObject = {
 			tileh: 128,
 			map: {
 				seller: [6, 1],
-			}
+			},
 		},
+		// "tileset.png": {
+		// 	tile: 64,
+		// 	tileh: 64,
+		// 	map: {
+		// 		highlight: [2,2],
+		// 	}
+		// },
 		"marker.png": {
 			tile: 32,
 			tileh: 32,

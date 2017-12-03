@@ -18,15 +18,6 @@ Crafty.c("Moving", {
 			var dt = timestep.dt;
 			var collisions
 			if (collisions = this.moveCollisionTest()) { // if we're stuck, first get free
-				// Unless we are a chicken and have an appointment with the Seller!
-				for (var i = 0; i < collisions.length; i++) {
-					if (this.has("Chicken") && collisions[i].obj.has("Seller") && !this.isGrabbed) {
-						collisions[i].obj.animate();
-						player.setMoney(player.money + 0.01 * Math.round(3500 + Math.random() * 10));
-						this.destroy();
-					}
-				}
-
 				this.rx += this.vx * dt;
 				this.x = Math.round(this.rx);
 				this.ry += this.vy * dt;

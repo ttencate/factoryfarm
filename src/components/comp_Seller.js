@@ -5,7 +5,10 @@ Crafty.c('Seller',{
 		this.h = this.h ? this.h : 128;
 		this.w = this.w ? this.w : 128;
 		this.origin('center');
-		this.collision([30,60, 98,60, 98,90, 30,90]);
+		this.collision([40,70, 88,70, 88,90, 40,90]);
+		var chopArea = Crafty.e("2D, ChopArea, OriginCoordinates, Collision")
+				.attr({x: this._x + 35, y: this._y + 50, w: 58, h: 40});
+		this.attach(chopArea);
 	},
 	
 	_Seller: function(x, y){
@@ -20,7 +23,6 @@ Crafty.c('Seller',{
 		this.bind("AnimationEnd", function() {
 			this.animate('sell', 0).pauseAnimation();
 		});
-		console.log(this);
 		return this;
 	},
 
