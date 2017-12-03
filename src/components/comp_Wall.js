@@ -16,14 +16,14 @@ Crafty.c('Wall',{
 		this.hitAreaH.collision([lBound,tBound, rBound,tBound, rBound,bBound, lBound, bBound]);
 		// this 2x2x2x2 matrix holds sprites such that spriteMatrix[L][T][R][B] has the correct sprite
 		// if each letter is 0 for an empty neighbor, and 1 for a neighbor with a wall.
-		this.spriteMatrix = [[[[{c:1,r:1},{c:1,r:2}],			// LTR(B?)
-													 [{c:2,r:1},{c:2,r:2}]], 		// LT (B?)
-													[[{c:1,r:0},{c:1,r:3}],			// L R(B?)
-													 [{c:2,r:0},{c:2,r:3}]]],		// L  (B?)
-												 [[[{c:0,r:1},{c:0,r:2}],			//  TR(B?)
-													 [{c:3,r:1},{c:3,r:2}]], 		//  T (B?)
-													[[{c:0,r:0},{c:0,r:3}],			//   R(B?)
-													 [{c:3,r:0},{c:1,r:0}]]]];//(B?) // TODO: add lonely fence
+		this.spriteMatrix = [[[[{c:2,r:1},{c:2,r:2}],			// LTR(B?)
+													 [{c:3,r:1},{c:3,r:2}]], 		// LT (B?)
+													[[{c:2,r:0},{c:2,r:3}],			// L R(B?)
+													 [{c:3,r:0},{c:3,r:3}]]],		// L  (B?)
+												 [[[{c:1,r:1},{c:1,r:2}],			//  TR(B?)
+													 [{c:4,r:1},{c:4,r:2}]], 		//  T (B?)
+													[[{c:1,r:0},{c:1,r:3}],			//   R(B?)
+													 [{c:4,r:0},{c:0,r:1}]]]];  //    (B?)
 	},
 	
 	_Wall: function(x,y){
@@ -59,7 +59,7 @@ Crafty.c('Wall',{
 		if (rCol) rightNeighbor = rCol[yIdx] && rCol[yIdx].has("Wall") ? 0 : 1;
 		var spriteCoords = this.spriteMatrix[leftNeighbor][topNeighbor][rightNeighbor][bottomNeighbor];
 		// set sprites to match neighbors
-		this.sprite(spriteCoords.c + 1, spriteCoords.r);
+		this.sprite(spriteCoords.c, spriteCoords.r);
 
 		// set hitboxes to match neighbors
 		this.hitAreaH.destroy();
@@ -70,13 +70,13 @@ Crafty.c('Wall',{
 		// set horizontal collision area
 		tBound = 0.5 * tileSize - 5;
 		bBound = 0.5 * tileSize + 5;
-		if (spriteCoords.c + 1 == 1) { // right half collides
+		if (spriteCoords.c == 1) { // right half collides
 			lBound = 0.5 * tileSize;
 			rBound = tileSize;
-		} else if (spriteCoords.c + 1== 2) { // full width collides
+		} else if (spriteCoords.c == 2) { // full width collides
 			lBound = 0;
 			rBound = tileSize;
-		} else if (spriteCoords.c + 1 == 3) { // left half collides
+		} else if (spriteCoords.c == 3) { // left half collides
 			lBound = 0;
 			rBound = 0.5 * tileSize;
 		} else {
