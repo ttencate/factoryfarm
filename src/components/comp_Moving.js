@@ -16,26 +16,33 @@ Crafty.c("Moving", {
 		this.ry = this._y;
 		this.bind("EnterFrame", function(timestep) {
 			var dt = timestep.dt;
-			this.prevX = this.rx;
-			this.rx += this.vx * dt;
-			this.x = Math.round(this.rx);
-			if (this.moveCollisionTest()) {
-				this.vx *= this.bounce;
-				this.rx = this.prevX;
+			if (this.moveCollisionTest()) { // if we're stuck, first get free
+				this.rx += this.vx * dt;
 				this.x = Math.round(this.rx);
-			}
-			this.prevY = this.ry;
-			this.ry += this.vy * dt;
-			this.y = Math.round(this.ry);
-			if (this.moveCollisionTest()) {
-				this.vy *= this.bounce;
-				this.ry = this.prevY;
+				this.ry += this.vy * dt;
 				this.y = Math.round(this.ry);
-			}
-			if (this.grabbed) {
-				this.z = zLevels['player'] + this._y + 20;
 			} else {
-				this.z = this.baseZ + this._y;
+				this.prevX = this.rx;
+				this.rx += this.vx * dt;
+				this.x = Math.round(this.rx);
+				if (this.moveCollisionTest()) {
+					this.vx *= this.bounce;
+					this.rx = this.prevX;
+					this.x = Math.round(this.rx);
+				}
+				this.prevY = this.ry;
+				this.ry += this.vy * dt;
+				this.y = Math.round(this.ry);
+				if (this.moveCollisionTest()) {
+					this.vy *= this.bounce;
+					this.ry = this.prevY;
+					this.y = Math.round(this.ry);
+				}
+				if (this.grabbed) {
+					this.z = zLevels['player'] + this._y + 20;
+				} else {
+					this.z = this.baseZ + this._y;
+				}
 			}
 
 		});
@@ -43,7 +50,7 @@ Crafty.c("Moving", {
 	},
 
 	moveCollisionTest: function() {
-		if (this.hit("Wall")) {
+		if (this.hit("Impassable")) {
 			return true;
 		}
 		return false;

@@ -3,9 +3,7 @@ var bgMusic = null;
 
 // MAIN SCENE
 Crafty.scene('Main', function() {
-	
-	infoDiv = document.getElementById('info');
-	infoDiv.innerHTML = "This is your money";
+  document.getElementById('info').style.visibility = 'visible';
 
 	if (!bgMusic) {
 		bgMusic = Crafty.audio.play('bgMusic',-1,0.3);
@@ -50,6 +48,7 @@ Crafty.scene('Main', function() {
 			Crafty.e('2D, WebGL, Image').image("assets/images/grass.png").attr({x: grass.x, y: grass.y - grass.height, w: grass.width, h: grass.height});
 		} 
 
+		wallTiles = [];
 		// draw all the tiles
 		for (var row = 0; row < level.height; ++row) {
 			for (var col = 0; col < level.width; ++col) {
@@ -58,16 +57,24 @@ Crafty.scene('Main', function() {
 				if (tileIdx === 1) {
 
 				} else if (tileIdx > 0) {
-					Crafty.e('2D, Wall')._Wall(col, row).attr({
-						z: zLevels['background'],
-						tileIdx: tileIdx
-					}).sprite((tileIdx - 1) % xTiles, Math.floor((tileIdx - 1) / xTiles));
+					if (!wallTiles[col]) {
+						wallTiles[col] = [];
+					}
+					wallTiles[col][row] = Crafty.e('2D, Wall')._Wall(col, row).attr({
+						// tileIdx: tileIdx
+					});//.sprite((tileIdx - 1) % xTiles, Math.floor((tileIdx - 1) / xTiles));
 				}				
 			};
 		};
+		Crafty("Wall").each(function(){
+			if (this.matchNeighbors) {
+				this.matchNeighbors();
+			}
+		})
 
 		player = Crafty.e('2D, WebGL, Sprite, farmer_down, KeyControls, Moving, Collision, SpriteAnimation, ReelFromVelocity, OriginCoordinates')
-				.attr({x: 800, y: 500, w: 64, h: 64, z: zLevels['player']})
+				.attr({x: 100, y: 500, w: 64, h: 64, z: zLevels['player']})
+				.collision([15,47, 49,47, 49,59, 15,59])
 				.reel('walking_down', 500, [[0, 0], [1, 0], [2, 0], [3, 0]])
 				.reel('walking_up', 500, [[0, 1], [1, 1], [2, 1], [3, 1]])
 				.reel('walking_right', 500, [[0, 2], [1, 2], [2, 2], [3, 2]])

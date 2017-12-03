@@ -35,10 +35,7 @@ Crafty.c('Chicken', {
 					this.happy += 0.5;
 				}
 			}
-
-
 			var prox = Math.min(dSquared, params.proxLimit) / params.proxLimit;
-
 			if (!this.grabbed) { // do not actively move if grabbed
 				var polCoords = utility.car2pol(dx, dy);
 				var angle = polCoords.phi;
@@ -46,7 +43,6 @@ Crafty.c('Chicken', {
 				this.vy += Math.sin(angle) * this.acc * prox * dt;
 			}
 
-			// console.log('at ' + this._x);
 			// apply drag force
 			this.vx -= this.drag * this.vx * dt;
 			this.vy -= this.drag * this.vy * dt;
@@ -62,7 +58,7 @@ Crafty.c('Chicken', {
 		this.bind("EnterFrame", function(timestep){
 			var dt = timestep.dt;
 			if (this.needCounter === 0) {
-				console.log('fed: ' + this.fed + ', happy: ' + this.happy);
+				// console.log('fed: ' + this.fed + ', happy: ' + this.happy);
 				this.needCounter = 100;
 				// update needs and check most pressing one
 				this.fed -= 3 + 2 * Math.random();
