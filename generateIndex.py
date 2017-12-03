@@ -27,8 +27,12 @@ footer = """    <script>
     <link rel="image_src" href="scrshot.png"/>  
   </head>
   <body>
-        <!--Add your own HTML!-->   
+    <!--Add your own HTML!-->   
     <div id="cr-stage">
+    </div>
+    <div id="chickenPopupContainer">
+      <div id="chickenPopup" style="visibility: hidden;">
+      </div>
     </div>
     <div id="info" style="visibility: hidden;">
       <div id="moneyText"></div>
