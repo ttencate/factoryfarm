@@ -61,15 +61,20 @@ Crafty.c('Wall',{
 		if (this.has("Gate")) {
 			if ((!topNeighbor || !bottomNeighbor) && leftNeighbor && rightNeighbor) {
 				spriteCoords = {c: 4, r: 1};
-				this.sprite(5, 4);
+				this.sprite(5, 4 + (this.gateOpen ? 1 : 0));
 			} else {
 				spriteCoords = {c: 2, r: 3};
-				this.sprite(4, 4);
+				this.sprite(4, 4 + (this.gateOpen ? 1 : 0));
 			}
 		} else {
 			var spriteCoords = this.spriteMatrix[leftNeighbor][topNeighbor][rightNeighbor][bottomNeighbor];
 			// set sprites to match neighbors
 			this.sprite(spriteCoords.c, spriteCoords.r);
+		}
+
+		var hitAreaComponents = "2D, Collision, Impassable";
+		if (this.has('Gate')) {
+			hitAreaComponents += ', Gate';
 		}
 
 		// set hitboxes to match neighbors
@@ -94,7 +99,7 @@ Crafty.c('Wall',{
 			horz = false;
 		}
 		if (horz) {
-			this.hitAreaH = Crafty.e("2D, Collision, Impassable").attr({x: this._x, y: this._y, w: this._w, h: this._h});
+			this.hitAreaH = Crafty.e(hitAreaComponents).attr({x: this._x, y: this._y, w: this._w, h: this._h});
 			this.hitAreaH.collision([lBound,tBound, rBound,tBound, rBound,bBound, lBound, bBound]);
 			this.attach(this.hitAreaH);
 		}
@@ -118,7 +123,7 @@ Crafty.c('Wall',{
 			vert = false;
 		}
 		if (vert) {
-			this.hitAreaV = Crafty.e("2D, Collision, Impassable").attr({x: this._x, y: this._y, w: this._w, h: this._h});
+			this.hitAreaV = Crafty.e(hitAreaComponents).attr({x: this._x, y: this._y, w: this._w, h: this._h});
 			this.hitAreaV.collision([lBound,tBound, rBound,tBound, rBound,bBound, lBound, bBound]);
 			this.attach(this.hitAreaV);
 		}

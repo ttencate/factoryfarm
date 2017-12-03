@@ -141,7 +141,7 @@ Crafty.scene('Main', function() {
 						// tileIdx: tileIdx
 					//});
 				} else if (tileType === 'Gate') {
-					tileMatrix[col][row].block = Crafty.e('2D, Wall, Gate')._Wall(col, row);//.attr({
+					tileMatrix[col][row].block = Crafty.e('2D, Wall, Gate, Delay')._Wall(col, row);//.attr({
 				}
 				if (ownedLayer.data[linearIndex]) {
 					tileMatrix[col][row].owned = true;
@@ -175,7 +175,7 @@ Crafty.scene('Main', function() {
 					chicken.age = properties.age || 0;
 					break;
 				case 'Farmer':
-					player = Crafty.e('2D, WebGL, farmer_down, KeyControls, Moving, Collision, SpriteAnimation, ReelFromVelocity, OriginCoordinates')
+					player = Crafty.e('2D, WebGL, farmer_down, KeyControls, Moving, Collision, SpriteAnimation, ReelFromVelocity, OriginCoordinates, CanMoveThroughGates')
 							.attr({x: x - 32, y: y - 32, w: 64, h: 64, z: zLevels['player']})
 							.collision([15,47, 49,47, 49,59, 15,59])
 							.reel('walking_down', 500, [[0, 0], [1, 0], [2, 0], [3, 0]])
