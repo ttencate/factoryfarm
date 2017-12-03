@@ -29,7 +29,7 @@ Crafty.c('KeyControls', {
 		this.numSelections = 3;
 		this.select(1);
 
-		this.highlightTile = Crafty.e("2D, WebGL, highlightYes")
+		this.highlightTile = Crafty.e("2D, WebGL, Sprite, highlightYes")
 				.attr({x: this.interactPoint.x, y: this.interactPoint.y, w: tileSize, h: tileSize})
 				.sprite("highlightYes");
 
