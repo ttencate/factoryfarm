@@ -68,22 +68,20 @@ Crafty.c('KeyControls', {
 							wallTiles[col][row] = Crafty.e('2D, Feeder')._Feeder(col, row);
 						}
 					}
-				} else if (this.selected === 4) { // grab chicken/item
-					// check if "grab" area hits chicken. OLD IDEA: First position it correctly
-					// 1. if the farmer has non-zero speed, position it in the forward direction
-					// 2. if zero speed, position it in front of the farmer, based on the sprite
-					if (Math.abs(this.vx) > 0 || Math.abs(this.vy) > 0) {
-						// var polar = utility.car2pol(this.vx, this.vy);
-						// this.grabArea.x = Math.cos(polar.phi) * params.grabReach + this.originX() - 0.5 * params.grabAreaSize;
-						// this.grabArea.y = Math.sin(polar.phi) * params.grabReach + this.originY() - 0.5 * params.grabAreaSize;
-						// this.grabArea.rotation = Math.rad2deg(polar.phi);
-						var grabbed = this.grabArea.hit("Chicken");
-						if (grabbed) {
-							grabbed[0].obj.grabbed = true;
-							this.grabbed = grabbed[0].obj;
-						}
-					} else {
-
+				}
+			} else if (k === this.grab) { // grab chicken/item
+				// check if "grab" area hits chicken. OLD IDEA: First position it correctly
+				// 1. if the farmer has non-zero speed, position it in the forward direction
+				// 2. if zero speed, position it in front of the farmer, based on the sprite
+				if (Math.abs(this.vx) > 0 || Math.abs(this.vy) > 0) {
+					// var polar = utility.car2pol(this.vx, this.vy);
+					// this.grabArea.x = Math.cos(polar.phi) * params.grabReach + this.originX() - 0.5 * params.grabAreaSize;
+					// this.grabArea.y = Math.sin(polar.phi) * params.grabReach + this.originY() - 0.5 * params.grabAreaSize;
+					// this.grabArea.rotation = Math.rad2deg(polar.phi);
+					var grabbed = this.grabArea.hit("Chicken");
+					if (grabbed) {
+						grabbed[0].obj.grabbed = true;
+						this.grabbed = grabbed[0].obj;
 					}
 				}
 			} else if (k >= Crafty.keys['1'] && k < Crafty.keys['1'] + this.numSelections) {
@@ -100,7 +98,7 @@ Crafty.c('KeyControls', {
 				this.goingLeft = false;
 			} else if (k === this.right) {
 				this.goingRight = false;
-			} else if (k === this.action) {
+			} else if (k === this.grab) {
 				if (this.grabbed) {
 					this.grabbed.grabbed = false;
 					this.grabbed = null;
@@ -166,12 +164,13 @@ Crafty.c('KeyControls', {
 		});
 	},
 
-	_KeyControls: function(left, right, up, down, action) {
+	_KeyControls: function(left, right, up, down, action, grab) {
 		this.left = left;
 		this.right = right;
 		this.up = up;
 		this.down = down;
-		this.action = action;
+    this.action = action;
+		this.grab = grab;
 		return this;
 	},
 

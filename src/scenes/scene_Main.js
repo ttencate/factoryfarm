@@ -82,7 +82,7 @@ Crafty.scene('Main', function() {
 				.animate('walking_down', 0)
 				.origin(32,50)
 				._Moving()
-				._KeyControls(Crafty.keys.LEFT_ARROW, Crafty.keys.RIGHT_ARROW, Crafty.keys.UP_ARROW, Crafty.keys.DOWN_ARROW, Crafty.keys.SPACE, Crafty.keys["1"], Crafty.keys["2"]);
+				._KeyControls(Crafty.keys.LEFT_ARROW, Crafty.keys.RIGHT_ARROW, Crafty.keys.UP_ARROW, Crafty.keys.DOWN_ARROW, Crafty.keys.SPACE, Crafty.keys.SHIFT);
 		Crafty.viewport.clampToEntities = false;
 		Crafty.viewport.follow(player);
 
