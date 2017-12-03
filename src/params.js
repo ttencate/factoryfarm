@@ -13,9 +13,10 @@ params = {
 
 zLevels = {
     background: 1000,
+    seller: 1730,
     player: 1700,
     chicken: 1670,
-    walls: 1680,
     markers: 1670,
+    walls: 1680,
     roof: 1900,
 };

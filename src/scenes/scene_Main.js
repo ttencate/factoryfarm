@@ -182,7 +182,6 @@ function updateLandMarkers() {
 				tile.landMarker.destroy();
 				tile.landMarker = null;
 			} else if (!tile.landMarker && needMarker) {
-				console.log(col, row);
 				var x = 64 * col - 11;
 				var y = 64 * row - 24;
 				var z = zLevels['markers'] + y;

@@ -11,11 +11,15 @@ Crafty.c('Seller',{
 	_Seller: function(x, y){
 		this.x = 64*x;
 		this.y = 64*y;
-		this.baseZ = zLevels['walls'];
+		this.baseZ = zLevels['seller'];
 		this.z = this.baseZ + this.y;
-		this.requires('seller, SpriteAnimation, WiredHitBox')
+		this.requires('seller, SpriteAnimation')
 			.reel('sell', 500, [[3,0],[3,1],[3,2],[3,3]])
-			.animate('sell', 2)
+			.animate('sell', 0)
+			.pauseAnimation();
+		this.bind("AnimationEnd", function() {
+			this.animate('sell', 0).pauseAnimation();
+		});
 		console.log(this);
 		return this;
 	},
