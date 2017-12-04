@@ -107,14 +107,19 @@ Crafty.c('KeyControls', {
 		});
 		this.bind('KeyUp', function(keyEvent) {
 			var k = keyEvent.key;
-			if (k === this.up ) {
+			var updateDirection = false;
+			if (k === this.up) {
 				this.goingUp = false;
+				updateDirection = true;
 			} else if (k === this.down) {
 				this.goingDown = false;
+				updateDirection = true;
 			} else if (k === this.left) {
 				this.goingLeft = false;
+				updateDirection = true;
 			} else if (k === this.right) {
 				this.goingRight = false;
+				updateDirection = true;
 			} else if (k === this.grab) {
 				if (this.grabbed) {
 					var chopCollisions = this.grabbed.hit("ChopArea");
@@ -131,6 +136,17 @@ Crafty.c('KeyControls', {
 					this.grabbed.isGrabbed = false;
 					this.grabbed = null;
 					this.updateChickenPopup(null);
+				}
+			}
+			if (updateDirection) {
+				if (this.goingUp) {
+					this.direction = 'up';
+				} else if (this.goingDown) {
+					this.direction = 'down';
+				} else if (this.goingLeft) {
+					this.direction = 'left';
+				} else if (this.goingRight) {
+					this.direction = 'right';
 				}
 			}
 		});
