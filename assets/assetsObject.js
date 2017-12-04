@@ -79,5 +79,12 @@ var assetsObject = {
 				iconOverripe: [1, 0],
 			},
 		},
+		"house.png": {
+			tile: 192,
+			tileh: 256,
+			map: {
+				house: [0, 0],
+			},
+		}
 	},
 };

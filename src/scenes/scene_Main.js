@@ -153,6 +153,10 @@ Crafty.scene('Main', function() {
 					//});
 				} else if (tileType === 'Gate') {
 					tileMatrix[col][row].block = Crafty.e('2D, Wall, Gate, Delay')._Wall(col, row);//.attr({
+				} else if (tileType === 'House') {
+					Crafty.e('2D, WebGL, Sprite, house, Collision, Impassable')
+						.attr({ x: col * tileSize, y: row * tileSize, z: row * tileSize + zLevels.house, w: 192, h: 256 })
+						.collision([18,104, 174,104, 174,252, 18,252]);
 				}
 				if (ownedLayer.data[linearIndex]) {
 					tileMatrix[col][row].owned = true;
