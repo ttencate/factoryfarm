@@ -19,7 +19,6 @@ Crafty.scene('Loading', function() {
 			family: fontFamily1
 		})
 		.css({
-			'padding-top': '45px',
 			'background-color': mycolors.textBlockBg,
 			'border': ('2px dashed' + mycolors.button1),
 			'border-radius': '8px',

@@ -1,0 +1,18 @@
+{
+  "name": "happychickenfarm",
+  "version": "1.0.0",
+  "description": "An entry for [Ludum Dare 40](https://ldjam.com/events/ludum-dare/40).",
+  "main": "index.html",
+  "devDependencies": {
+    "eslint": "^4.12.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ttencate/happychickenfarm.git"
+  },
+  "author": "Jelle Nauta and Thomas ten Cate",
+  "bugs": {
+    "url": "https://github.com/ttencate/happychickenfarm/issues"
+  },
+  "homepage": "https://github.com/ttencate/happychickenfarm#readme"
+}

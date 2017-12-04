@@ -10,14 +10,14 @@ var utility = {
 		return {
 			x: Math.cos(phi) * r,
 			y: Math.sin(phi) * r
-		}
+		};
 	},
 
 	car2pol: function(x, y) {
 		return {
 			r: Math.sqrt(x*x + y*y),
 			phi: Math.atan2(y, x)
-		}
+		};
 	},
 
 	normalizeAngle: function(phi) {

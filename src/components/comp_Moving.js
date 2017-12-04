@@ -24,8 +24,8 @@ Crafty.c("Moving", {
 
 	movingEnterFrame: function(timestep) {
 		var dt = timestep.dt;
-		var collisions
-		if (collisions = this.moveCollisionTest()) { // if we're stuck, first get free
+		var collisions = this.moveCollisionTest();
+		if (collisions) { // if we're stuck, first get free
 			this.rx += this.vx * dt;
 			this.x = Math.round(this.rx);
 			this.ry += this.vy * dt;

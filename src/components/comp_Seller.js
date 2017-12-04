@@ -1,6 +1,6 @@
 Crafty.c('Seller',{
 	init: function(){
-		this.requires('2D, WebGL, OriginCoordinates, Impassable, Collision')
+		this.requires('2D, WebGL, OriginCoordinates, Impassable, Collision');
 		//this.color("mycolors.platformcolor");
 		this.h = this.h ? this.h : 128;
 		this.w = this.w ? this.w : 128;

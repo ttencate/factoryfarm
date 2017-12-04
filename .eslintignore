@@ -1,0 +1,8 @@
+lib/
+src/map.js
+
+# Old unused files
+src/components/comp_Popup.js
+src/colors.js
+src/scenes/scene_HowToPlay.js
+src/scenes/scene_StartScreen.js

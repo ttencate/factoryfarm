@@ -2,7 +2,9 @@ var overlay;
 var bgMusic = null;
 var globalGrimness = 0;
 var tileMatrix;
+var tileSize;
 var ownedTiles = 0;
+var player;
 
 function getTile(col, row) {
 	if (col < 0 || col >= tileMatrix.length) {
@@ -52,10 +54,10 @@ Crafty.scene('Main', function() {
 		}
 	}
 	
-	buildLevel = function(){
+	var buildLevel = function(){
 		
-		level = TileMaps["map"];
-		tileSets = level.tilesets;
+		var level = TileMaps["map"];
+		var tileSets = level.tilesets;
 
 		// determine tile sizes
 		var xTiles, yTiles;
@@ -67,12 +69,12 @@ Crafty.scene('Main', function() {
 				xTiles = t.imagewidth / t.tilewidth;
 				yTiles = t.imageheight / t.tileheight;
 			}
-		};
+		}
 
-		solidLayer = null;
-		grassLayer = null;
-		spawnLayer = null;
-		ownedLayer = null;
+		var solidLayer = null;
+		var grassLayer = null;
+		var spawnLayer = null;
+		var ownedLayer = null;
 
 		for (var i = level.layers.length - 1; i >= 0; i--) {
 			var layer = level.layers[i];
@@ -155,13 +157,13 @@ Crafty.scene('Main', function() {
 				if (ownedLayer.data[linearIndex]) {
 					tileMatrix[col][row].owned = true;
 				}
-			};
-		};
+			}
+		}
 		Crafty("Wall").each(function(){
 			if (this.matchNeighbors) {
 				this.matchNeighbors();
 			}
-		})
+		});
 
 		// spawn living entities
 		var spawns = spawnLayer.objects;
@@ -208,7 +210,7 @@ Crafty.scene('Main', function() {
 		Crafty.e('Calendar');
 
 		updateLand();
-	}
+	};
 
 	buildLevel();
 });

@@ -22,7 +22,7 @@ Crafty.c('KeyControls', {
 		this.minSpeed = 8 / 1000; // px per ms
 		this.maxSpeed = 256 / 1000; // px per ms
  
- 		this.interactPoint = {x: 0, y: 0}
+		this.interactPoint = {x: 0, y: 0};
 		this.grabArea = Crafty.e("2D, WebGL, Collision")
 				.attr({x: 0, y: 0, w: params.grabAreaSize, h: params.grabAreaSize, z: zLevels["player"]});
 		this.attach(this.grabArea);
@@ -117,11 +117,11 @@ Crafty.c('KeyControls', {
 				this.goingRight = false;
 			} else if (k === this.grab) {
 				if (this.grabbed) {
-					var chopCollisions;
-					if (chopCollisions = this.grabbed.hit("ChopArea")) {
+					var chopCollisions = this.grabbed.hit("ChopArea");
+					if (chopCollisions) {
 						if (this.grabbed.has("Chicken")) {
 							chopCollisions[0].obj._parent.animate();
-							Crafty.audio.play("chop")
+							Crafty.audio.play("chop");
 							player.setMoney(player.money + this.grabbed.getPrice());
 							this.grabbed.destroy();
 						}
@@ -137,7 +137,7 @@ Crafty.c('KeyControls', {
 
 		this.bind('EnterFrame', function(timestep){
 			this.updateVelocity(timestep.dt);
-			this.interactPoint = {x: 0, y: 0}
+			this.interactPoint = {x: 0, y: 0};
 			var dir = this.reel();
 			if (dir == "walking_left") {
 				this.interactPoint.x = this.originX() - params.interactDist;
@@ -157,7 +157,7 @@ Crafty.c('KeyControls', {
 				this.grabArea.x = this.originX() - 0.5 * params.grabAreaSize;
 				this.grabArea.y = -params.grabReach + this.originY() - 0.5 * params.grabAreaSize;
 			} else if (dir == "walking_down") {
-				this.interactPoint.x = this.originX()
+				this.interactPoint.x = this.originX();
 				this.interactPoint.y = this.originY() + params.interactDist;
 				this.grabArea.x = this.originX() - 0.5 * params.grabAreaSize;
 				this.grabArea.y = params.grabReach + this.originY() - 0.5 * params.grabAreaSize;

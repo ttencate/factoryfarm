@@ -67,7 +67,7 @@ Crafty.c('Wall',{
 				this.sprite(4, 4 + (this.gateOpen ? 1 : 0));
 			}
 		} else {
-			var spriteCoords = this.spriteMatrix[leftNeighbor][topNeighbor][rightNeighbor][bottomNeighbor];
+			spriteCoords = this.spriteMatrix[leftNeighbor][topNeighbor][rightNeighbor][bottomNeighbor];
 			// set sprites to match neighbors
 			this.sprite(spriteCoords.c, spriteCoords.r);
 		}

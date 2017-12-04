@@ -24,7 +24,7 @@ Game = {
 		// Start crafty and set a background color so that we can see it's working
 		Crafty.init();
 		Crafty.timer.FPS(60);
-		Crafty.timer.steptype('semifixed', 50)
+		Crafty.timer.steptype('semifixed', 50);
     //Crafty.viewport.zoom(20,0,0,100);
     //Crafty.pixelart(true);
 		Crafty.scene('Loading');

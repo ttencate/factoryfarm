@@ -55,7 +55,7 @@ Crafty.c('Chicken', {
 				this.vy = 0;
 			}
 
-		}
+		};
 
 		this.bind("EnterFrame", this.chickenEnterFrame);
 		return this;
@@ -116,7 +116,7 @@ Crafty.c('Chicken', {
 
 			// maybe make a doo-doo
 			if (Math.random() < params.pShit) {
-				var tile = getTile(col, row)
+				var tile = getTile(col, row);
 				if (tile) tile.setFilth(tile.filth + 15);
 			}
 
@@ -140,12 +140,16 @@ Crafty.c('Chicken', {
 				} else {
 					if (this.currentNeed === "none") { // chicken was already loitering
 						if (Math.random() > 0.6) { // sometimes rest
-							this.dest = {x: this.originX() + (0.5 - Math.random()) * params.chickWalkRange,
-													 y: this.originY() + (0.5 - Math.random()) * params.chickWalkRange}
+							this.dest = {
+								x: this.originX() + (0.5 - Math.random()) * params.chickWalkRange,
+								y: this.originY() + (0.5 - Math.random()) * params.chickWalkRange
+							};
 						}
 					} else { // just finished satisfying need, move away
-						this.dest = {x: this.originX() + (0.5 - Math.random()) * params.chickWalkRange,
-												 y: this.originY() + (0.5 - Math.random()) * params.chickWalkRange};
+						this.dest = {
+							x: this.originX() + (0.5 - Math.random()) * params.chickWalkRange,
+							y: this.originY() + (0.5 - Math.random()) * params.chickWalkRange
+						};
 						this.currentNeed = "none";
 					}
 				}
