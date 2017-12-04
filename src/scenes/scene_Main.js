@@ -154,8 +154,10 @@ Crafty.scene('Main', function() {
 								this.filthSprite.sprite(6,1);
 							} else if (this.filth <= 100) {
 								this.filthSprite.sprite(6,2);
-							} else { // disgusting!
+							} else if (this.filth <= 150) { // disgusting!
 								this.filthSprite.sprite(6,3);
+							} else { // the ultimate grossness
+								this.filthSprite.sprite(6,4);
 							}
 						}
 					},
