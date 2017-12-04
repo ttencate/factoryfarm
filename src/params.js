@@ -23,7 +23,7 @@ params = {
     indicatorSize: 32,
 
     yearDurationMilliseconds: 40000,
-    rentPerTile: 1,
+    rentPerTile: 0.25,
     basePriceUnripe: 5,
     basePriceRipe: 15,
     topQualityPriceRipe: 30,
