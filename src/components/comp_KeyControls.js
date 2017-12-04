@@ -40,13 +40,17 @@ Crafty.c('KeyControls', {
 			var k = keyEvent.key;
 			if (k === Crafty.keys.F7) { // cheat for debugging
 				this.setMoney(this.money + 1000);
-			} else if (k === this.up ) {
+			} else if (k === this.up) {
+        this.direction = 'up';
 				this.goingUp = true;
 			} else if (k === this.down) {
+        this.direction = 'down';
 				this.goingDown = true;
 			} else if (k === this.left) {
+        this.direction = 'left';
 				this.goingLeft = true;
 			} else if (k === this.right) {
+        this.direction = 'right';
 				this.goingRight = true;
 			} else if (k === this.action) {
 				if (this.selected === 1 && this.money >= costs.chicken) { // spawn
