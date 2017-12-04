@@ -35,7 +35,7 @@ Crafty.scene('Loading', function() {
 				tileset: [0,0],	
 			});
 			// levelIdx = 0;
-			// Crafty.audio.play('bgmusic', -1, 0.3);
+			// Crafty.audio.play('bgmusic', -1, 1.0);
 			Crafty.scene('Main');
 		},
 
