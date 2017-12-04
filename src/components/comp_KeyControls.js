@@ -13,7 +13,7 @@ Crafty.c('KeyControls', {
 		this.initHotbar();
 		this.chickensText = document.getElementById('chickensText');
 		this.chickenPopup = document.getElementById('chickenPopup');
-		this.setMoney(100);
+		this.setMoney(30);
 
 		// acceleration
 		this.acc = 0.005;
@@ -54,8 +54,7 @@ Crafty.c('KeyControls', {
 					var chickSize = 32;
 					// var dir = this.reel();
 					// xMod = dir === "walking_down" || dir === "walking_up" ? chickSize / 2 : 0;
-					this.payMoney(costs.chicken, 'Bought chick');
-					Crafty.e('2D, WebGL, Sprite, chicken_down, Moving, Collision, Chicken, SpriteAnimation, ReelFromVelocity')
+					var chick = Crafty.e('2D, WebGL, Sprite, chicken_down, Moving, Collision, Chicken, SpriteAnimation, ReelFromVelocity')
 						.reel('walking_down', 500, [[0, 0], [1, 0], [2, 0], [3, 0]])
 						.reel('walking_up', 500, [[0, 1], [1, 1], [2, 1], [3, 1]])
 						.reel('walking_right', 500, [[0, 2], [1, 2], [2, 2], [3, 2]])
@@ -64,6 +63,7 @@ Crafty.c('KeyControls', {
 						.attr({x: this.interactPoint.x - chickSize/2, y: this.interactPoint.y - chickSize/2, w: chickSize, h: chickSize, z: zLevels['chicken']})
 						._Chicken()
 						._Moving();
+					this.payMoney(costs.chicken, 'Bought ' + chick.name);
 				} else if (this.selected === 2 || this.selected === 3) {
 					// determine nearest tile
 					var col = Math.floor(this.interactPoint.x / tileSize);
