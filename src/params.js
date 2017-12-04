@@ -21,6 +21,7 @@ var params = {
 	grabAreaSize: 35,
 	interactDist: 40,
 	indicatorSize: 32,
+	cleanFilthAmount: 20,
 
 	yearDurationMilliseconds: 60000,
 	rentPerTile: 0.25,
@@ -37,6 +38,7 @@ params.monthDurationMilliseconds = params.yearDurationMilliseconds / 12;
 var zLevels = {
 	background: 1000,
 	paths: 1001,
+	filth: 1002,
 	seller: 1730,
 	player: 1700,
 	chicken: 1670,

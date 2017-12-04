@@ -28,7 +28,8 @@ var indexedActions = [
 			return tile.filth > 0;
 		},
 		start: function(col, row, tile) {
-			tile.setFilth(0);
+			tile.setFilth(Math.max(0, tile.filth - params.cleanFilthAmount));
+			return tile.filth > 0 ? 'Cleaned a bit' : 'Cleaned';
 		},
 	},
 	{
@@ -284,7 +285,11 @@ Crafty.c('Actions', {
 			ret = action.start.call(this, this.interactPoint.x, this.interactPoint.y);
 		}
 		if (ret) {
-			this.payMoney(action.cost, ret);
+			if (action.cost) {
+				this.payMoney(action.cost, ret);
+			} else {
+				showPopup(this.x + this.w / 2, this.y + this.h / 2, ret, '#eee');
+			}
 		}
 	},
 

@@ -20,18 +20,7 @@ Crafty.c('Wallet', {
 		reason = reason ? reason + '<br>' : '';
 		entity = entity || this;
 		var text = reason + '<b>' + utility.formatMoney(money) + '</b>';
-		var popup = Crafty.e('2D, DOM, Text, Tween, Delay')
-			.attr({x: entity.x + entity.w / 2 - 128, y: entity.y - 32, z: entity.z + zLevels.popup, w: 256})
-			.text(text)
-			.textAlign('center')
-			.textFont({ family: fontFamily1, size: '16px' })
-			.textColor(money >= 0 ? '#d2ffb7' : '#FF4136')
-			.css({ 'text-shadow': '1px 1px 2px #000000' })
-			.unselectable();
-		popup.tween({ y: popup.y - 60, alpha: 0 }, 3000);
-		popup.delay(function() {
-			popup.destroy();
-		}, 3000);
+		showPopup(entity.x + entity.w / 2, entity.y - 32, text, money >= 0 ? '#d2ffb7' : '#FF4136');
 	},
 
 	payMoney: function(money, reason, entity) {
@@ -43,3 +32,18 @@ Crafty.c('Wallet', {
 		this.moneyText.innerText = utility.formatMoney(this.money);
 	},
 });
+
+function showPopup(x, y, text, textColor) {
+		var popup = Crafty.e('2D, DOM, Text, Tween, Delay')
+			.attr({x: x - 128, y: y, z: y + zLevels.popup, w: 256})
+			.text(text)
+			.textAlign('center')
+			.textFont({ family: fontFamily1, size: '16px' })
+			.textColor(textColor)
+			.css({ 'text-shadow': '1px 1px 2px #000000' })
+			.unselectable();
+		popup.tween({ y: y - 60, alpha: 0 }, 3000);
+		popup.delay(function() {
+			popup.destroy();
+		}, 3000);
+}
