@@ -9,7 +9,7 @@ indexFile = open('index.html', 'w')
 header = """<!DOCTYPE html>
 <html>
     <head>
-        <title>Factory Farm</title>
+        <title>Happy Chicken Farm</title>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
         <link rel="stylesheet" type="text/css" href="stylesheet.css" />
