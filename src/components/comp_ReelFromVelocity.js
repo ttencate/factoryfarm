@@ -2,12 +2,14 @@
 
 Crafty.c('ReelFromVelocity', {
 	init: function() {
-		this.bind('EnterFrame', function(timestep) {
-			this.updateReel();
-		});
+		this.bind('EnterFrame', this.updateReel);
 	},
 
-	updateReel: function() {
+	remove: function() {
+		this.unbind('EnterFrame', this.updateReel);
+	},
+
+	updateReel: function(timestep) {
 		var directionFromVelocity = this.directionFromVelocity();
 		var direction = this.direction || directionFromVelocity;
 		if (direction && this.reelDirection !== direction) {

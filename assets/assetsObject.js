@@ -32,6 +32,7 @@ var assetsObject = {
 				chicken_up: [0, 1],
 				chicken_right: [0, 2],
 				chicken_left: [0, 3],
+				chicken_dead: [0, 4],
 			},
 		},
 		"grass.png": {

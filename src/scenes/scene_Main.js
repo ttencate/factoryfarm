@@ -178,6 +178,7 @@ Crafty.scene('Main', function() {
 							.reel('walking_up', 500, [[0, 1], [1, 1], [2, 1], [3, 1]])
 							.reel('walking_right', 500, [[0, 2], [1, 2], [2, 2], [3, 2]])
 							.reel('walking_left', 500, [[0, 3], [1, 3], [2, 3], [3, 3]])
+							.reel('dead', 500, [[0, 4], [1, 4], [2, 4], [3, 4]])
 							.animate('walking_down', 0)
 							._Chicken()
 							._Moving();

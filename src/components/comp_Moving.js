@@ -14,40 +14,45 @@ Crafty.c("Moving", {
 		}
 		this.rx = this._x;
 		this.ry = this._y;
-		this.bind("EnterFrame", function(timestep) {
-			var dt = timestep.dt;
-			var collisions
-			if (collisions = this.moveCollisionTest()) { // if we're stuck, first get free
-				this.rx += this.vx * dt;
-				this.x = Math.round(this.rx);
-				this.ry += this.vy * dt;
-				this.y = Math.round(this.ry);
-			} else {
-				this.prevX = this.rx;
-				this.rx += this.vx * dt;
-				this.x = Math.round(this.rx);
-				if (this.moveCollisionTest()) {
-					this.vx *= this.bounce;
-					this.rx = this.prevX;
-					this.x = Math.round(this.rx);
-				}
-				this.prevY = this.ry;
-				this.ry += this.vy * dt;
-				this.y = Math.round(this.ry);
-				if (this.moveCollisionTest()) {
-					this.vy *= this.bounce;
-					this.ry = this.prevY;
-					this.y = Math.round(this.ry);
-				}
-				if (this.isGrabbed) {
-					this.z = zLevels['player'] + this._y + 20;
-				} else {
-					this.z = this.baseZ + this._y;
-				}
-			}
-
-		});
+		this.bind("EnterFrame", this.movingEnterFrame);
 		return this;
+	},
+
+	remove: function() {
+		this.unbind("EnterFrame", this.movingEnterFrame);
+	},
+
+	movingEnterFrame: function(timestep) {
+		var dt = timestep.dt;
+		var collisions
+		if (collisions = this.moveCollisionTest()) { // if we're stuck, first get free
+			this.rx += this.vx * dt;
+			this.x = Math.round(this.rx);
+			this.ry += this.vy * dt;
+			this.y = Math.round(this.ry);
+		} else {
+			this.prevX = this.rx;
+			this.rx += this.vx * dt;
+			this.x = Math.round(this.rx);
+			if (this.moveCollisionTest()) {
+				this.vx *= this.bounce;
+				this.rx = this.prevX;
+				this.x = Math.round(this.rx);
+			}
+			this.prevY = this.ry;
+			this.ry += this.vy * dt;
+			this.y = Math.round(this.ry);
+			if (this.moveCollisionTest()) {
+				this.vy *= this.bounce;
+				this.ry = this.prevY;
+				this.y = Math.round(this.ry);
+			}
+			if (this.isGrabbed) {
+				this.z = zLevels['player'] + this._y + 20;
+			} else {
+				this.z = this.baseZ + this._y;
+			}
+		}
 	},
 
 	moveCollisionTest: function() {
