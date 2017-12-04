@@ -56,7 +56,9 @@ Crafty.scene('Main', function() {
 			bgMusic.pause();
 		}
 	}
-	
+
+	Crafty.e('Tutorial');
+
 	var buildLevel = function(){
 		
 		var level = TileMaps["map"];
@@ -138,6 +140,10 @@ Crafty.scene('Main', function() {
 								this.filthSprite = null;
 							}
 						} else {
+							showTip('cleaning');
+							if (this.filth > 100) {
+								showTip('moreCleaning');
+							}
 							if (!this.filthSprite) {
 								this.filthSprite = Crafty.e('2D, WebGL, Sprite, filth')
 									.attr({x: this.col * tileSize, y: this.row * tileSize, w: tileSize, h: tileSize, z: zLevels.filth + this.y});
@@ -237,7 +243,13 @@ Crafty.scene('Main', function() {
 							.animate('walking_down', 0)
 							.origin(32,50)
 							._Moving()
-							._KeyControls(Crafty.keys.LEFT_ARROW, Crafty.keys.RIGHT_ARROW, Crafty.keys.UP_ARROW, Crafty.keys.DOWN_ARROW, Crafty.keys.SPACE, Crafty.keys.SHIFT);
+							._KeyControls(
+								[Crafty.keys.LEFT_ARROW, Crafty.keys.A],
+								[Crafty.keys.RIGHT_ARROW, Crafty.keys.D],
+								[Crafty.keys.UP_ARROW, Crafty.keys.W],
+								[Crafty.keys.DOWN_ARROW, Crafty.keys.S],
+								[Crafty.keys.SPACE],
+								[Crafty.keys.SHIFT]);
 					// player.ignoreGrimness = 1.0;
 					Crafty.viewport.follow(player);
 					// Crafty.viewport.scale(1);

@@ -33,6 +33,7 @@ Crafty.c('Feeder',{
 		if (amount > this.filling) {
 			amount = this.filling;
 			this.setFilling(0);
+			showTip('buyFood');
 			return amount;
 		} else {
 			this.setFilling(this.filling - amount);

@@ -30,6 +30,8 @@ footer = """    <script>
     <!--Add your own HTML!-->   
     <div id="cr-stage">
     </div>
+    <div id="tip" class="hidden">
+    </div>
     <div id="chickenPopupContainer">
       <div id="chickenPopup" style="visibility: hidden;">
       </div>

@@ -6,7 +6,7 @@ Crafty.c('Chicken', {
 		this.baseZ = zLevels['chicken'];
 		this.name = femaleNames[Math.floor(Math.random() * femaleNames.length)];
 		this.happy = 100;
-		this.fed = 100 * Math.random();
+		this.fed = 100;
 		this.ageMs = 0;
 		this.sick = 0;
 		this.quality = 100;
@@ -38,6 +38,9 @@ Crafty.c('Chicken', {
 					var fraction = dt / params.feedTime;
 					if (this.dest.has && this.dest.has('Feeder')) {
 						var consumed = this.dest.consume(fraction);
+						if (this.fed <= 0 && consumed > 0) {
+							hideTip('hungryChicken');
+						}
 						this.fed = Math.min(100, this.fed + 100 * consumed);
 					}
 					prox = Math.min(dSquared, params.proxLimit) / params.proxLimit;
@@ -115,6 +118,9 @@ Crafty.c('Chicken', {
 
 		// update needs
 		this.fed = Math.max(0, this.fed - params.hunger * dt);
+		if (this.fed <= 0) {
+			showTip('hungryChicken');
+		}
 
 		this.needWatch -= dt;
 		if (this.needWatch < 0) {
@@ -147,12 +153,19 @@ Crafty.c('Chicken', {
 				}
 				this.currentTile = tile;
 				this.currentTile.units.push(this);
+				// show tip if happiness impact from crowding is more than 30
+				if (this.currentTile.units.length > 30 / params.crowdImpact) {
+					showTip('buyFence');
+				}
 			}
 
 			// calculate steady-state happiness in this location
 			var ssHappy = this.currentTile.ssHappiness();
 			var dHappy = ssHappy - this.happy;
 			this.happy += 0.005 * dHappy * dt;
+			if (this.happy < 20) {
+				showTip('unhappyChicken');
+			}
 
 			// maybe make a doo-doo
 			if (Math.random() < params.pShit) {
@@ -247,8 +260,12 @@ Crafty.c('Chicken', {
 			this.ageIcon = Crafty.e('2D, WebGL, Sprite, iconRipe')
 					.attr({x: this.x, y: this.y - 16, w: 32, h: 32, z: this.z});
 			this.attach(this.ageIcon);
+			showTip('sellChicken');
 		}
 		if (this.ageIcon) {
+			if (ageYears >= params.overripeAgeYears) {
+				showTip('overripeChicken');
+			}
 			this.ageIcon.sprite(ageYears >= params.overripeAgeYears ? 'iconOverripe' : 'iconRipe');
 			this.ageIcon.z = this.z;
 		}

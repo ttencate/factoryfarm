@@ -14,6 +14,8 @@ Crafty.c('KeyControls', {
 		this.chickenPopup = document.getElementById('chickenPopup');
 		this.setMoney(50);
 
+		showTip('welcome');
+
 		// acceleration
 		this.acc = 0.005;
 		this.drag = 0.01;
@@ -27,21 +29,25 @@ Crafty.c('KeyControls', {
 		this.bind('KeyDown', function(keyEvent) {
 			var k = keyEvent.key;
 			var numberKey = keyEvent.key - Crafty.keys['0'];
-			if (k === this.up) {
+			if (this.isKey(k, this.up)) {
+				hideTip('welcome');
 				this.direction = 'up';
 				this.goingUp = true;
-			} else if (k === this.down) {
+			} else if (this.isKey(k, this.down)) {
+				hideTip('welcome');
 				this.direction = 'down';
 				this.goingDown = true;
-			} else if (k === this.left) {
+			} else if (this.isKey(k, this.left)) {
+				hideTip('welcome');
 				this.direction = 'left';
 				this.goingLeft = true;
-			} else if (k === this.right) {
+			} else if (this.isKey(k, this.right)) {
+				hideTip('welcome');
 				this.direction = 'right';
 				this.goingRight = true;
-			} else if (k === this.action) {
+			} else if (this.isKey(k, this.action)) {
 				this.startAction();
-			} else if (k === this.grab) { // grab chicken/item
+			} else if (this.isKey(k, this.grab)) { // grab chicken/item
 				// check if "grab" area hits chicken. OLD IDEA: First position it correctly
 				// 1. if the farmer has non-zero speed, position it in the forward direction
 				// 2. if zero speed, position it in front of the farmer, based on the sprite
@@ -65,21 +71,21 @@ Crafty.c('KeyControls', {
 		this.bind('KeyUp', function(keyEvent) {
 			var k = keyEvent.key;
 			var updateDirection = false;
-			if (k === this.up) {
+			if (this.isKey(k, this.up)) {
 				this.goingUp = false;
 				updateDirection = true;
-			} else if (k === this.down) {
+			} else if (this.isKey(k, this.down)) {
 				this.goingDown = false;
 				updateDirection = true;
-			} else if (k === this.left) {
+			} else if (this.isKey(k, this.left)) {
 				this.goingLeft = false;
 				updateDirection = true;
-			} else if (k === this.right) {
+			} else if (this.isKey(k, this.right)) {
 				this.goingRight = false;
 				updateDirection = true;
-			} else if (k === this.action) {
+			} else if (this.isKey(k, this.action)) {
 				this.stopAction();
-			} else if (k === this.grab) {
+			} else if (this.isKey(k, this.grab)) {
 				if (this.grabbed) {
 					var chopCollisions = this.grabbed.hit("ChopArea");
 					if (chopCollisions) {
@@ -88,6 +94,8 @@ Crafty.c('KeyControls', {
 							Crafty.audio.play("chop");
 							this.earnMoney(this.grabbed.getPrice(), 'Butchered ' + this.grabbed.name);
 							this.grabbed.destroy();
+							hideTip('sellChicken');
+							hideTip('overripeChicken');
 						}
 					} else {
 						Crafty.audio.play("drop"+ (1+Math.round(Math.random())));
@@ -112,6 +120,10 @@ Crafty.c('KeyControls', {
 
 		this.bind('EnterFrame', function(timestep) {
 			this.updateVelocity(timestep.dt);
+
+			if (this.money > ownedTiles * params.rentPerTile + actions.chicken.cost) {
+				showTip('buyChicken');
+			}
 
 			if (this.grabbed) {
 				// determine location of the grabbed item
@@ -155,6 +167,10 @@ Crafty.c('KeyControls', {
 		this.action = action;
 		this.grab = grab;
 		return this;
+	},
+
+	isKey(k, keyList) {
+		return keyList.indexOf(k) >= 0;
 	},
 
 	updateVelocity: function(dt) {

@@ -17,6 +17,7 @@ var indexedActions = [
 				.attr({x: x - chickSize/2, y: y - chickSize/2, w: chickSize, h: chickSize, z: zLevels['chicken']})
 				._Chicken()
 				._Moving();
+			hideTip('buyChicken');
 			return 'Bought ' + chick.name;
 		},
 	},
@@ -29,48 +30,12 @@ var indexedActions = [
 		},
 		start: function(col, row, tile) {
 			tile.setFilth(Math.max(0, tile.filth - params.cleanFilthAmount));
-			return tile.filth > 0 ? 'Cleaned a bit' : 'Cleaned';
-		},
-	},
-	{
-		name: 'fence',
-		title: 'Build fence',
-		cost: 1,
-		perTile: true,
-		canStart: function(col, row, tile) {
-			return tile.owned && !tile.block;
-		},
-		start: function(col, row, tile) {
-			tile.block = Crafty.e('2D, Wall')._Wall(col, row);
-			tile.block.matchAndFixNeighbors(col, row);
-			return 'Built fence';
-		},
-	},
-	{
-		name: 'gate',
-		title: 'Build gate',
-		cost: 10,
-		perTile: true,
-		canStart: function(col, row, tile) {
-			return tile.owned && !tile.block;
-		},
-		start: function(col, row, tile) {
-			tile.block = Crafty.e('2D, Wall, Gate, Delay')._Wall(col, row);
-			tile.block.matchAndFixNeighbors(col, row);
-			return 'Built gate';
-		},
-	},
-	{
-		name: 'feeder',
-		title: 'Build feeder',
-		cost: 50,
-		perTile: true,
-		canStart: function(col, row, tile) {
-			return tile.owned && !tile.block;
-		},
-		start: function(col, row, tile) {
-			tile.block = Crafty.e('2D, Feeder')._Feeder(col, row);
-			return 'Built feeder';
+			if (tile.filth == 0) {
+				hideTip('cleaning');
+				hideTip('moreCleaning');
+				hideTip('unhappyChicken');
+			}
+			return tile.filth > 0 ? 'Cleaning' : 'Clean!';
 		},
 	},
 	{
@@ -86,7 +51,51 @@ var indexedActions = [
 				return null;
 			}
 			tile.block.refill();
+			hideTip('buyFood');
 			return 'Filled feeder';
+		},
+	},
+	{
+		name: 'fence',
+		title: 'Build fence',
+		cost: 1,
+		perTile: true,
+		canStart: function(col, row, tile) {
+			return tile.owned && !tile.block;
+		},
+		start: function(col, row, tile) {
+			tile.block = Crafty.e('2D, Wall')._Wall(col, row);
+			tile.block.matchAndFixNeighbors(col, row);
+			hideTip('buyFence');
+			return 'Built fence';
+		},
+	},
+	{
+		name: 'gate',
+		title: 'Build gate',
+		cost: 10,
+		perTile: true,
+		canStart: function(col, row, tile) {
+			return tile.owned && !tile.block;
+		},
+		start: function(col, row, tile) {
+			tile.block = Crafty.e('2D, Wall, Gate, Delay')._Wall(col, row);
+			tile.block.matchAndFixNeighbors(col, row);
+			hideTip('buyFence');
+			return 'Built gate';
+		},
+	},
+	{
+		name: 'feeder',
+		title: 'Build feeder',
+		cost: 50,
+		perTile: true,
+		canStart: function(col, row, tile) {
+			return tile.owned && !tile.block;
+		},
+		start: function(col, row, tile) {
+			tile.block = Crafty.e('2D, Feeder')._Feeder(col, row);
+			return 'Built feeder';
 		},
 	},
 	{

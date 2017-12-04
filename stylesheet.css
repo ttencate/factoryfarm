@@ -165,6 +165,34 @@ a {
 	text-shadow: 1px 1px 2px black;
 }
 
+#tip {
+	visibility: hidden;
+	opacity: 0.0;
+	transition: opacity 2s linear;
+	position: absolute;
+	z-index: 50;
+	top: 16px;
+	left: 25vw;
+	width: 50vw;
+	padding: 8px;
+	border-radius: 4px;
+	font-size: 20px;
+	background-color: rgba(0, 0, 0, 0.3);
+	text-shadow: 1px 1px 2px black;
+}
+
+#tip.hidden {
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s 0.5s, opacity 2s linear;
+}
+
+#tip.visible {
+	visibility: visible;
+	opacity: 1;
+	transition: opacity 0.5s linear;
+}
+
 dl, dt, dd {
 	margin: 0;
 	padding: 0;
