@@ -12,7 +12,7 @@ Crafty.c('KeyControls', {
 
 		this.chickensText = document.getElementById('chickensText');
 		this.chickenPopup = document.getElementById('chickenPopup');
-		this.setMoney(30);
+		this.setMoney(50);
 
 		// acceleration
 		this.acc = 0.005;

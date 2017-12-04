@@ -239,8 +239,8 @@ Crafty.c('Chicken', {
 			}
 		}
 
-		// quality = average happines (clamped to 0-100) over lifetime
-		this.quality = (this.quality * this.ageMs + utility.clamp(0, 100, this.happy) * dt) / (this.ageMs + dt);
+		// quality = average (happines+fed)/2 , clamped to 0-100, over lifetime
+		this.quality = (this.quality * this.ageMs + utility.clamp(0, 100, (this.happy + this.fed) / 2) * dt) / (this.ageMs + dt);
 		this.ageMs += dt;
 		var ageYears = this.ageYears();
 		if (ageYears >= params.ripeAgeYears && !this.ageIcon) {
