@@ -6,7 +6,7 @@ Crafty.c('Chicken', {
 		this.baseZ = zLevels['chicken'];
 		this.name = femaleNames[Math.floor(Math.random() * femaleNames.length)];
 		this.happy = 100;
-		this.fed = 100;
+		this.fed = 50;
 		this.ageMs = 0;
 		this.sick = 0;
 		this.quality = 100;
@@ -28,7 +28,7 @@ Crafty.c('Chicken', {
 		this.updateVelocity = function(dt) {
 			var dx = (this.dest.originX ? this.dest.originX() : this.dest.x) - this.originX();
 			var dy = (this.dest.originY ? this.dest.originY() : this.dest.y) - this.originY();
-			
+
 			// use proximity to slow down in time and determine if the chicken is close enough to satisfy needs
 			var dSquared = dx * dx + dy * dy;
 			var prox;
@@ -38,7 +38,7 @@ Crafty.c('Chicken', {
 					var fraction = dt / params.feedTime;
 					if (this.dest.has && this.dest.has('Feeder')) {
 						var consumed = this.dest.consume(fraction);
-						if (this.fed <= 0 && consumed > 0) {
+						if (consumed > 0) {
 							hideTip('hungryChicken');
 						}
 						this.fed = Math.min(100, this.fed + 100 * consumed);

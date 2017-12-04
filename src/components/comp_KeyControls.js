@@ -67,6 +67,9 @@ Crafty.c('KeyControls', {
 			} else if (actionsByKey[numberKey]) {
 				this.selectAction(actionsByKey[numberKey].name);
 			}
+
+			// no need to check every frame, keypress is a nice occasion
+			showTip('thatsAll');
 		});
 		this.bind('KeyUp', function(keyEvent) {
 			var k = keyEvent.key;
