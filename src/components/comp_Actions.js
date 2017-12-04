@@ -43,6 +43,11 @@ var indexedActions = [
 		cost: 10,
 		perTile: true,
 		needFreeTile: true,
+		start: function(col, row) {
+			tileMatrix[col][row].block = Crafty.e('2D, Wall, Gate, Delay')._Wall(col, row);
+			tileMatrix[col][row].block.matchAndFixNeighbors(col, row);
+			return 'Built gate';
+		},
 	},
 	{
 		name: 'feeder',
