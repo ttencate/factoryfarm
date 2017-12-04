@@ -80,7 +80,7 @@ Crafty.c('Chicken', {
 				}
 			}
 
-			console.log('fed: ' + this.fed + ', happy: ' + this.happy);
+			// console.log('fed: ' + this.fed + ', happy: ' + this.happy);
 
 			this.needWatch += params.needCheckTime;
 			var col = Math.floor(this.originX() / tileSize);
