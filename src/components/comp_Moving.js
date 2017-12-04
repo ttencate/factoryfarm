@@ -64,8 +64,10 @@ Crafty.c("Moving", {
 				var gateObj = obj._parent;
 				if (gateObj && gateObj.matchNeighbors && !gateObj.gateOpen) {
 					gateObj.gateOpen = true;
+					Crafty.audio.play('gate_open');
 					gateObj.matchNeighbors();
 					gateObj.delay(function() {
+						// Crafty.audio.play('gate_close');
 						this.gateOpen = false;
 						this.matchNeighbors();
 					}.bind(gateObj), 500);

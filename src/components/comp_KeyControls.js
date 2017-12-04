@@ -91,6 +91,7 @@ Crafty.c('KeyControls', {
 					// this.grabArea.rotation = Math.rad2deg(polar.phi);
 					var grabbed = this.grabArea.hit("Chicken");
 					if (grabbed) {
+						Crafty.audio.play('pickup', 1, 0.6);
 						grabbed[0].obj.isGrabbed = true;
 						this.grabbed = grabbed[0].obj;
 						this.updateChickenPopup(this.grabbed);
@@ -116,9 +117,12 @@ Crafty.c('KeyControls', {
 					if (chopCollisions = this.grabbed.hit("ChopArea")) {
 						if (this.grabbed.has("Chicken")) {
 							chopCollisions[0].obj._parent.animate();
+							Crafty.audio.play("chop")
 							player.setMoney(player.money + 0.01 * Math.round(3500 + Math.random() * 10));
 							this.grabbed.destroy();
 						}
+					} else {
+						Crafty.audio.play("drop"+ (1+Math.round(Math.random())));
 					}
 					this.grabbed.isGrabbed = false;
 					this.grabbed = null;

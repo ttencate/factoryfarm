@@ -35,7 +35,8 @@ Crafty.scene('Loading', function() {
 			Crafty.sprite(64, 64, "assets/images/tileset.png", {
 				tileset: [0,0],	
 			});
-			levelIdx = 0;
+			// levelIdx = 0;
+			// Crafty.audio.play('bgmusic', -1, 0.3);
 			Crafty.scene('Main');
 		},
 

@@ -1,6 +1,17 @@
 var assetsObject = {
 	"audio": {
 		"bgmusic": ["bgmusic.mp3", "bgmusic.ogg"],
+		"pok1": ["pok1.mp3"],
+		"pok2": ["pok2.mp3"],
+		"pok3": ["pok3.mp3"],
+		"pickup": ["pickup.mp3"],
+		"gate_open": ["gate_open.mp3"],
+		"gate_close": ["gate_close.mp3"],
+		"chop": ["chop.mp3"],
+		"drop1": ["drop1.mp3"],
+		"drop2": ["drop2.mp3"],
+		"hungry": ["hungry.mp3"],
+		"unhappy": ["hungry.mp3"],
 	},
 	"sprites": {
 		"farmer.png": {

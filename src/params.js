@@ -6,8 +6,11 @@ params = {
     needCheckTime: 4000,
     chickWalkRange: 400,
     grassSearchRadius: 15,
+    pCluck: 0.25,
+    criticalNeed: 30,
     // fed factors
-    hunger: 0.1,
+    hunger: 0.13,
+    eatSpeed: 0.005,
     pShit: 1,
     // happy factors
     pavedImpact: 70,

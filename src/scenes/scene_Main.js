@@ -188,6 +188,7 @@ Crafty.scene('Main', function() {
 							._KeyControls(Crafty.keys.LEFT_ARROW, Crafty.keys.RIGHT_ARROW, Crafty.keys.UP_ARROW, Crafty.keys.DOWN_ARROW, Crafty.keys.SPACE, Crafty.keys.SHIFT);
 					// player.ignoreGrimness = 1.0;
 					Crafty.viewport.follow(player);
+					// Crafty.viewport.scale(1);
 					break;
 			}
 		}

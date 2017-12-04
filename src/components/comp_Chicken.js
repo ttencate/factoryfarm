@@ -30,11 +30,9 @@ Crafty.c('Chicken', {
 			// use proximity to slow down in time and determine if the chicken is close enough to satisfy needs
 			var dSquared = dx * dx + dy * dy;
 			if (dSquared < params.needD2) {
-				// chicken is really close to destination that was
+				// chicken is really close to destination that was chosen
 				if (this.currentNeed === "fed") {
-					this.fed += 0.5;
-				} else if (this.currentNeed === "happy") {
-					this.happy += 0.5;
+					this.fed += params.eatSpeed * dt;
 				}
 			}
 			var prox = Math.min(dSquared, params.proxLimit) / params.proxLimit;
@@ -61,8 +59,20 @@ Crafty.c('Chicken', {
 			var dt = timestep.dt;
 			this.needWatch -= dt;
 			if (this.needWatch < 0) {
+				if (this.fed < params.criticalNeed) {
+					Crafty.audio.play('hungry');
+				} else if (this.happy < params.criticalNeed) {
+					Crafty.audio.play('unhappy');
+				} else {
+					var clucking = Math.random();
+					if (clucking < params.pCluck) {
+						Crafty.audio.play('pok'+Math.round(1+Math.random()*2), 1, 0.5);
+					}
+				}
+
+				console.log('fed: ' + this.fed + ', happy: ' + this.happy);
+
 				this.needWatch += params.needCheckTime;
-				// console.log('fed: ' + this.fed + ', happy: ' + this.happy);
 				var col = Math.floor(this.originX() / tileSize);
 				var row = Math.floor(this.originY() / tileSize);
 				if (this.currentTile !== tileMatrix[col][row]) {
@@ -84,7 +94,7 @@ Crafty.c('Chicken', {
 				var ssHappy = 100; // base is perfectly happy.
 
 				if (this.currentTile.paved) {
-					ssHappy -= 70; // don't like paved.
+					ssHappy -= params.pavedImpact; // don't like paved.
 				}
 				ssHappy -= params.filthImpact * this.currentTile.filth; // filth makes chicken unhappy
 				// account for crowdedness, get chicken on same tile
@@ -92,7 +102,7 @@ Crafty.c('Chicken', {
 				ssHappy -= (chickenSameTile.length - 1) * params.crowdImpact;
 
 				var dHappy = ssHappy - this.happy;
-				this.happy += (3 * utility.sign(dHappy) + 0.1 * dHappy) * dt;
+				this.happy += 0.005 * dHappy * dt;
 
 				// maybe make a doo-doo
 				if (Math.random() < params.pShit) {
@@ -104,10 +114,10 @@ Crafty.c('Chicken', {
 				// 1. satisfy really urgent needs
 				// 2. satisfy current need up to a threshold
 				var minNeed = Math.min(this.fed, this.happy);
-				if (this.minNeed < 30) {
-					if (this.minNeed === this.fed) {
+				if (minNeed < params.criticalNeed) {
+					if (minNeed === this.fed) {
 						this.currentNeed = "fed";
-					} else if (this.minNeed === this.happy) {
+					} else if (minNeed === this.happy) {
 						this.currentNeed = "happy";
 					}
 				} else if (this.currentNeed === "none" || this[this.currentNeed] > 80) { // reselect need if this one is satisfied
@@ -143,6 +153,7 @@ Crafty.c('Chicken', {
 						d2 = dx * dx + dy * dy;
 						if (d2 < d2min) {
 							this.dest = feeder;
+							d2min = d2;
 						}
 					}
 				} else if (this.currentNeed === "happy") {
@@ -159,7 +170,7 @@ Crafty.c('Chicken', {
 							if (tileMatrix[newCol] && tileMatrix[newCol][newRow]) {
 								if (tileMatrix[newCol][newRow].block) {
 									break; // can't see through walls.
-								} else if (!tileMatrix[newCol][newRow].paved) {
+								} else if (!tileMatrix[newCol][newRow].paved && tileMatrix[newCol][newRow].filth < 50) {
 									this.dest = {x: newCol * tileSize, y: newRow * tileSize};
 									foundGrass = true;
 									break;
