@@ -11,7 +11,7 @@ Crafty.c('Chicken', {
 		this.sick = 0;
 		this.quality = 100;
 		this.acc = 0.001;
-		this.drag = 0.007;
+		this.drag = 0.015;
 		this.isGrabbed = false;
 		this.currentNeed = "none";
 		this.needWatch = Math.random() * params.needCheckTime;
