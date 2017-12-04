@@ -44,7 +44,7 @@ Crafty.scene('Main', function() {
 				co.x + co.w, co.y + co.h
 			);
 			// Write our grimness attribute
-			var grimness = (globalGrimness + (entity.grimness || 0)) * (1.0 - (entity.ignoreGrimness || 0));
+			var grimness = utility.clamp(0, 1, globalGrimness + (entity.grimness || 0)) * (1.0 - (entity.ignoreGrimness || 0));
 			e.program.writeVector("aGrimness", grimness, 0.0);
 		}
 	);
