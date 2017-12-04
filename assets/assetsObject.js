@@ -64,5 +64,13 @@ var assetsObject = {
 				marker: [0, 0],
 			},
 		},
+		"icons.png": {
+			tile: 32,
+			tileh: 32,
+			map: {
+				iconRipe: [0, 0],
+				iconOverripe: [1, 0],
+			},
+		},
 	},
 };

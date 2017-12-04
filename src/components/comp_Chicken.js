@@ -185,9 +185,19 @@ Crafty.c('Chicken', {
 				}
 			}
 
-			// quality = average happines over lifetime
-			this.quality = (this.quality * this.ageMs + this.happy * dt) / (this.ageMs + dt);
+			// quality = average happines (clamped to 0-100) over lifetime
+			this.quality = (this.quality * this.ageMs + utility.clamp(0, 100, this.happy) * dt) / (this.ageMs + dt);
 			this.ageMs += dt;
+			var ageYears = this.ageYears();
+			if (ageYears >= params.ripeAgeYears && !this.ageIcon) {
+				this.ageIcon = Crafty.e('2D, WebGL, Sprite, iconRipe')
+						.attr({x: this.x, y: this.y - 16, w: 32, h: 32, z: this.z});
+				this.attach(this.ageIcon);
+			}
+			if (this.ageIcon) {
+				this.ageIcon.sprite(ageYears >= params.overripeAgeYears ? 'iconOverripe' : 'iconRipe');
+				this.ageIcon.z = this.z;
+			}
 
 			this.updateVelocity(dt);
 		});
@@ -198,20 +208,15 @@ Crafty.c('Chicken', {
 		return this.ageMs / params.yearDurationMilliseconds;
 	},
 
-	isRipe: function() {
-		var ageYears = this.ageYears();
-		return ageYears >= params.ripeMinAgeYears;
-	},
-
 	getPrice: function() {
 		var ageYears = this.ageYears();
 		var ripeness;
-		if (ageYears < params.ripeMinAgeYears) {
-			ripeness = ageYears / params.ripeMinAgeYears;
-		} else if (ageYears < params.ripeMaxAgeYears) {
+		if (ageYears < params.ripeAgeYears) {
+			ripeness = ageYears / params.ripeAgeYears;
+		} else if (ageYears < params.overripeAgeYears) {
 			ripeness = 1;
 		} else {
-			ripeness = (params.deathAgeYears - ageYears) / (params.deathAgeYears - params.ripeMaxAgeYears);
+			ripeness = (params.deathAgeYears - ageYears) / (params.deathAgeYears - params.overripeAgeYears);
 		}
 		var quality = utility.clamp(0, 1, this.quality / 100);
 		var priceRipe = utility.lerp(params.basePriceRipe, params.topQualityPriceRipe, quality);

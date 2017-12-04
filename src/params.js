@@ -27,9 +27,9 @@ params = {
     basePriceUnripe: 10,
     basePriceRipe: 40,
     topQualityPriceRipe: 80,
-    ripeMinAgeYears: 3,
-    ripeMaxAgeYears: 4,
-    deathAgeYears: 5,
+    ripeAgeYears: 3,
+    overripeAgeYears: 4,
+    deathAgeYears: 6,
 };
 params.monthDurationMilliseconds = params.yearDurationMilliseconds / 12;
 
