@@ -44,8 +44,7 @@ Crafty.scene('Loading', function() {
 		},
 
 		function(e) {
-			console.log('loading error');
-			console.log(e);
+			console.log('loading error', e);
 		}
 	);
     
