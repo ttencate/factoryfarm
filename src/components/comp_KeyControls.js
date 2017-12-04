@@ -122,7 +122,7 @@ Crafty.c('KeyControls', {
 						if (this.grabbed.has("Chicken")) {
 							chopCollisions[0].obj._parent.animate();
 							Crafty.audio.play("chop")
-							player.setMoney(player.money + 0.01 * Math.round(3500 + Math.random() * 10));
+							player.setMoney(player.money + this.grabbed.getPrice());
 							this.grabbed.destroy();
 						}
 					} else {
@@ -278,6 +278,7 @@ Crafty.c('KeyControls', {
 		html += '<dt>Happiness</dt><dd>' + heartString(chicken.happy) + '</dd>';
 		html += '<dt>Fed</dt><dd>' + Math.round(chicken.fed) + '%</dd>';
 		html += '<dt>Age</dt><dd>' + Math.floor(chicken.age) + ' years</dd>';
+		html += '<dt>Value</dt><dd>' + utility.formatMoney(chicken.getPrice()) + '</dd>';
 		html += '</dl>';
 		this.chickenPopup.innerHTML = html;
 	},

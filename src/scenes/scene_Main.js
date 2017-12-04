@@ -56,7 +56,6 @@ Crafty.scene('Main', function() {
 		
 		level = TileMaps["map"];
 		tileSets = level.tilesets;
-		tileSet = null;
 
 		// determine tile sizes
 		var xTiles, yTiles;
@@ -64,7 +63,6 @@ Crafty.scene('Main', function() {
 			var t = tileSets[i];
 			if (t.name === "tileset") {
 				// these are the real tiles; solid stuff, background etc.
-				tileSet = t;
 				tileSize = t.tilewidth;
 				xTiles = t.imagewidth / t.tilewidth;
 				yTiles = t.imageheight / t.tileheight;
@@ -129,8 +127,19 @@ Crafty.scene('Main', function() {
 							}
 						}
 					};
-				tileIdx = solidLayer.data[linearIndex];
-				tileType = tileSet.tiles[tileIdx - tileSet.firstgid] && tileSet.tiles[tileIdx - tileSet.firstgid].type;
+
+				// find tile type from tile set containing this tile's gid (global id)
+				var tileGid = solidLayer.data[linearIndex];
+				var tileType = null;
+				for (var i = 0; i < tileSets.length; i++) {
+					var tileSet = tileSets[i];
+					if (tileGid >= tileSet.firstgid && tileGid < tileSet.firstgid + tileSet.tilecount) {
+						var tile = tileSet.tiles[tileGid - tileSet.firstgid];
+						tileType = tile && tile.type;
+						break;
+					}
+				}
+
 				// add impassable items
 				if (tileType === 'Feeder') {
 					tileMatrix[col][row].block = Crafty.e('2D, Feeder')._Feeder(col, row);
@@ -138,7 +147,7 @@ Crafty.scene('Main', function() {
 					Crafty.e('Seller')._Seller(col, row);
 				} else if (tileType === 'Fence') {
 					tileMatrix[col][row].block = Crafty.e('2D, Wall')._Wall(col, row);//.attr({
-						// tileIdx: tileIdx
+						// tileGid: tileGid
 					//});
 				} else if (tileType === 'Gate') {
 					tileMatrix[col][row].block = Crafty.e('2D, Wall, Gate, Delay')._Wall(col, row);//.attr({

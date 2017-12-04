@@ -188,4 +188,7 @@ Crafty.c('Chicken', {
 		return this;
 	},
 
+	getPrice: function() {
+		return 0.01 * Math.round(3500 + Math.random() * 10);
+	},
 });
