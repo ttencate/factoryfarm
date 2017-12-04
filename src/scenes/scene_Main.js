@@ -48,7 +48,7 @@ Crafty.scene('Main', function() {
 	Crafty.defaultShader('Sprite', colorGradingShader);
 
 	if (!bgMusic) {
-		bgMusic = Crafty.audio.play('bgMusic',-1,0.3);
+		bgMusic = Crafty.audio.play('bgmusic',-1,0.3);
 		if(mutemusic && bgMusic.source){
 			bgMusic.pause();
 		}
@@ -72,6 +72,7 @@ Crafty.scene('Main', function() {
 		}
 
 		var solidLayer = null;
+		var pathsLayer = null;
 		var grassLayer = null;
 		var spawnLayer = null;
 		var ownedLayer = null;
@@ -86,6 +87,8 @@ Crafty.scene('Main', function() {
 				spawnLayer = layer;
 			} else if (layer.name === "owned") {
 				ownedLayer = layer;
+			} else if (layer.name === "paths") {
+				pathsLayer = layer;
 			}
 		}
 		
@@ -174,6 +177,13 @@ Crafty.scene('Main', function() {
 						.collision([18,104, 174,104, 174,252, 18,252]);
 				}
 
+				var pathTile = pathsLayer.data[linearIndex];
+				if (pathTile) {
+					Crafty.e('2D, WebGL, Sprite, filth') // temporary sprite in tileset
+						.attr({ x: col * tileSize, y: row * tileSize, z: row * tileSize + zLevels.paths, w: tileSize, h: tileSize })
+						.sprite((pathTile - 1) % 10, Math.floor((pathTile - 1) / 10));
+				}
+
 				var ownedTile = getTile(ownedLayer.data[linearIndex]);
 				tileMatrix[col][row].owned = ownedTile.type === 'Owned';
 				tileMatrix[col][row].forSale = ownedTile.type !== 'NotForSale';
@@ -207,7 +217,7 @@ Crafty.scene('Main', function() {
 					chicken.ageMs = (properties.age || 0) * params.yearDurationMilliseconds;
 					break;
 				case 'Farmer':
-					player = Crafty.e('2D, WebGL, farmer_down, Wallet, KeyControls, Moving, Collision, SpriteAnimation, ReelFromVelocity, OriginCoordinates, CanMoveThroughGates')
+					player = Crafty.e('2D, WebGL, farmer_down, Wallet, KeyControls, Actions, Moving, Collision, SpriteAnimation, ReelFromVelocity, OriginCoordinates, CanMoveThroughGates')
 							.attr({x: x - 32, y: y - 32, w: 64, h: 64, z: zLevels['player']})
 							.collision([15,47, 49,47, 49,59, 15,59])
 							.reel('walking_down', 500, [[0, 0], [1, 0], [2, 0], [3, 0]])

@@ -105,18 +105,18 @@ a {
 	font-size: 16px;
 }
 
-#hotbar-item-1 {
+#hotbar-item-chicken {
 	background-image: url(assets/images/chicken.png);
 	background-size: 400%;
 	background-position: 0px -128px;
 }
 
-#hotbar-item-2 {
+#hotbar-item-fence {
 	background-image: url(assets/images/tileset.png);
 	background-position: -128px -182px;
 }
 
-#hotbar-item-3 {
+#hotbar-item-feeder {
 	background-image: url(assets/images/tileset.png);
 	background-position: -320px -128px;
 }
