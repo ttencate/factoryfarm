@@ -28,7 +28,7 @@ var utility = {
 	},
 
 	formatMoney: function(money) {
-		return '$' + Math.round(money * 100) / 100;
+		return (money < 0 ? '−' : '') + '$' + Math.abs(Math.round(money * 100) / 100);
 	},
 
 	clamp: function(min, max, value) {

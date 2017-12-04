@@ -41,6 +41,7 @@ zLevels = {
     markers: 1670,
     walls: 1680,
     roof: 1900,
+    popup: 5000,
 };
 
 costs = {

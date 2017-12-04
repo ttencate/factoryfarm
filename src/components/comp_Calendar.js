@@ -1,7 +1,7 @@
 Crafty.c('Calendar', {
 
 	year: 0,
-	month: 0,
+	month: 11, // TODO set back!
 
 	init: function() {
 		this.requires('Delay');
@@ -14,6 +14,7 @@ Crafty.c('Calendar', {
 		if (this.month >= 12) {
 			this.month = 0;
 			this.year++;
+			Crafty('Wallet').payMoney(ownedTiles * params.rentPerTile, 'Yearly rent');
 		}
 		this.updateTexts();
 	},
