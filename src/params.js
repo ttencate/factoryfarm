@@ -8,6 +8,9 @@ var params = {
 	grassSearchRadius: 15,
 	pCluck: 0.25,
 	criticalNeed: 30,
+	repelForce: 0.001,
+	repelForceThreshold: 0.0005,
+	repelForceDistance: 40,
 	// fed factors
 	hunger: 100/30 / 1000, // eat once every 30 seconds (= 2 times per year = $0.66/year)
 	feedTime: 2000, // milliseconds needed to eat an empty belly full

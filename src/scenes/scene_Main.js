@@ -7,6 +7,9 @@ var ownedTiles = 0;
 var player;
 
 function getTile(col, row) {
+	if (!isFinite(col) || !isFinite(row)) {
+		throw 'invalid coordinates: ' + col + ', ' + row;
+	}
 	if (col < 0 || col >= tileMatrix.length) {
 		return {};
 	}

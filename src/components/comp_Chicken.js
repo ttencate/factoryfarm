@@ -55,15 +55,50 @@ Crafty.c('Chicken', {
 				this.vy += Math.sin(angle) * this.acc * prox * dt;
 			}
 
+			// apply force away from other chickens
+			var col = Math.floor(this.originX() / tileSize);
+			var row = Math.floor(this.originY() / tileSize);
+			var fx = 0;
+			var fy = 0;
+			var unitCount = 0; // never consider more than 10 just to be safe performance-wise
+			for (var dr = -1; dr <= 1; dr++) {
+				for (var dc = -1; dc <= 1; dc++) {
+					var tile = getTile(col + dc, row + dr);
+					if (!tile.units) continue;
+					for (var i = 0; i < tile.units.length; i++) {
+						unitCount++;
+						if (unitCount > 10) break;
+						var unit = tile.units[i];
+						if (unit === this) continue;
+						if (!unit.has || !unit.has('Chicken')) continue;
+						var dx = this.originX() - unit.originX();
+						var dy = this.originY() - unit.originY();
+						var r = Math.sqrt(dx*dx + dy*dy);
+						if (r < 0.01) {
+							continue; // Avoid weirdness near/at zero.
+						}
+						var force = params.repelForce * Math.exp(-r*r / (params.repelForceDistance*params.repelForceDistance));
+						fx += dx / r * force;
+						fy += dy / r * force;
+					}
+					if (unitCount > 10) break;
+				}
+				if (unitCount > 10) break;
+			}
+			if (fx*fx + fy*fy >= params.repelForceThreshold*params.repelForceThreshold) { // prevents jittering back and forth
+				this.vx += fx * dt;
+				this.vy += fy * dt;
+			}
+
 			// apply drag force
 			this.vx -= this.drag * this.vx * dt;
 			this.vy -= this.drag * this.vy * dt;
-			if (utility.sign(this.vx) * this.vx < 0.01) {
-				this.vx = 0;
-			}
-			if (utility.sign(this.vy) * this.vy < 0.01) {
-				this.vy = 0;
-			}
+			// if (utility.sign(this.vx) * this.vx < 0.01) {
+			// 	this.vx = 0;
+			// }
+			// if (utility.sign(this.vy) * this.vy < 0.01) {
+			// 	this.vy = 0;
+			// }
 
 		};
 

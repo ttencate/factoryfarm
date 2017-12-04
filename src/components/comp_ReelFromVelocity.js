@@ -1,6 +1,8 @@
 "use strict";
 
 Crafty.c('ReelFromVelocity', {
+	directionChangeCooldown: 0,
+
 	init: function() {
 		this.bind('EnterFrame', this.updateReel);
 	},
@@ -12,9 +14,11 @@ Crafty.c('ReelFromVelocity', {
 	updateReel: function(timestep) {
 		var directionFromVelocity = this.directionFromVelocity();
 		var direction = this.direction || directionFromVelocity;
-		if (direction && this.reelDirection !== direction) {
+		this.directionChangeCooldown--;
+		if (direction && this.reelDirection !== direction && this.directionChangeCooldown <= 0) {
 			this.animate('walking_' + direction, -1);
 			this.reelDirection = direction;
+			this.directionChangeCooldown = 5;
 		} else if (!directionFromVelocity) {
 			this.pauseAnimation();
 			this.reelPosition(0);
@@ -23,7 +27,7 @@ Crafty.c('ReelFromVelocity', {
 	},
 
 	directionFromVelocity: function() {
-		if (this.vx || this.vy) {
+		if (Math.abs(this.vx) + Math.abs(this.vy) > 0.01) {
 			if (Math.abs(this.vx) > Math.abs(this.vy)) {
 				if (this.vx > 0) {
 					return 'right';
