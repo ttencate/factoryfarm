@@ -153,7 +153,6 @@ Crafty.scene('Main', function() {
 						ssHappy -= params.filthImpact * this.filth; // filth makes chicken unhappy
 						// account for crowdedness, get chicken on same tile
 						ssHappy -= (this.units.length - 1) * params.crowdImpact;
-						console.log(this.units.length + " aaand " + ssHappy);
 					}
 				};
 

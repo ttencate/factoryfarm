@@ -110,15 +110,6 @@ Crafty.c('Chicken', {
 			// update needs
 			this.fed -= params.hunger * dt;
 			// calculate steady-state happiness in this location
-								// var ssHappy = 100; // base is perfectly happy.
-
-								// if (this.currentTile.paved) {
-								// 	ssHappy -= params.pavedImpact; // don't like paved.
-								// }
-								// ssHappy -= params.filthImpact * this.currentTile.filth; // filth makes chicken unhappy
-								// // account for crowdedness, get chicken on same tile
-								// var chickenSameTile = this.currentTile.units;
-								// ssHappy -= (chickenSameTile.length - 1) * params.crowdImpact;
 			var ssHappy = this.currentTile.ssHappiness();
 			var dHappy = ssHappy - this.happy;
 			this.happy += 0.005 * dHappy * dt;
