@@ -233,11 +233,11 @@
                  "name":"",
                  "properties":
                     {
-                     "age":4
+                     "age":2.5
                     },
                  "propertytypes":
                     {
-                     "age":"int"
+                     "age":"float"
                     },
                  "rotation":0,
                  "type":"Chicken",
@@ -252,11 +252,11 @@
                  "name":"",
                  "properties":
                     {
-                     "age":3
+                     "age":2
                     },
                  "propertytypes":
                     {
-                     "age":"int"
+                     "age":"float"
                     },
                  "rotation":0,
                  "type":"Chicken",
@@ -271,11 +271,11 @@
                  "name":"",
                  "properties":
                     {
-                     "age":2
+                     "age":1
                     },
                  "propertytypes":
                     {
-                     "age":"int"
+                     "age":"float"
                     },
                  "rotation":0,
                  "type":"Chicken",
@@ -290,11 +290,11 @@
                  "name":"",
                  "properties":
                     {
-                     "age":1
+                     "age":1.5
                     },
                  "propertytypes":
                     {
-                     "age":"int"
+                     "age":"float"
                     },
                  "rotation":0,
                  "type":"Chicken",

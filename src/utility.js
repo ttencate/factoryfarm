@@ -30,6 +30,14 @@ var utility = {
 	formatMoney: function(money) {
 		return '$' + Math.round(money * 100) / 100;
 	},
+
+	clamp: function(min, max, value) {
+		return Math.max(min, Math.min(max, value));
+	},
+
+	lerp: function(a, b, f) {
+		return (1 - f) * a + f * b;
+	},
 };
 
 Math.deg2rad = function(degrees) {

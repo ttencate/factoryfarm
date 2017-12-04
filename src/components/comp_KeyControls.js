@@ -277,7 +277,8 @@ Crafty.c('KeyControls', {
 		html += '<dl>';
 		html += '<dt>Happiness</dt><dd>' + heartString(chicken.happy) + '</dd>';
 		html += '<dt>Fed</dt><dd>' + Math.round(chicken.fed) + '%</dd>';
-		html += '<dt>Age</dt><dd>' + Math.floor(chicken.age) + ' years</dd>';
+		html += '<dt>Age</dt><dd>' + Math.floor(chicken.ageYears() * 10) / 10 + ' years</dd>';
+		html += '<dt>Quality</dt><dd>' + Math.round(chicken.quality) + '%</dd>';
 		html += '<dt>Value</dt><dd>' + utility.formatMoney(chicken.getPrice()) + '</dd>';
 		html += '</dl>';
 		this.chickenPopup.innerHTML = html;

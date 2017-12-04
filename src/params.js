@@ -22,9 +22,16 @@ params = {
     interactDist: 80,
     indicatorSize: 32,
 
-    monthDurationMilliseconds: 60000 / 12,
+    yearDurationMilliseconds: 60000,
     rentPerTile: 1,
+    basePriceUnripe: 10,
+    basePriceRipe: 40,
+    topQualityPriceRipe: 80,
+    ripeMinAgeYears: 3,
+    ripeMaxAgeYears: 4,
+    deathAgeYears: 5,
 };
+params.monthDurationMilliseconds = params.yearDurationMilliseconds / 12;
 
 zLevels = {
     background: 1000,

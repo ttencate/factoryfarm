@@ -5,10 +5,11 @@ Crafty.c('Chicken', {
 	init: function() {
 		this.baseZ = zLevels['chicken'];
 		this.name = femaleNames[Math.floor(Math.random() * femaleNames.length)];
-		this.happy = 50;
+		this.happy = 100;
 		this.fed = 50;
-		this.age = 0;
+		this.ageMs = 0;
 		this.sick = 0;
+		this.quality = 100;
 		this.acc = 0.001;
 		this.drag = 0.007;
 		this.isGrabbed = false;
@@ -183,12 +184,38 @@ Crafty.c('Chicken', {
 					}
 				}
 			}
+
+			// quality = average happines over lifetime
+			this.quality = (this.quality * this.ageMs + this.happy * dt) / (this.ageMs + dt);
+			this.ageMs += dt;
+
 			this.updateVelocity(dt);
 		});
 		return this;
 	},
 
+	ageYears: function() {
+		return this.ageMs / params.yearDurationMilliseconds;
+	},
+
+	isRipe: function() {
+		var ageYears = this.ageYears();
+		return ageYears >= params.ripeMinAgeYears;
+	},
+
 	getPrice: function() {
-		return 0.01 * Math.round(3500 + Math.random() * 10);
+		var ageYears = this.ageYears();
+		var ripeness;
+		if (ageYears < params.ripeMinAgeYears) {
+			ripeness = ageYears / params.ripeMinAgeYears;
+		} else if (ageYears < params.ripeMaxAgeYears) {
+			ripeness = 1;
+		} else {
+			ripeness = (params.deathAgeYears - ageYears) / (params.deathAgeYears - params.ripeMaxAgeYears);
+		}
+		var quality = utility.clamp(0, 1, this.quality / 100);
+		var priceRipe = utility.lerp(params.basePriceRipe, params.topQualityPriceRipe, quality);
+		var price = utility.lerp(params.basePriceUnripe, priceRipe, ripeness);
+		return price;
 	},
 });
