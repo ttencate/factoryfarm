@@ -1,16 +1,16 @@
 var params = {
 	debug: false,
-	proxLimit: 20000,
-  proxLimitLow: 10000,
-	needD2: 10000,
+	proxLimit: 144*144,
+  proxLimitLow: 100*100,
+	needD2: 64*64,
 	needCheckTime: 4000,
 	chickWalkRange: 400,
 	grassSearchRadius: 15,
 	pCluck: 0.25,
 	criticalNeed: 30,
 	// fed factors
-	hunger: 0.13,
-	eatSpeed: 0.005,
+	hunger: 100/30 / 1000, // eat once every 30 seconds (= 2 times per year = $0.66/year)
+	feedTime: 2000, // milliseconds needed to eat an empty belly full
 	pShit: 1,
 	// happy factors
 	pavedImpact: 70,

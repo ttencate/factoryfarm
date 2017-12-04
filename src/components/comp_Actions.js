@@ -75,8 +75,18 @@ var indexedActions = [
 	{
 		name: 'food',
 		title: 'Fill feeder',
-		cost: 20,
+		cost: 10,
 		perTile: true,
+		canStart: function(col, row, tile) {
+			return tile.block && tile.block.has('Feeder');
+		},
+		start: function(col, row, tile) {
+			if (!tile.block.refill) {
+				return null;
+			}
+			tile.block.refill();
+			return 'Filled feeder';
+		},
 	},
 	{
 		name: 'land',

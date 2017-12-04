@@ -59,6 +59,7 @@ var assetsObject = {
 			tile: 64,
 			tileh: 64,
 			map: {
+				emptyTileSetTile: [0, 0],
 				highlightYes: [0,2],
 				highlightNo: [0,3],
 				filth: [6, 3],

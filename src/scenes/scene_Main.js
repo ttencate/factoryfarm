@@ -48,7 +48,7 @@ Crafty.scene('Main', function() {
 	Crafty.defaultShader('Sprite', colorGradingShader);
 
 	if (!bgMusic) {
-		bgMusic = Crafty.audio.play('bgmusic',-1,0.3);
+		bgMusic = Crafty.audio.play('bgmusic',-1,1.0);
 		if(mutemusic && bgMusic.source){
 			bgMusic.pause();
 		}
@@ -181,7 +181,7 @@ Crafty.scene('Main', function() {
 
 				var pathTile = pathsLayer.data[linearIndex];
 				if (pathTile) {
-					Crafty.e('2D, WebGL, Sprite, filth') // temporary sprite in tileset
+					Crafty.e('2D, WebGL, Sprite, emptyTileSetTile')
 						.attr({ x: col * tileSize, y: row * tileSize, z: row * tileSize + zLevels.paths, w: tileSize, h: tileSize })
 						.sprite((pathTile - 1) % 10, Math.floor((pathTile - 1) / 10));
 				}

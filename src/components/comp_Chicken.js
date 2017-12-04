@@ -6,7 +6,7 @@ Crafty.c('Chicken', {
 		this.baseZ = zLevels['chicken'];
 		this.name = femaleNames[Math.floor(Math.random() * femaleNames.length)];
 		this.happy = 100;
-		this.fed = 50;
+		this.fed = 100 * Math.random();
 		this.ageMs = 0;
 		this.sick = 0;
 		this.quality = 100;
@@ -35,8 +35,11 @@ Crafty.c('Chicken', {
 			if (dSquared < params.needD2) {
 				// chicken is close to destination that was chosen
 				if (this.currentNeed === "fed") {
-					// let's assume we are near a feeder now...
-					this.fed += params.eatSpeed * dt;
+					var fraction = dt / params.feedTime;
+					if (this.dest.has && this.dest.has('Feeder')) {
+						var consumed = this.dest.consume(fraction);
+						this.fed = Math.min(100, this.fed + 100 * consumed);
+					}
 					prox = Math.min(dSquared, params.proxLimit) / params.proxLimit;
 				} else {
 					// for example near a happy tile
@@ -74,6 +77,10 @@ Crafty.c('Chicken', {
 
 	chickenEnterFrame: function(timestep){
 		var dt = timestep.dt;
+
+		// update needs
+		this.fed = Math.max(0, this.fed - params.hunger * dt);
+
 		this.needWatch -= dt;
 		if (this.needWatch < 0) {
 			if (this.fed < params.criticalNeed) {
@@ -107,8 +114,6 @@ Crafty.c('Chicken', {
 				this.currentTile.units.push(this);
 			}
 
-			// update needs
-			this.fed -= params.hunger * dt;
 			// calculate steady-state happiness in this location
 			var ssHappy = this.currentTile.ssHappiness();
 			var dHappy = ssHappy - this.happy;
