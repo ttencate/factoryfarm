@@ -24,6 +24,12 @@ var indexedActions = [
 		name: 'clean',
 		title: 'Clean floor',
 		perTile: true,
+		canStart: function(col, row, tile) {
+			return tile.filth > 0;
+		},
+		start: function(col, row, tile) {
+			tile.setFilth(0);
+		},
 	},
 	{
 		name: 'fence',

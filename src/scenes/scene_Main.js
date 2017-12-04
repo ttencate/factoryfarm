@@ -126,18 +126,20 @@ Crafty.scene('Main', function() {
 					col: col,
 					row: row,
 					setFilth: function(filth){
-						if (!this.filthSprite) this.filthSprite = Crafty.e('2D, WebGL, Sprite, filth')
+						if (!this.filthSprite) {
+							this.filthSprite = Crafty.e('2D, WebGL, Sprite, filth')
 								.attr({x: this.col * tileSize, y: this.row * tileSize, w: tileSize, h: tileSize, z: zLevels['background'] + this.y});
+						}
 						this.filth = filth;
 						// console.log('filth to '+this.filth+' at '+this.filthSprite.x+", "+this.filthSprite.y);
-						if (this.filth < 0) {
+						if (this.filth <= 0) {
 							this.filth = 0;
 							this.filthSprite.destroy();
-						} else if (this.filth < 20) {
+						} else if (this.filth <= 20) {
 							this.filthSprite.sprite(6,0);
-						} else if (this.filth < 50) {
+						} else if (this.filth <= 50) {
 							this.filthSprite.sprite(6,1);
-						} else if (this.filth < 100) {
+						} else if (this.filth <= 100) {
 							this.filthSprite.sprite(6,2);
 						} else { // disgusting!
 							this.filthSprite.sprite(6,3);

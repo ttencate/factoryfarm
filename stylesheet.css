@@ -106,9 +106,13 @@ a {
 }
 
 #hotbar-item-chicken {
-	background-image: url(assets/images/chicken.png);
-	background-size: 400%;
-	background-position: 0px -128px;
+	background-image: url(assets/images/tileset.png);
+	background-position: -448px -128px;
+}
+
+#hotbar-item-clean {
+	background-image: url(assets/images/tileset.png);
+	background-position: -448px -64px;
 }
 
 #hotbar-item-fence {
