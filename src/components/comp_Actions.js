@@ -18,6 +18,7 @@ var indexedActions = [
 				._Chicken()
 				._Moving();
 			hideTip('buyChicken');
+			hideTip('buyAnotherChicken');
 			return 'Bought ' + chick.name;
 		},
 	},

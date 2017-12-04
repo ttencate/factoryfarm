@@ -124,6 +124,9 @@ Crafty.c('KeyControls', {
 			if (this.money > ownedTiles * params.rentPerTile + actions.chicken.cost) {
 				showTip('buyChicken');
 			}
+			if (this.money > ownedTiles * params.rentPerTile + actions.food.cost + 2 * actions.chicken.cost) {
+				showTip('buyAnotherChicken');
+			}
 
 			if (this.grabbed) {
 				// determine location of the grabbed item
@@ -155,7 +158,9 @@ Crafty.c('KeyControls', {
 				this.grabbed.rx = grabX;
 				this.grabbed.ry = grabY;
 			}
+
 			this.updateChickensText();
+			this.updateGrimness(timestep.dt);
 		});
 	},
 
@@ -202,7 +207,23 @@ Crafty.c('KeyControls', {
 		this.chickensText.innerText = numChickens;
 		var minGrimnessAt = 4;
 		var maxGrimnessAt = 14;
-		globalGrimness = Math.max(0.0, Math.min(1.0, (numChickens - minGrimnessAt) / (maxGrimnessAt - minGrimnessAt)));
+	},
+
+	updateGrimness: function(dt) {
+		var averageHappiness = 0;
+		var chickens = Crafty('Chicken');
+		if (!chickens.length) {
+			return;
+		}
+		for (var i = 0; i < chickens.length; i++) {
+			averageHappiness += Crafty(chickens[i]).happy;
+		}
+		averageHappiness /= chickens.length;
+
+		var targetGrimness = utility.clamp(0, 1, 1 - averageHappiness / 100);
+		// the more chickens, the smoother the average will vary, so the quicker we can update grimness
+		var adjustSpeed = 0.0001 * chickens.length;
+		globalGrimness += (targetGrimness - globalGrimness) * Math.min(1, dt * adjustSpeed);
 	},
 
 	updateChickenPopup: function(chicken) {

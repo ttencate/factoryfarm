@@ -10,8 +10,12 @@ var tips = {
 		prerequisites: ['cleaning'],
 	},
 	buyChicken: {
-		text: '<b>It is time to expand.</b> More chickens means more future income.<br><br><em>Press ' + actions.chicken.key + ', move into the pen, then press Space to buy a chicken.</em>',
+		text: '<b>You have some savings.</b> Money can be turned into chickens. More chickens means more future income.<br><br><em>Press ' + actions.chicken.key + ', move into the pen, then press Space to buy a chicken.</em>',
 		prerequisites: ['cleaning'],
+	},
+	buyAnotherChicken: {
+		text: '<b>You have plenty of money.</b> Buy another chicken or two to be certain of future income.<br><br><em>Press ' + actions.chicken.key + ', move into the pen, then press Space to buy a chicken.</em>',
+		prerequisites: ['buyChicken'],
 	},
 	buyFood: {
 		text: '<b>The feeder is empty!</b> Good food throughout a chicken\'s lifetime contributes to the quality of the meat.<br><br><em>Press ' + actions.food.key + ', move to the feeder, then press Space to fill it up.</em>',
@@ -33,10 +37,10 @@ var tips = {
 		text: '<b>The pen is getting crowded.</b> Chickens get unhappy if they don\'t have enough space. It\'s time to expand.<br><br><em>Use actions ' + actions.fence.key + ' and ' + actions.gate.key + ' to place fences and gates. Use action ' + actions.sell.key + ' to sell the old ones.</em>',
 	},
 	rentWarning: {
-		text: '<b>You don\'t have enough money to pay the rent at the end of this year.</b><br><br><em>You can go negative once, but if you\'re already in debt when the rent is due, it\'s game over!</em>',
+		text: '<b>You don\'t have enough money to pay the rent at the end of this year.</b><br><br><em>You can go negative once, but if you\'re already in debt when the rent is due, you will be declared bankrupt!</em>',
 	},
 	rentCritical: {
-		text: '<b>You are in debt.</b> If you are still in debt at the end of the year, it\'s game over.<br><br><em>Sell some chickens to get some cash. You may even have to sell them before they are mature.</em>',
+		text: '<b>You are in debt.</b> If you are still in debt at the end of the year, you will be declared bankrupt.<br><br><em>Sell some chickens to get some cash. You may even have to sell them before they are mature.</em>',
 		prerequisites: ['rentWarning'],
 	},
 };

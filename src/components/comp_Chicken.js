@@ -166,6 +166,7 @@ Crafty.c('Chicken', {
 			if (this.happy < 20) {
 				showTip('unhappyChicken');
 			}
+			this.grimness = 1 - this.happy / 100;
 
 			// maybe make a doo-doo
 			if (Math.random() < params.pShit) {
