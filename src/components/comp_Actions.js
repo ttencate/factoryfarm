@@ -30,10 +30,12 @@ var indexedActions = [
 		title: 'Build fence',
 		cost: 1,
 		perTile: true,
-		needFreeTile: true,
-		start: function(col, row) {
-			tileMatrix[col][row].block = Crafty.e('2D, Wall')._Wall(col, row);
-			tileMatrix[col][row].block.matchAndFixNeighbors(col, row);
+		canStart: function(col, row, tile) {
+			return tile.owned && !tile.block;
+		},
+		start: function(col, row, tile) {
+			tile.block = Crafty.e('2D, Wall')._Wall(col, row);
+			tile.block.matchAndFixNeighbors(col, row);
 			return 'Built fence';
 		},
 	},
@@ -42,10 +44,12 @@ var indexedActions = [
 		title: 'Build gate',
 		cost: 10,
 		perTile: true,
-		needFreeTile: true,
-		start: function(col, row) {
-			tileMatrix[col][row].block = Crafty.e('2D, Wall, Gate, Delay')._Wall(col, row);
-			tileMatrix[col][row].block.matchAndFixNeighbors(col, row);
+		canStart: function(col, row, tile) {
+			return tile.owned && !tile.block;
+		},
+		start: function(col, row, tile) {
+			tile.block = Crafty.e('2D, Wall, Gate, Delay')._Wall(col, row);
+			tile.block.matchAndFixNeighbors(col, row);
 			return 'Built gate';
 		},
 	},
@@ -54,9 +58,11 @@ var indexedActions = [
 		title: 'Build feeder',
 		cost: 50,
 		perTile: true,
-		needFreeTile: true,
-		start: function(col, row) {
-			tileMatrix[col][row].block = Crafty.e('2D, Feeder')._Feeder(col, row);
+		canStart: function(col, row, tile) {
+			return tile.owned && !tile.block;
+		},
+		start: function(col, row, tile) {
+			tile.block = Crafty.e('2D, Feeder')._Feeder(col, row);
 			return 'Built feeder';
 		},
 	},
@@ -76,16 +82,23 @@ var indexedActions = [
 		name: 'sell',
 		title: 'Sell object',
 		perTile: true,
-		start: function(col, row) {
-			var block = tileMatrix[col][row].block;
+		canStart: function(col, row, tile) {
+			var block = tile.block;
+			if (!block) {
+				return false;
+			}
+			for (var i = 0; i < sellables.length; i++) {
+				if (block.has(sellables[i].comp)) {
+					return true;
+				}
+			}
+			return false;
+		},
+		start: function(col, row, tile) {
+			var block = tile.block;
 			if (!block) {
 				return;
 			}
-			var sellables = [
-				{comp: 'Gate', price: actions.gate.cost / 2, text: 'Sold gate'},
-				{comp: 'Wall', price: actions.fence.cost / 2, text: 'Sold fence'},
-				{comp: 'Feeder', price: actions.feeder.cost / 2, text: 'Sold feeder'},
-			];
 			for (var i = 0; i < sellables.length; i++) {
 				var sellable = sellables[i];
 				if (block.has(sellable.comp)) {
@@ -120,6 +133,12 @@ var actionsByKey = (function() {
 	}
 	return actions;
 })();
+
+var sellables = [
+	{comp: 'Gate', price: actions.gate.cost / 2, text: 'Sold gate'},
+	{comp: 'Wall', price: actions.fence.cost / 2, text: 'Sold fence'},
+	{comp: 'Feeder', price: actions.feeder.cost / 2, text: 'Sold feeder'},
+];
 
 Crafty.c('Actions', {
 
@@ -179,7 +198,7 @@ Crafty.c('Actions', {
 			this.highlightTile.z = zLevels['background' + this.highlightTile.y];
 			this.highlightTile.visible = true;
 			this.interactIndicator.visible = false;
-			if (tile && tile.owned) {
+			if (!this.selectedAction.canStart || this.selectedAction.canStart(tileX, tileY, tile)) {
 				this.highlightTile.sprite("highlightYes");
 			} else {
 				this.highlightTile.sprite("highlightNo");
@@ -233,10 +252,9 @@ Crafty.c('Actions', {
 			// determine nearest tile
 			var col = Math.floor(this.interactPoint.x / tileSize);
 			var row = Math.floor(this.interactPoint.y / tileSize);
-			if (tileMatrix[col] && tileMatrix[col][row]) { // consider only tiles in bounds of tileMatrix
-				if (!action.needFreeTile || !tileMatrix[col][row].block) { // tile is not already blocked
-					ret = action.start.call(this, col, row);
-				}
+			var tile = getTile(col, row);
+			if (!action.canStart || action.canStart(col, row, tile)) { // tile is not already blocked
+				ret = action.start.call(this, col, row, tile);
 			}
 		} else {
 			ret = action.start.call(this, this.interactPoint.x, this.interactPoint.y);
