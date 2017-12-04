@@ -19,7 +19,7 @@ var params = {
 	// farmer parameters
 	grabReach: 20,
 	grabAreaSize: 35,
-	interactDist: 80,
+	interactDist: 40,
 	indicatorSize: 32,
 
 	yearDurationMilliseconds: 60000,
@@ -27,9 +27,9 @@ var params = {
 	basePriceUnripe: 5,
 	basePriceRipe: 15,
 	topQualityPriceRipe: 30,
-	ripeAgeYears: 3,
-	overripeAgeYears: 4,
-	deathAgeYears: 6,
+	ripeAgeYears: 2,
+	overripeAgeYears: 3,
+	deathAgeYears: 4,
 };
 
 params.monthDurationMilliseconds = params.yearDurationMilliseconds / 12;

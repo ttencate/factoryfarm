@@ -140,22 +140,22 @@
  <objectgroup name="spawn">
   <object id="19" type="Chicken" x="967.667" y="1523" width="32" height="32">
    <properties>
-    <property name="age" type="float" value="2.5"/>
+    <property name="age" type="float" value="1.5"/>
    </properties>
   </object>
   <object id="20" type="Chicken" x="925.667" y="1559" width="32" height="32">
    <properties>
-    <property name="age" type="float" value="2"/>
+    <property name="age" type="float" value="1"/>
    </properties>
   </object>
   <object id="21" type="Chicken" x="846.667" y="1528" width="32" height="32">
    <properties>
-    <property name="age" type="float" value="1"/>
+    <property name="age" type="float" value="0"/>
    </properties>
   </object>
   <object id="22" type="Chicken" x="887.667" y="1549" width="32" height="32">
    <properties>
-    <property name="age" type="float" value="1.5"/>
+    <property name="age" type="float" value="0.5"/>
    </properties>
   </object>
   <object id="23" type="Farmer" x="1216" y="1728" width="64" height="64"/>

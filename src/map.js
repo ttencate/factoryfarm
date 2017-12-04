@@ -244,7 +244,7 @@
                  "name":"",
                  "properties":
                     {
-                     "age":2.5
+                     "age":1.5
                     },
                  "propertytypes":
                     {
@@ -263,7 +263,7 @@
                  "name":"",
                  "properties":
                     {
-                     "age":2
+                     "age":1
                     },
                  "propertytypes":
                     {
@@ -282,7 +282,7 @@
                  "name":"",
                  "properties":
                     {
-                     "age":1
+                     "age":0
                     },
                  "propertytypes":
                     {
@@ -301,7 +301,7 @@
                  "name":"",
                  "properties":
                     {
-                     "age":1.5
+                     "age":0.5
                     },
                  "propertytypes":
                     {
