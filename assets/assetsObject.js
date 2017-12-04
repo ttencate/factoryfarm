@@ -11,7 +11,13 @@ var assetsObject = {
 		"drop1": ["drop1.mp3"],
 		"drop2": ["drop2.mp3"],
 		"hungry": ["hungry.mp3"],
-		"unhappy": ["hungry.mp3"],
+		"unhappy": ["unhappy.mp3"],
+		"hammer": ["hammer.mp3"],
+		"kaching": ["kaching.mp3"],
+		"metal_knock": ["metal_knock.mp3"],
+		"natural_death": ["natural_death.mp3"],
+		"refill": ["refill.mp3"],
+		"saw": ["saw.mp3"],
 	},
 	"sprites": {
 		"farmer.png": {

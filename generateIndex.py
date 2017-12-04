@@ -41,6 +41,13 @@ footer = """    <script>
         <div class="hotbar-item" id="hotbar-item-1" title="Chicken"><span class="key">1</span><span class="cost">chicken</span></div>
         <div class="hotbar-item" id="hotbar-item-2" title="Fence"><span class="key">2</span><span class="cost">fence</span></div>
         <div class="hotbar-item" id="hotbar-item-3" title="Feeder"><span class="key">3</span><span class="cost">feeder</span></div>
+        <div class="hotbar-item" id="hotbar-item-4" title="Feeder"><span class="key">4</span><span class="cost">feeder</span></div>
+        <div class="hotbar-item" id="hotbar-item-5" title="Feeder"><span class="key">5</span><span class="cost">feeder</span></div>
+        <div class="hotbar-item" id="hotbar-item-6" title="Feeder"><span class="key">6</span><span class="cost">feeder</span></div>
+        <div class="hotbar-item" id="hotbar-item-7" title="Feeder"><span class="key">7</span><span class="cost">feeder</span></div>
+        <div class="hotbar-item" id="hotbar-item-8" title="Feeder"><span class="key">8</span><span class="cost">feeder</span></div>
+        <div class="hotbar-item" id="hotbar-item-9" title="Feeder"><span class="key">9</span><span class="cost">feeder</span></div>
+        <div class="hotbar-item" id="hotbar-item-0" title="Feeder"><span class="key">0</span><span class="cost">feeder</span></div>
       </div>
       <div id="chickensDiv">Chickens: <span id="chickensText"></span></div>
       <div id="dayDiv"><span id="monthText"></span>, Year <span id="yearText"></span></div>
