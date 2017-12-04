@@ -96,6 +96,18 @@ Crafty.scene('Main', function() {
 			Crafty.e('2D, WebGL, Sprite, grass').attr({x: grass.x, y: grass.y - grass.height, w: grass.width, h: grass.height});
 		}
 
+		// find tile properties from the tile set that contains this tile's gid (global id)
+		function getTile(tileGid) {
+			for (var i = 0; i < tileSets.length; i++) {
+				var tileSet = tileSets[i];
+				if (tileGid >= tileSet.firstgid && tileGid < tileSet.firstgid + tileSet.tilecount) {
+					var tile = tileSet.tiles[tileGid - tileSet.firstgid];
+					return tile || {};
+				}
+			}
+			return {};
+		}
+
 		tileMatrix = [];
 		// draw all the tiles
 		for (var col = 0; col < level.width; ++col) {
@@ -103,44 +115,35 @@ Crafty.scene('Main', function() {
 			for (var row = 0; row < level.height; ++row) {
 				var linearIndex = level.width * row + col;
 				tileMatrix[col][row] = {
-						block: null,
-						owned: false,
-						filth: 0,
-						filthSprite: null,
-						units: [],
-						col: col,
-						row: row,
-						setFilth: function(filth){
-							if (!this.filthSprite) this.filthSprite = Crafty.e('2D, WebGL, Sprite, filth')
-									.attr({x: this.col * tileSize, y: this.row * tileSize, w: tileSize, h: tileSize, z: zLevels['background'] + this.y});
-							this.filth = filth;
-							// console.log('filth to '+this.filth+' at '+this.filthSprite.x+", "+this.filthSprite.y);
-							if (this.filth < 0) {
-								this.filth = 0;
-								this.filthSprite.destroy();
-							} else if (this.filth < 20) {
-								this.filthSprite.sprite(6,0);
-							} else if (this.filth < 50) {
-								this.filthSprite.sprite(6,1);
-							} else if (this.filth < 100) {
-								this.filthSprite.sprite(6,2);
-							} else { // disgusting!
-								this.filthSprite.sprite(6,3);
-							}
+					block: null,
+					owned: false,
+					filth: 0,
+					filthSprite: null,
+					units: [],
+					col: col,
+					row: row,
+					setFilth: function(filth){
+						if (!this.filthSprite) this.filthSprite = Crafty.e('2D, WebGL, Sprite, filth')
+								.attr({x: this.col * tileSize, y: this.row * tileSize, w: tileSize, h: tileSize, z: zLevels['background'] + this.y});
+						this.filth = filth;
+						// console.log('filth to '+this.filth+' at '+this.filthSprite.x+", "+this.filthSprite.y);
+						if (this.filth < 0) {
+							this.filth = 0;
+							this.filthSprite.destroy();
+						} else if (this.filth < 20) {
+							this.filthSprite.sprite(6,0);
+						} else if (this.filth < 50) {
+							this.filthSprite.sprite(6,1);
+						} else if (this.filth < 100) {
+							this.filthSprite.sprite(6,2);
+						} else { // disgusting!
+							this.filthSprite.sprite(6,3);
 						}
-					};
-
-				// find tile type from tile set containing this tile's gid (global id)
-				var tileGid = solidLayer.data[linearIndex];
-				var tileType = null;
-				for (var i = 0; i < tileSets.length; i++) {
-					var tileSet = tileSets[i];
-					if (tileGid >= tileSet.firstgid && tileGid < tileSet.firstgid + tileSet.tilecount) {
-						var tile = tileSet.tiles[tileGid - tileSet.firstgid];
-						tileType = tile && tile.type;
-						break;
 					}
-				}
+				};
+
+				var tileGid = solidLayer.data[linearIndex];
+				var tileType = getTile(tileGid).type;
 
 				// add impassable items
 				if (tileType === 'Feeder') {
@@ -153,10 +156,15 @@ Crafty.scene('Main', function() {
 					//});
 				} else if (tileType === 'Gate') {
 					tileMatrix[col][row].block = Crafty.e('2D, Wall, Gate, Delay')._Wall(col, row);//.attr({
+				} else if (tileType === 'House') {
+					Crafty.e('2D, WebGL, Sprite, house, Collision, Impassable')
+						.attr({ x: col * tileSize, y: row * tileSize, z: row * tileSize + zLevels.house, w: 192, h: 256 })
+						.collision([18,104, 174,104, 174,252, 18,252]);
 				}
-				if (ownedLayer.data[linearIndex]) {
-					tileMatrix[col][row].owned = true;
-				}
+
+				var ownedTile = getTile(ownedLayer.data[linearIndex]);
+				tileMatrix[col][row].owned = ownedTile.type === 'Owned';
+				tileMatrix[col][row].forSale = ownedTile.type !== 'NotForSale';
 			}
 		}
 		Crafty("Wall").each(function(){

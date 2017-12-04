@@ -23,7 +23,7 @@ params = {
     indicatorSize: 32,
 
     yearDurationMilliseconds: 40000,
-    rentPerTile: 1,
+    rentPerTile: 0.25,
     basePriceUnripe: 5,
     basePriceRipe: 15,
     topQualityPriceRipe: 30,
@@ -41,6 +41,7 @@ zLevels = {
     markers: 1670,
     walls: 1680,
     roof: 1900,
+    house: 1900,
     popup: 5000,
 };
 
