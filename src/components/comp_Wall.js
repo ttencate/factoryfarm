@@ -61,10 +61,10 @@ Crafty.c('Wall',{
 		if (this.has("Gate")) {
 			if ((!topNeighbor || !bottomNeighbor) && leftNeighbor && rightNeighbor) {
 				spriteCoords = {c: 4, r: 1};
-				this.sprite(5, 4 + (this.gateOpen ? 1 : 0));
+				this.sprite(5, 4 + (this.gateCloseDelay ? 1 : 0));
 			} else {
 				spriteCoords = {c: 2, r: 3};
-				this.sprite(4, 4 + (this.gateOpen ? 1 : 0));
+				this.sprite(4, 4 + (this.gateCloseDelay ? 1 : 0));
 			}
 		} else {
 			spriteCoords = this.spriteMatrix[leftNeighbor][topNeighbor][rightNeighbor][bottomNeighbor];

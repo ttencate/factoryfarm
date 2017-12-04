@@ -67,15 +67,20 @@ Crafty.c("Moving", {
 					return collisions;
 				}
 				var gateObj = obj._parent;
-				if (gateObj && gateObj.matchNeighbors && !gateObj.gateOpen) {
-					gateObj.gateOpen = true;
-					Crafty.audio.play('gate_open');
-					gateObj.matchNeighbors();
-					gateObj.delay(function() {
-						// Crafty.audio.play('gate_close');
-						this.gateOpen = false;
-						this.matchNeighbors();
-					}.bind(gateObj), 500);
+				if (gateObj && gateObj.matchNeighbors) {
+					if (!gateObj.gateCloseDelay) { // opening
+						Crafty.audio.play('gate_open');
+						gateObj.gateCloseDelay = function() {
+							Crafty.audio.play('gate_close');
+							this.gateCloseDelay = null;
+							this.matchNeighbors();
+						}.bind(gateObj);
+						gateObj.delay(gateObj.gateCloseDelay, 500);
+						gateObj.matchNeighbors();
+					} else { // already open
+						gateObj.cancelDelay(gateObj.gateCloseDelay);
+						gateObj.delay(gateObj.gateCloseDelay, 500);
+					}
 				}
 			}
 			return false;
