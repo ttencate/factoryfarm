@@ -93,6 +93,14 @@ var indexedActions = [
 		title: 'Rent land',
 		cost: 5,
 		perTile: true,
+		canStart: function(col, row, tile) {
+			return tile.forSale && !tile.owned;
+		},
+		start: function(col, row, tile) {
+			tile.owned = true;
+			updateLand();
+			return 'Rented land';
+		},
 	},
 	{
 		name: 'sell',
