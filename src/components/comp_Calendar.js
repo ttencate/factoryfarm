@@ -14,6 +14,7 @@ Crafty.c('Calendar', {
 		if (this.month >= 12) {
 			this.month = 0;
 			this.year++;
+			Crafty('Wallet').payMoney(ownedTiles * params.rentPerTile, 'Yearly rent');
 		}
 		this.updateTexts();
 	},

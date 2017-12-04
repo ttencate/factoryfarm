@@ -5,16 +5,15 @@ Crafty.c('KeyControls', {
 	goingRight: false,
 	goingUp: false,
 	goingDown: false,
-	money: 100,
 
 	init: function() {
+		this.requires('Wallet');
 		this.baseZ = zLevels['player'];
 
 		this.initHotbar();
-		this.moneyText = document.getElementById('moneyText');
 		this.chickensText = document.getElementById('chickensText');
 		this.chickenPopup = document.getElementById('chickenPopup');
-		this.setMoney(100);
+		this.setMoney(30);
 
 		// acceleration
 		this.acc = 0.005;
@@ -38,27 +37,24 @@ Crafty.c('KeyControls', {
 
 		this.bind('KeyDown', function(keyEvent) {
 			var k = keyEvent.key;
-			if (k === Crafty.keys.F7) { // cheat for debugging
-				this.setMoney(this.money + 1000);
-			} else if (k === this.up) {
-        this.direction = 'up';
+			if (k === this.up) {
+				this.direction = 'up';
 				this.goingUp = true;
 			} else if (k === this.down) {
-        this.direction = 'down';
+				this.direction = 'down';
 				this.goingDown = true;
 			} else if (k === this.left) {
-        this.direction = 'left';
+				this.direction = 'left';
 				this.goingLeft = true;
 			} else if (k === this.right) {
-        this.direction = 'right';
+				this.direction = 'right';
 				this.goingRight = true;
 			} else if (k === this.action) {
-				if (this.selected === 1 && this.money >= costs.chicken) { // spawn
+				if (this.selected === 1 && this.canAfford(costs.chicken)) { // spawn
 					var chickSize = 32;
 					// var dir = this.reel();
 					// xMod = dir === "walking_down" || dir === "walking_up" ? chickSize / 2 : 0;
-					this.setMoney(this.money - costs.chicken);
-					Crafty.e('2D, WebGL, Sprite, chicken_down, Moving, Collision, Chicken, SpriteAnimation, ReelFromVelocity')
+					var chick = Crafty.e('2D, WebGL, Sprite, chicken_down, Moving, Collision, Chicken, SpriteAnimation, ReelFromVelocity')
 						.reel('walking_down', 500, [[0, 0], [1, 0], [2, 0], [3, 0]])
 						.reel('walking_up', 500, [[0, 1], [1, 1], [2, 1], [3, 1]])
 						.reel('walking_right', 500, [[0, 2], [1, 2], [2, 2], [3, 2]])
@@ -67,18 +63,19 @@ Crafty.c('KeyControls', {
 						.attr({x: this.interactPoint.x - chickSize/2, y: this.interactPoint.y - chickSize/2, w: chickSize, h: chickSize, z: zLevels['chicken']})
 						._Chicken()
 						._Moving();
+					this.payMoney(costs.chicken, 'Bought ' + chick.name);
 				} else if (this.selected === 2 || this.selected === 3) {
 					// determine nearest tile
 					var col = Math.floor(this.interactPoint.x / tileSize);
 					var row = Math.floor(this.interactPoint.y / tileSize);
 					if (tileMatrix[col] && tileMatrix[col][row]) { // consider only tiles in bounds of tileMatrix
 						if (!tileMatrix[col][row].block) { // tile is not already blocked
-							if (this.selected === 2 && this.money >= costs.fence) { // build fence
-								this.setMoney(this.money - 4);
+							if (this.selected === 2 && this.canAfford(costs.fence)) { // build fence
+								this.payMoney(costs.fence, 'Built fence');
 								tileMatrix[col][row].block = Crafty.e('2D, Wall')._Wall(col, row);
 								tileMatrix[col][row].block.matchAndFixNeighbors(col, row);
-							} else if (this.selected === 3 && this.money >= costs.feeder) { // place feeder
-								this.setMoney(this.money - 55);
+							} else if (this.selected === 3 && this.canAfford(costs.feeder)) { // place feeder
+								this.payMoney(costs.feeder, 'Built feeder');
 								tileMatrix[col][row].block = Crafty.e('2D, Feeder')._Feeder(col, row);
 							}
 						}
@@ -107,14 +104,19 @@ Crafty.c('KeyControls', {
 		});
 		this.bind('KeyUp', function(keyEvent) {
 			var k = keyEvent.key;
-			if (k === this.up ) {
+			var updateDirection = false;
+			if (k === this.up) {
 				this.goingUp = false;
+				updateDirection = true;
 			} else if (k === this.down) {
 				this.goingDown = false;
+				updateDirection = true;
 			} else if (k === this.left) {
 				this.goingLeft = false;
+				updateDirection = true;
 			} else if (k === this.right) {
 				this.goingRight = false;
+				updateDirection = true;
 			} else if (k === this.grab) {
 				if (this.grabbed) {
 					var chopCollisions = this.grabbed.hit("ChopArea");
@@ -122,7 +124,7 @@ Crafty.c('KeyControls', {
 						if (this.grabbed.has("Chicken")) {
 							chopCollisions[0].obj._parent.animate();
 							Crafty.audio.play("chop");
-							player.setMoney(player.money + this.grabbed.getPrice());
+							this.earnMoney(this.grabbed.getPrice(), 'Butchered ' + this.grabbed.name);
 							this.grabbed.destroy();
 						}
 					} else {
@@ -131,6 +133,17 @@ Crafty.c('KeyControls', {
 					this.grabbed.isGrabbed = false;
 					this.grabbed = null;
 					this.updateChickenPopup(null);
+				}
+			}
+			if (updateDirection) {
+				if (this.goingUp) {
+					this.direction = 'up';
+				} else if (this.goingDown) {
+					this.direction = 'down';
+				} else if (this.goingLeft) {
+					this.direction = 'left';
+				} else if (this.goingRight) {
+					this.direction = 'right';
 				}
 			}
 		});
@@ -224,7 +237,7 @@ Crafty.c('KeyControls', {
 		this.right = right;
 		this.up = up;
 		this.down = down;
-    this.action = action;
+		this.action = action;
 		this.grab = grab;
 		return this;
 	},
@@ -251,11 +264,6 @@ Crafty.c('KeyControls', {
 			this.vx = 0;
 			this.vy = 0;
 		}
-	},
-
-	setMoney: function(money) {
-		this.money = money;
-		this.moneyText.innerText = utility.formatMoney(this.money);
 	},
 
 	updateChickensText: function() {

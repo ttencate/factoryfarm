@@ -187,7 +187,7 @@ Crafty.scene('Main', function() {
 					chicken.ageMs = (properties.age || 0) * params.yearDurationMilliseconds;
 					break;
 				case 'Farmer':
-					player = Crafty.e('2D, WebGL, farmer_down, KeyControls, Moving, Collision, SpriteAnimation, ReelFromVelocity, OriginCoordinates, CanMoveThroughGates')
+					player = Crafty.e('2D, WebGL, farmer_down, Wallet, KeyControls, Moving, Collision, SpriteAnimation, ReelFromVelocity, OriginCoordinates, CanMoveThroughGates')
 							.attr({x: x - 32, y: y - 32, w: 64, h: 64, z: zLevels['player']})
 							.collision([15,47, 49,47, 49,59, 15,59])
 							.reel('walking_down', 500, [[0, 0], [1, 0], [2, 0], [3, 0]])

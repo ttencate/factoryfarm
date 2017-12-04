@@ -22,11 +22,11 @@ params = {
     interactDist: 80,
     indicatorSize: 32,
 
-    yearDurationMilliseconds: 60000,
+    yearDurationMilliseconds: 40000,
     rentPerTile: 1,
-    basePriceUnripe: 10,
-    basePriceRipe: 40,
-    topQualityPriceRipe: 80,
+    basePriceUnripe: 5,
+    basePriceRipe: 15,
+    topQualityPriceRipe: 30,
     ripeAgeYears: 3,
     overripeAgeYears: 4,
     deathAgeYears: 6,
@@ -41,10 +41,11 @@ zLevels = {
     markers: 1670,
     walls: 1680,
     roof: 1900,
+    popup: 5000,
 };
 
 costs = {
-  chicken: 30,
-  fence: 4,
-  feeder: 55,
+  chicken: 10,
+  fence: 1,
+  feeder: 50,
 };

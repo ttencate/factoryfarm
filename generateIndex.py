@@ -14,7 +14,7 @@ header = """<!DOCTYPE html>
     <meta content="utf-8" http-equiv="encoding">
         <link rel="stylesheet" type="text/css" href="stylesheet.css" />
         <!-- font -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favoicon.png"> 
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png"> 
     <!-- <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'> -->
     <!--   <meta name="viewport"   content="user-scalable=yes, initial-scale=1.0" /> -->
     <script src="lib/crafty.js"></script>
