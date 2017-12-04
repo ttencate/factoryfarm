@@ -20,17 +20,9 @@ Crafty.c('KeyControls', {
 		this.minSpeed = 8 / 1000; // px per ms
 		this.maxSpeed = 256 / 1000; // px per ms
  
-		this.interactPoint = {x: 0, y: 0};
 		this.grabArea = Crafty.e("2D, WebGL, Collision")
 				.attr({x: 0, y: 0, w: params.grabAreaSize, h: params.grabAreaSize, z: zLevels["player"]});
 		this.attach(this.grabArea);
-
-		this.highlightTile = Crafty.e("2D, WebGL, Sprite, highlightYes")
-				.attr({x: this.interactPoint.x, y: this.interactPoint.y, w: tileSize, h: tileSize})
-				.sprite("highlightYes");
-		this.interactIndicator = Crafty.e("2D, WebGL, highlightYes")
-				.attr({x: this.interactPoint.x, y: this.interactPoint.y, w: params.indicatorSize, h: params.indicatorSize})
-				.sprite("highlightYes");
 
 		this.bind('KeyDown', function(keyEvent) {
 			var k = keyEvent.key;
@@ -118,56 +110,8 @@ Crafty.c('KeyControls', {
 			}
 		});
 
-		this.bind('EnterFrame', function(timestep){
+		this.bind('EnterFrame', function(timestep) {
 			this.updateVelocity(timestep.dt);
-			this.interactPoint = {x: 0, y: 0};
-			var dir = this.reel();
-			if (dir == "walking_left") {
-				this.interactPoint.x = this.originX() - params.interactDist;
-				this.interactPoint.y = this.originY()-10;
-				this.grabArea.x = -params.grabReach + this.originX() - 0.5 * params.grabAreaSize;
-				this.grabArea.y = this.originY() - 0.5 * params.grabAreaSize;
-			} else if (dir == "walking_right") {
-				this.interactPoint.x = this.originX() + params.interactDist;
-				this.interactPoint.y = this.originY()-10;
-				this.interactIndicator.x = this.interactPoint.x; 
-				this.interactIndicator.y = this.interactPoint.y;
-				this.grabArea.x = params.grabReach + this.originX() - 0.5 * params.grabAreaSize;
-				this.grabArea.y = this.originY() - 0.5 * params.grabAreaSize;
-			} else if (dir == "walking_up") {
-				this.interactPoint.x = this.originX();
-				this.interactPoint.y = this.originY() - params.interactDist;
-				this.grabArea.x = this.originX() - 0.5 * params.grabAreaSize;
-				this.grabArea.y = -params.grabReach + this.originY() - 0.5 * params.grabAreaSize;
-			} else if (dir == "walking_down") {
-				this.interactPoint.x = this.originX();
-				this.interactPoint.y = this.originY() + params.interactDist;
-				this.grabArea.x = this.originX() - 0.5 * params.grabAreaSize;
-				this.grabArea.y = params.grabReach + this.originY() - 0.5 * params.grabAreaSize;
-			}
-			this.interactIndicator.x = this.interactPoint.x - params.indicatorSize / 2; 
-			this.interactIndicator.y = this.interactPoint.y - params.indicatorSize / 2;
-
-			// outline tile with which the player would now interact if she pressed the action button
-			if (this.selectedAction.perTile) {
-				var tileX = Math.floor(this.interactPoint.x / tileSize);
-				var tileY = Math.floor(this.interactPoint.y / tileSize);
-				var tile = getTile(tileX, tileY);
-				this.highlightTile.x = tileX * tileSize;
-				this.highlightTile.y = tileY * tileSize;
-				this.highlightTile.z = zLevels['background' + this.highlightTile.y];
-				this.highlightTile.visible = true;
-				this.interactIndicator.visible = false;
-				if (tile && tile.owned) {
-					this.highlightTile.sprite("highlightYes");
-				} else {
-					this.highlightTile.sprite("highlightNo");
-				}
-				//Crafty.e("2D, WebGL, Color").attr({x: tileX * tileSize, y: tileY * tileSize, w: tileSize, h: tileSize, z: 10000}).color('purple');
-			} else {
-				this.interactIndicator.visible = true;
-				this.highlightTile.visible = false;
-			}
 
 			if (this.grabbed) {
 				// determine location of the grabbed item
