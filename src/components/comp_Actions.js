@@ -76,6 +76,29 @@ var indexedActions = [
 		name: 'sell',
 		title: 'Sell object',
 		perTile: true,
+		start: function(col, row) {
+			var block = tileMatrix[col][row].block;
+			if (!block) {
+				return;
+			}
+			var sellables = [
+				{comp: 'Gate', price: actions.gate.cost / 2, text: 'Sold gate'},
+				{comp: 'Wall', price: actions.fence.cost / 2, text: 'Sold fence'},
+				{comp: 'Feeder', price: actions.feeder.cost / 2, text: 'Sold feeder'},
+			];
+			for (var i = 0; i < sellables.length; i++) {
+				var sellable = sellables[i];
+				if (block.has(sellable.comp)) {
+					if (block.has('Wall')) {
+						block.removeComponent('Wall');
+						block.matchAndFixNeighbors(col, row);
+					}
+					block.destroy();
+					tileMatrix[col][row].block = null;
+					this.earnMoney(sellable.price, sellable.text);
+				}
+			}
+		},
 	},
 ];
 

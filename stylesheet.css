@@ -126,6 +126,11 @@ a {
 	background-position: -320px -128px;
 }
 
+#hotbar-item-sell {
+	background-image: url(assets/images/tileset.png);
+	background-position: -448px -0px;
+}
+
 #chickenPopupContainer {
 	position: absolute;
 	left: 0;

@@ -27,7 +27,7 @@ Crafty.c('Wall',{
 													[[{c:1,r:0},{c:1,r:3}],			//   R(B?)
 													 [{c:4,r:0},{c:4,r:3}]]]];  //    (B?)
 	},
-	
+
 	_Wall: function(x,y){
 		this.requires('tileset').sprite(0,0);
 		this.x = 64*x;

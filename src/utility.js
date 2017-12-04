@@ -28,7 +28,15 @@ var utility = {
 	},
 
 	formatMoney: function(money) {
-		return (money < 0 ? '−' : '') + '$' + Math.abs(Math.round(money * 100) / 100);
+		var prefix = (money < 0 ? '−' : '') + '$';
+		var amount = '' + Math.abs(Math.round(money * 100) / 100);
+		var dot = amount.indexOf('.');
+		if (dot >= 0) {
+			while (amount.length < dot + 3) {
+				amount += '0';
+			}
+		}
+		return prefix + amount;
 	},
 
 	clamp: function(min, max, value) {
