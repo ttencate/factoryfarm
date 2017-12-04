@@ -48,7 +48,7 @@ Crafty.scene('Main', function() {
 	Crafty.defaultShader('Sprite', colorGradingShader);
 
 	if (!bgMusic) {
-		bgMusic = Crafty.audio.play('bgMusic',-1,0.3);
+		bgMusic = Crafty.audio.play('bgmusic',-1,0.3);
 		if(mutemusic && bgMusic.source){
 			bgMusic.pause();
 		}

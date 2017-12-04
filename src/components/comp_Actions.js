@@ -67,6 +67,11 @@ var indexedActions = [
 		cost: 5,
 		perTile: true,
 	},
+	{
+		name: 'sell',
+		title: 'Sell object',
+		perTile: true,
+	},
 ];
 
 var actions = (function() {

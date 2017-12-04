@@ -117,21 +117,22 @@ Crafty.c('KeyControls', {
 				// determine location of the grabbed item
 				var grabX = null;
 				var grabY = null;
+				var dir = this.direction;
 				// if (this.vx > 0 || this.vy > 0) {
 				// 	var polar = utility.car2pol(this.vx, this.vy);
 				// 	grabX = Math.cos(polar.phi) * params.grabReach + this.originX() - 0.5 * this.grabbed._w;
 				// 	grabY = Math.sin(polar.phi) * params.grabReach + (this._y + 20) - 0.5 * this.grabbed._h;
 				// } else {
-					if (dir == "walking_left") {
+					if (dir == "left") {
 						grabX = -15 + this.originX() - 0.5 * this.grabbed._w;
 						grabY = (this._y + 35) - 0.5 * this.grabbed._h;
-					} else if (dir == "walking_right") {
+					} else if (dir == "right") {
 						grabX = 15 + this.originX() - 0.5 * this.grabbed._w;
 						grabY = (this._y + 35) - 0.5 * this.grabbed._h;
-					} else if (dir == "walking_up") {
+					} else if (dir == "up") {
 						grabX = this.originX() - 0.5 * this.grabbed._w;
 						grabY = -10 + (this._y + 20) - 0.5 * this.grabbed._h;
-					} else if (dir == "walking_down") {
+					} else if (dir == "down") {
 						grabX = this.originX() - 0.5 * this.grabbed._w;
 						grabY = 20 + (this._y + 20) - 0.5 * this.grabbed._h;
 					}
