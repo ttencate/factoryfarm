@@ -1,7 +1,7 @@
 Crafty.c('Calendar', {
 
 	year: 0,
-	month: 11, // TODO set back!
+	month: 0,
 
 	init: function() {
 		this.requires('Delay');
