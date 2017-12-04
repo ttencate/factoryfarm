@@ -2,6 +2,7 @@
 params = {
     debug: false,
     proxLimit: 20000,
+    proxLimitLow: 10000,
     needD2: 10000,
     needCheckTime: 4000,
     chickWalkRange: 400,

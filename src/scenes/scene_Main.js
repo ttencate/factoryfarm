@@ -139,6 +139,18 @@ Crafty.scene('Main', function() {
 						} else { // disgusting!
 							this.filthSprite.sprite(6,3);
 						}
+					},
+					ssHappiness: function() {
+						// calculate steady-state happiness in this location
+						var ssHappy = 100; // base is perfectly happy.
+
+						if (this.paved) {
+							ssHappy -= params.pavedImpact; // don't like paved.
+						}
+						ssHappy -= params.filthImpact * this.filth; // filth makes chicken unhappy
+						// account for crowdedness, get chicken on same tile
+						ssHappy -= (this.units.length - 1) * params.crowdImpact;
+						console.log(this.units.length + " aaand " + ssHappy);
 					}
 				};
 
