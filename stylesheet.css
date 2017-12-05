@@ -14,7 +14,12 @@ html, body {
 }
  
 a {
-   color: #efd241;
+	color: #efd241;
+}
+
+em {
+	font-style: normal;
+	color: #efd241;
 }
 
 #cr-stage { 
