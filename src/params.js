@@ -25,6 +25,7 @@ var params = {
 	interactDist: 40,
 	indicatorSize: 32,
 	cleanFilthAmount: 20,
+	cleanFilthAmountPaved: 60,
 
 	yearDurationMilliseconds: 60000,
 	rentPerTile: 0.25,
@@ -41,7 +42,9 @@ params.monthDurationMilliseconds = params.yearDurationMilliseconds / 12;
 var zLevels = {
 	background: 1000,
 	paths: 1001,
-	filth: 1002,
+	floor: 1002,
+	filth: 1003,
+	highlight: 1100,
 	seller: 1730,
 	player: 1700,
 	chicken: 1670,

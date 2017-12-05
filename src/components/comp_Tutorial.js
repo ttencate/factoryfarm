@@ -24,7 +24,7 @@ var tips = {
 
 	// Tips for situations best avoided
 	moreCleaning: {
-		text: '<b>Don\'t forget to keep the pen clean!</b><br><br><em>Press ' + actions.clean.key + ' to activate cleaning, then move to a dirty spot and press Space until it\'s clean.</em>',
+		text: '<b>Don\'t forget to keep the pen clean!</b> Concrete floors are much easier to clean, but chickens hate them.<br><br><em>You can use action ' + actions.floor.key + ' to create concrete flooring, if you like.</em>',
 		prerequisites: ['thatsAll'],
 	},
 	buyAnotherChicken: {

@@ -135,6 +135,11 @@ a {
 	background-position: -448px -192px;
 }
 
+#hotbar-item-floor {
+	background-image: url(assets/images/tileset.png);
+	background-position: -512px -0px;
+}
+
 #hotbar-item-land {
 	background-image: url(assets/images/tileset.png);
 	background-position: -448px -256px;

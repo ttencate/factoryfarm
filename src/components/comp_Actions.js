@@ -31,13 +31,14 @@ var indexedActions = [
 			return tile.filth > 0;
 		},
 		start: function(col, row, tile) {
-			tile.setFilth(Math.max(0, tile.filth - params.cleanFilthAmount));
+			var amount = tile.paved ? params.cleanFilthAmountPaved : params.cleanFilthAmount;
+			tile.setFilth(Math.max(0, tile.filth - amount));
 			if (tile.filth == 0) {
 				hideTip('cleaning');
 				hideTip('moreCleaning');
 				hideTip('unhappyChicken');
 			}
-			return tile.filth > 0 ? 'Cleaning' : 'Clean!';
+			return tile.filth > 0 ? '* sweep *' : 'Clean!';
 		},
 	},
 	{
@@ -85,6 +86,21 @@ var indexedActions = [
 			tile.block.matchAndFixNeighbors(col, row);
 			hideTip('buyFence');
 			return 'Built gate';
+		},
+	},
+	{
+		name: 'floor',
+		title: 'Pave floor',
+		cost: 5,
+		perTile: true,
+		canStart: function(col, row, tile) {
+			return !tile.paved;
+		},
+		start: function(col, row, tile) {
+			if (tile.paved) return;
+			tile.pave();
+			hideTip('moreCleaning');
+			return 'Paved floor';
 		},
 	},
 	{
@@ -223,6 +239,7 @@ Crafty.c('Actions', {
 		}
 		this.interactIndicator.x = this.interactPoint.x - params.indicatorSize / 2; 
 		this.interactIndicator.y = this.interactPoint.y - params.indicatorSize / 2;
+		this.interactIndicator.z = this.interactIndicator.y + zLevels.highlight;
 
 		// outline tile with which the player would now interact if she pressed the action button
 		if (this.selectedAction.perTile) {
@@ -231,7 +248,7 @@ Crafty.c('Actions', {
 			var tile = getTile(tileX, tileY);
 			this.highlightTile.x = tileX * tileSize;
 			this.highlightTile.y = tileY * tileSize;
-			this.highlightTile.z = zLevels['background' + this.highlightTile.y];
+			this.highlightTile.z = zLevels.highlight + this.highlightTile.y;
 			this.highlightTile.visible = true;
 			this.interactIndicator.visible = false;
 			if (!this.selectedAction.canStart || this.selectedAction.canStart(tileX, tileY, tile)) {

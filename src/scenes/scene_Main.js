@@ -146,7 +146,7 @@ Crafty.scene('Main', function() {
 							}
 							if (!this.filthSprite) {
 								this.filthSprite = Crafty.e('2D, WebGL, Sprite, filth')
-									.attr({x: this.col * tileSize, y: this.row * tileSize, w: tileSize, h: tileSize, z: zLevels.filth + this.y});
+									.attr({x: this.col * tileSize, y: this.row * tileSize, z: zLevels.filth + this.row * tileSize, w: tileSize, h: tileSize});
 							}
 							if (this.filth <= 20) {
 								this.filthSprite.sprite(6,0);
@@ -160,6 +160,15 @@ Crafty.scene('Main', function() {
 								this.filthSprite.sprite(6,4);
 							}
 						}
+					},
+					pave: function() {
+						if (this.paved) {
+							return;
+						}
+						this.paved = true;
+						this.floor = Crafty.e('2D, WebGL, Sprite, tileset')
+								.attr({x: this.col * tileSize, y: this.row * tileSize, z: zLevels.floor + this.row * tileSize, w: tileSize, h: tileSize})
+								.sprite(8, Math.floor(4 * Math.random()));
 					},
 					ssHappiness: function() {
 						// calculate steady-state happiness in this location
