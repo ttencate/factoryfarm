@@ -215,7 +215,7 @@ Crafty.c('KeyControls', {
 	updateGrimness: function(dt) {
 		var averageHappiness = 0;
 		var chickens = Crafty('Chicken');
-		if (!chickens.length) {
+		if (!chickens || !chickens.length) {
 			return;
 		}
 		for (var i = 0; i < chickens.length; i++) {

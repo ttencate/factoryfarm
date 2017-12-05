@@ -316,7 +316,7 @@ Crafty.c('Actions', {
 			if (action.cost) {
 				this.payMoney(action.cost, ret);
 			} else {
-				showPopup(this.x + this.w / 2, this.y + this.h / 2, ret, '#eee');
+				showPopup(this.x + this.w / 2, this.y - 16, ret, '#eee');
 			}
 		}
 	},
