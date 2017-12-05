@@ -1,7 +1,7 @@
 
 mycolors = {
    
-    background : '#9977CC', //'#C7B66D', //#D3BDDB',
+    background : '#4c9524',
 
     outside : '#241304',
 

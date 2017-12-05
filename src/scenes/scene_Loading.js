@@ -6,28 +6,25 @@ Crafty.scene('Loading', function() {
 	//Crafty.background('url(assets/images/background1.png)');
     Crafty.background(mycolors.background);
 	
-	Crafty.e('2D, DOM, Text')
+	var text = Crafty.e('2D, DOM, Text')
 		.attr({
-			x: 321,
-			y: 188,
-			w: 222,
-			h: 200,
+			x: Crafty.viewport._width / 2 - 128,
+			y: Crafty.viewport._height / 2 - 16,
+			w: 256,
+			h: 32,
 			z: 8
 		})
 		.textFont({
 			size: '24px',
 			family: fontFamily1
 		})
+		.textColor('#ffffff')
+		.textAlign('center')
 		.css({
-			'background-color': mycolors.textBlockBg,
-			'border': ('2px dashed' + mycolors.button1),
 			'border-radius': '8px',
-			'cursor': 'pointer',
-			'text-align': 'center',
-			'padding-top': '3px',
-			'color': mycolors.textBlockText,
+			'line-height': '32px',
 		})
-		.text('<BR><br>Loading,<br><BR> please wait...');
+		.text('Loading... (0%)');
 	Crafty.load(assetsObject,
 		function() {
 			//when loaded
@@ -40,6 +37,7 @@ Crafty.scene('Loading', function() {
 		},
 
 		function(e) { // onProgress
+			text.text('Loading... (' + Math.round(e.percent) + '%)')
 			//console.log(e);
 		},
 
@@ -48,7 +46,4 @@ Crafty.scene('Loading', function() {
 		}
 	);
     
-    
-    
-
 });
