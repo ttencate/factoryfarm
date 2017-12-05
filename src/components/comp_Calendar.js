@@ -22,9 +22,15 @@ Crafty.c('Calendar', {
 		if (this.month >= 12) {
 			this.month = 0;
 			this.year++;
-			Crafty('Wallet').payMoney(ownedTiles * params.rentPerTile, 'Yearly rent');
 			hideTip('rentWarning');
 			hideTip('rentCritical');
+			var wallet = Crafty('Wallet');
+			var rent = ownedTiles * params.rentPerTile;
+			if (wallet.money < 0) {
+				Crafty.pause(true);
+				document.getElementById('overlay').className = 'lost';
+			}
+			wallet.payMoney(rent, 'Yearly rent');
 		}
 		this.updateTexts();
 	},

@@ -6,7 +6,9 @@ Crafty.c('Wallet', {
 
 		this.bind('KeyDown', function(keyEvent) {
 			if (keyEvent.key === Crafty.keys.NUMPAD_0) { // cheat for debugging
-				this.earnMoney(1000, 'Cheater!');
+				this.earnMoney(100, 'Cheater!');
+			} else if (keyEvent.key === Crafty.keys.DELETE) { // cheat for debugging
+				this.payMoney(100, 'Oops...');
 			}
 		});
 	},
@@ -30,6 +32,10 @@ Crafty.c('Wallet', {
 	setMoney: function(money) {
 		this.money = money;
 		this.moneyText.innerText = utility.formatMoney(this.money);
+		if (this.money > 1000) {
+			Crafty.pause(true);
+			document.getElementById('overlay').className = 'won';
+		}
 	},
 });
 

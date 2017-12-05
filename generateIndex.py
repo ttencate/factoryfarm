@@ -15,7 +15,7 @@ header = """<!DOCTYPE html>
         <link rel="stylesheet" type="text/css" href="stylesheet.css" />
         <!-- font -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png"> 
-    <!-- <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'> -->
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
     <!--   <meta name="viewport"   content="user-scalable=yes, initial-scale=1.0" /> -->
     <script src="lib/crafty.js"></script>
 """
@@ -46,6 +46,26 @@ footer = """    <script>
       <div id="dayDiv">
       <span id="monthText"></span>, Year <span id="yearText"></span><br>
         Chickens: <span id="chickensText"></span>
+      </div>
+    </div>
+    <div id="overlay">
+      <div id="intro">
+      </div>
+      <div id="won">
+        <h1>Congratulations!</h1>
+        <p>You earned $1000! You can now retire, safe in the knowledge that your children and grandchildren will never have a shortage of funds.</p>
+        <p>&nbsp;</p>
+        <p>Thank you for playing Happy Chicken Farm!</p>
+        <p>&nbsp;</p>
+        <p><em>Refresh the page to play again.</em></p>
+      </div>
+      <div id="lost">
+        <h1>Game over</h1>
+        <p>You were already in debt when the landlord came to collect the rent. You have been declared bankrupt.</p>
+        <p>&nbsp;</p>
+        <p>Thank you for playing Happy Chicken Farm!</p>
+        <p>&nbsp;</p>
+        <p><em>Refresh the page to try again.</em></p>
       </div>
     </div>
     <script type="text/x-vertex-shader" id="vertex-shader">

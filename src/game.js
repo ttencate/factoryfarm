@@ -2,7 +2,7 @@ var mutemusic = false;//false;
 var mutesound = false;
 var debug = false;//true;
 var playing = false;
-var fontFamily1  = "Alegreya SC"; // explanation text 
+var fontFamily1  = "Gloria Hallelujah"; // explanation text 
 var fontFamily2 = "Cinzel"; // help text
 var fontFamily3 = "Bungee Outline"; // title?
 
