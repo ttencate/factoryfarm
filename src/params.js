@@ -20,8 +20,8 @@ var params = {
 	filthImpact: 0.4,
 	crowdImpact: 10,
 	// farmer parameters
-	grabReach: 20,
-	grabAreaSize: 35,
+	grabReach: 15,
+	grabAreaSize: 40,
 	interactDist: 40,
 	indicatorSize: 32,
 	cleanFilthAmount: 20,
