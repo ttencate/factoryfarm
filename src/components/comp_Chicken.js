@@ -162,7 +162,7 @@ Crafty.c('Chicken', {
 			// calculate steady-state happiness in this location
 			var ssHappy = this.currentTile.ssHappiness();
 			var dHappy = ssHappy - this.happy;
-			this.happy += 0.005 * dHappy * dt;
+			this.happy = utility.clamp(0, 100, this.happy + 0.005 * dHappy * dt);
 			if (this.happy < 20) {
 				showTip('unhappyChicken');
 			}
