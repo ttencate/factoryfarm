@@ -24,7 +24,7 @@ footer = """    <script>
     </script>
     
     <!--  Thumbnail voor Facebook enzo. ;) -->
-    <link rel="image_src" href="scrshot.png"/>  
+    <!-- <link rel="image_src" href="scrshot.png"/> -->
   </head>
   <body>
     <!--Add your own HTML!-->   
@@ -36,16 +36,24 @@ footer = """    <script>
       <div id="chickenPopup" style="visibility: hidden;">
       </div>
     </div>
-    <div id="info" style="visibility: hidden;">
-      <div id="moneyDiv">
-        Cash: <span id="moneyText"></span><br>
-        Yearly rent: <span id="rentText"></span>
+    <div id="bottombar">
+      <div id="about">
+        <span class="contents">
+          Happy Chicken Farm was made in 72 hours by Jelle (<a href="http://ludumdare.com/compo/author/diningphilosopher/">Dining Philosopher</a>) and Thomas (<a href="https://twitter.com/frozenfractal">@frozenfractal</a>) for the <a href="https://ldjam.com">Ludum Dare</a> <a href="https://ldjam.com/events/ludum-dare/40">40</a> Jam.
+        </span>
+        (i)
       </div>
-      <div id="hotbar">
-      </div>
-      <div id="dayDiv">
-      <span id="monthText"></span>, Year <span id="yearText"></span><br>
-        Chickens: <span id="chickensText"></span>
+      <div id="info" style="visibility: hidden;">
+        <div id="moneyDiv">
+          Cash: <span id="moneyText"></span><br>
+          Yearly rent: <span id="rentText"></span>
+        </div>
+        <div id="hotbar">
+        </div>
+        <div id="dayDiv">
+          <span id="monthText"></span>, Year <span id="yearText"></span><br>
+          Chickens: <span id="chickensText"></span>
+        </div>
       </div>
     </div>
     <div id="overlay">
